@@ -23,7 +23,7 @@ export interface GymMembership {
 
 export interface MembershipWithStats extends GymMembership {
   daysAsMember: number;
-  daysUntilExpiry: number;
+  daysUntilExpire: number;
   isAboutToExpire: boolean;
   isExpired: boolean;
 }
