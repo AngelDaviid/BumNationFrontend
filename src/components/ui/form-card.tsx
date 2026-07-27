@@ -27,7 +27,7 @@ export function FormCard({
     maxWidth = 'md',
 }: FormCardProps) {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-zinc-950 px-4 py-10">
+        <div className="flex items-center justify-center py-10">
             <div className={`w-full ${maxWidthMap[maxWidth]} bg-white rounded-3xl shadow-2xl p-8 sm:p-10`}>
                 {header}
 
