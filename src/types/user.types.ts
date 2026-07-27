@@ -1,3 +1,5 @@
+import { GymMembership, MembershipWithStats } from "./membership.types";
+
 export type Role = 'CLIENT' | 'ADMIN';
 
 export interface User {
@@ -8,11 +10,13 @@ export interface User {
   firstLastName: string;
   secondLastName?: string;
   email: string;
-  phone: string;
+  phone: string | null;
   imageUrl: string | null;
   role: Role;
   createdAt: string;
   updatedAt: string;
+  gymMembership: GymMembership | null;
+  membershipStats: MembershipWithStats | null
 }
 
 export interface RegisterData {

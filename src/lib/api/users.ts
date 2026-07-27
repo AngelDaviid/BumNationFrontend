@@ -20,8 +20,18 @@ export const usersApi = {
             token,
         }), **/
 
-    getAll:(token: string, page = 1, limit = 10) =>
-        apiClient<PaginatedResponse<User>>(`/users?page=${page}&limit=${limit}`, { token }),
+   getAll: (token: string, page = 1, limit = 10, search?: string) => {
+        const params = new URLSearchParams({
+            page: String(page),
+            limit: String(limit),
+        });
+ 
+        if (search) {
+            params.set("search", search);
+        }
+ 
+        return apiClient<PaginatedResponse<User>>(`/users?${params.toString()}`, { token });
+    },
 
     deleteUser: (id: string, token: string) =>
         apiClient<User>(`/users/${id}`, {
