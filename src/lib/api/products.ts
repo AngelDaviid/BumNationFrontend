@@ -40,6 +40,17 @@ export const productsApi = {
             token,
         }),
 
+    uploadProductImage: (id: number, file: File, token: string) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return apiClient<Product>(`/products/${id}/image`, {
+            method: 'PATCH',
+            body: formData,
+            token,
+        });
+    },
+
     update: (id: number, data: UpdateProductData, token: string) =>
         apiClient<Product>(`/products/${id}`, {
             method: 'PATCH',

@@ -2,6 +2,11 @@ import { GymMembership, MembershipWithStats } from "./membership.types";
 
 export type Role = 'CLIENT' | 'ADMIN';
 
+export interface Stats {
+  total: number;
+  active: number;
+  withoutMembership: number;
+}
 export interface User {
   id: string;
   identification: string;

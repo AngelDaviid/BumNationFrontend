@@ -10,41 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
-
-
-
-const statusStyles: Record<MembershipStatus, string> = {
-    ACTIVE: "bg-[#6BFF3C]/15 text-[#3f9c1f]",
-    EXPIRED: "bg-red-300 text-red-600",
-    SUSPENDED: "bg-amber-100 text-amber-600",
-    CANCELLED: "bg-red-100 text-red-600",
-};
-
-const statusLabels: Record<MembershipStatus, string> = {
-    ACTIVE: "Activo",
-    EXPIRED: "Expirado",
-    SUSPENDED: "Suspendido",
-    CANCELLED: "Cancelado",
-};
-
-function StatusBadge({ status }: { status: MembershipStatus | null }) {
-    if (!status) {
-        return (
-            <span className="inline-flex items-center rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-400">
-                Sin membresía
-            </span>
-        );
-    }
-
-    return (
-        <span
-            className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${statusStyles[status]}`}
-        >
-            {statusLabels[status]}
-        </span>
-    );
-}
-
+import { UserActionsCell } from "./user-actions-cell";
+import { StatusBadge } from "@/components/membership/status-badge";
+import { formatDateOnly } from "@/lib/utils/date";
 
 export const columns: ColumnDef<User>[] = [
       {
@@ -69,70 +37,70 @@ export const columns: ColumnDef<User>[] = [
       />
     ),
   },
-    {
-        id: "status",
-        header: "Estado",
-        accessorFn: (row) => row.gymMembership?.status ?? null,
-        cell: ({ getValue }) => (
-            <StatusBadge status={getValue<MembershipStatus | null>()} />
-        ),
+  {
+    id: "status",
+    header: "Estado",
+    accessorFn: (row) => row.gymMembership?.status ?? null,
+    cell: ({ getValue }) => (
+      <StatusBadge status={getValue<MembershipStatus | null>()} />
+    ),
+  },
+  {
+    id: "startDate",
+    header: "Fecha de inicio",
+    accessorFn: (row) => row.gymMembership?.startDate ?? null,
+    cell: ({ getValue }) => {
+      const startDate = getValue<string | null>();
+      if (!startDate) return "No inscrito";
+      return new Date(startDate).toLocaleDateString("es-ES");
     },
-    {
-        id: "startDate",
-        header: "Fecha de inicio",
-        accessorFn: (row) => row.gymMembership?.startDate ?? null,
-        cell: ({ getValue }) => {
-            const startDate = getValue<string | null>();
-            if (!startDate) return "No inscrito";
-            return new Date(startDate).toLocaleDateString("es-ES");
-        },
+  },
+  {
+    id: "nextPaymentDate",
+    header: "Próximo pago",
+    accessorFn: (row) => row.gymMembership?.nextPaymentDate ?? null,
+    cell: ({ getValue }) => {
+      const nextPaymentDate = getValue<string | null>();
+      if (!nextPaymentDate) return "No inscrito";
+      return new Date(nextPaymentDate).toLocaleDateString("es-ES");
     },
-    {
-        id: "nextPaymentDate",
-        header: "Próximo pago",
-        accessorFn: (row) => row.gymMembership?.nextPaymentDate ?? null,
-        cell: ({ getValue }) => {
-            const nextPaymentDate = getValue<string | null>();
-            if (!nextPaymentDate) return "No inscrito";
-            return new Date(nextPaymentDate).toLocaleDateString("es-ES");
-        },
-    },
-    {
-      accessorKey: "membershipStats.daysUntilExpire",
-      header: "Días Restantes",
-      cell: ({ row }) => {
-        const daysUntilExpire = row.original.membershipStats?.daysUntilExpire;
-        if (daysUntilExpire === 0) return "Expirado";
-        if (!daysUntilExpire) return "No inscrito";
-        return daysUntilExpire;
-      }
-    },
-    {
-        accessorKey: "identification",
-        header: "Identificación",
-    },
-    {
-        accessorKey: "firstName",
-        header: "Nombre",
-    },
-    {
-        accessorKey: "firstLastName",
-        header: "Apellido",
-    },
-    {
-        accessorKey: "email",
-        header: "Correo electrónico",
-    },
-    {
-        accessorKey: "phone",
-        header: "Teléfono",
-        cell: ({ getValue }) => {
-            const phone = getValue<string | null>();
-            if (!phone) return "No registrado";
-            return phone;
-        }
-    },
-    {
+  },
+  {
+    accessorKey: "membershipStats.daysUntilExpire",
+    header: "Días Restantes",
+    cell: ({ row }) => {
+      const daysUntilExpire = row.original.membershipStats?.daysUntilExpire;
+      if (daysUntilExpire === 0) return "Expirado";
+      if (!daysUntilExpire) return "No inscrito";
+      return daysUntilExpire;
+    }
+  },
+  {
+    accessorKey: "identification",
+    header: "Identificación",
+  },
+  {
+    accessorKey: "firstName",
+    header: "Nombre",
+  },
+  {
+    accessorKey: "firstLastName",
+    header: "Apellido",
+  },
+  {
+    accessorKey: "email",
+    header: "Correo electrónico",
+  },
+  {
+    accessorKey: "phone",
+    header: "Teléfono",
+    cell: ({ getValue }) => {
+      const phone = getValue<string | null>();
+      if (!phone) return "No registrado";
+      return phone;
+    }
+  },
+  {
     id: "actions",
     header: "Acciones",
     cell: ({  }) => {

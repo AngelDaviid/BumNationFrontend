@@ -20,7 +20,7 @@ export default function LoginPage() {
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
       error={serverError}
-      header={<FormTitle title="Iniciar sesión" logoSrc="/LogoNegro.png" logoAlt="Bum Nation" />}
+      header={<FormTitle title="Iniciar sesión" logoSrc="/LogoNegro.svg" logoAlt="Bum Nation" />}
       footer={
         <>
           <Link href="/register" className="text-sm text-zinc-500 hover:text-zinc-700 transition-colors">

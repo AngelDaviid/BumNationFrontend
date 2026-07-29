@@ -1,4 +1,4 @@
-import { PaginatedResponse, UpdateUserData, User } from "@/types";
+import { PaginatedResponse, Stats, UpdateUserData,  User } from "@/types";
 import { apiClient } from "./client";
 
 export const usersApi = {
@@ -32,6 +32,11 @@ export const usersApi = {
  
         return apiClient<PaginatedResponse<User>>(`/users?${params.toString()}`, { token });
     },
+
+    getStats: (token: string) => 
+        apiClient<Stats>('/users/stats', { token }),
+    
+
 
     deleteUser: (id: string, token: string) =>
         apiClient<User>(`/users/${id}`, {
