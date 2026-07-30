@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox"
 import { UserActionsCell } from "./user-actions-cell";
 import { StatusBadge } from "@/components/membership/status-badge";
+import {formatDateOnly} from "@/lib/utils/date";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -50,9 +51,8 @@ export const columns: ColumnDef<User>[] = [
     header: "Próximo pago",
     accessorFn: (row) => row.gymMembership?.nextPaymentDate ?? null,
     cell: ({ getValue }) => {
-      const nextPaymentDate = getValue<string | null>();
-      if (!nextPaymentDate) return "No inscrito";
-      return new Date(nextPaymentDate).toLocaleDateString("es-ES");
+      const nextPaymentDate = formatDateOnly(getValue<string | null>(), "No inscrito");
+      return nextPaymentDate;
     },
   },
   {
@@ -62,7 +62,7 @@ export const columns: ColumnDef<User>[] = [
       const daysUntilExpire = row.original.membershipStats?.daysUntilExpire;
       if (daysUntilExpire === 0) return "Expirado";
       if (!daysUntilExpire) return "No inscrito";
-      return daysUntilExpire;
+      return daysUntilExpire + 1;
     }
   },
   {

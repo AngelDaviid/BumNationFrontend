@@ -8,9 +8,7 @@ import { Input } from "@/components/ui/input";
 import { useUpdateUser } from "@/hooks/users/use-update-user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { ImageUpload } from "@/components/ui/image-uploader";
-import { useUploadUserImage } from "@/hooks/users/use-upload-user-image";
-import { toast } from "sonner";
+
 
 interface EditUserFormProps {
     userId: string;
@@ -30,7 +28,7 @@ export function EditUserForm({ userId, defaultValues, imageUrl, onSuccess }: Edi
     })
 
     const { mutate: updateUser, isPending, isError, error } = useUpdateUser()
-    const { mutate: uploadImage, isPending: isUploadingImage } = useUploadUserImage();
+    //const { mutate: uploadImage, isPending: isUploadingImage } = useUploadUserImage();
 
     const onSubmit = (data: UpdateUserFormValues) => {
         updateUser(
@@ -43,7 +41,7 @@ export function EditUserForm({ userId, defaultValues, imageUrl, onSuccess }: Edi
         );
     };
 
-    const handleImageChange = (file: File | null) => {
+    /** const handleImageChange = (file: File | null) => {
         if (!file) return;
 
         uploadImage(
@@ -54,7 +52,7 @@ export function EditUserForm({ userId, defaultValues, imageUrl, onSuccess }: Edi
                 }
             }
         )
-    }
+    } **/
 
     return (
         <FormCard
@@ -63,14 +61,14 @@ export function EditUserForm({ userId, defaultValues, imageUrl, onSuccess }: Edi
             header={<FormTitle title="Actualizar usuario" />}
             maxWidth="2xl"
         >
-            <div className="flex justify-center mb-6">
+            {/** <div className="flex justify-center mb-6">
                 <ImageUpload
                     value={imageUrl}
                     onChange={handleImageChange}
                     isUploading={isUploadingImage}
                     shape="circle"
                 />
-            </div>
+            </div> **/}
             <FormGrid columns={2}>
                 <Field label="identificación">
                     <Input

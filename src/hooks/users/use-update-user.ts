@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { usersApi } from '@/lib/api/users'; // donde tengas tu updateUser
+import { usersApi } from '@/lib/api/users';
 import { useAuthStore } from '@/stores/auth.store';
-import { UpdateUserDataAdmin, User } from '@/types';
+import { User } from '@/types';
+import {UpdateUserFormValues} from "@/common/schemas/user.schema";
 
 interface UpdateUserVariables {
   id: string;
-  data: UpdateUserDataAdmin;
+  data: UpdateUserFormValues;
 }
 
 export function useUpdateUser() {

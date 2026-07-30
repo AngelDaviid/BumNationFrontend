@@ -1,5 +1,6 @@
-import { PaginatedResponse, UpdateUserData, UpdateUserDataAdmin, User } from "@/types";
+import {PaginatedResponse, Stats, UpdateUserData, User} from "@/types";
 import { apiClient } from "./client";
+import {UpdateUserFormValues} from "@/common/schemas/user.schema";
 
 export const usersApi = {
     getMe: (token: string) =>
@@ -25,7 +26,7 @@ export const usersApi = {
         });
     },
 
-    updateUser: (id: string, data: UpdateUserDataAdmin, token: string) =>
+    updateUser: (id: string, data: UpdateUserFormValues, token: string) =>
         apiClient<User>(`/users/${id}`, {
             method: 'PATCH',
             body: data,
@@ -44,12 +45,12 @@ export const usersApi = {
     },
 
     /**
-    changePassword: (oldPassword: string, newPassword: string, token: string) =>
-        apiClient<User>('/users/me/password', {
-            method: 'PATCH',
-            body: { oldPassword, newPassword },
-            token,
-        }), **/
+     changePassword: (oldPassword: string, newPassword: string, token: string) =>
+     apiClient<User>('/users/me/password', {
+     method: 'PATCH',
+     body: { oldPassword, newPassword },
+     token,
+     }), **/
 
     getAll: (token: string, page = 1, limit = 10, search?: string) => {
         const params = new URLSearchParams({
@@ -63,6 +64,9 @@ export const usersApi = {
 
         return apiClient<PaginatedResponse<User>>(`/users?${params.toString()}`, { token });
     },
+
+    getStats: (token: string) =>
+        apiClient<Stats>('/users/stats', { token }),
 
     getUserById: (id: string, token: string) =>
         apiClient<User>(`/users/${id}`, { token }),

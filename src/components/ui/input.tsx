@@ -11,6 +11,10 @@ interface InputProps {
   inputMode?: 'text' | 'numeric' | 'tel' | 'email' | 'none' | 'search' | 'decimal';
   registration: UseFormRegisterReturn;
   rightElement?: ReactNode; 
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string | number;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 
 function inputClass(hasError: boolean) {
@@ -27,6 +31,10 @@ export function Input({
   inputMode,
   registration,
   rightElement,
+  onChange,
+  value,
+  className,
+  onFocus,
 }: InputProps) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -34,11 +42,17 @@ export function Input({
 
       <div className="relative">
         <input
-          type={type}
-          inputMode={inputMode}
-          placeholder={placeholder}
-          className={`${inputClass(!!error)} ${rightElement ? 'pr-10' : ''}`}
-          {...registration}
+            type={type}
+            inputMode={inputMode}
+            placeholder={placeholder}
+            className={`${inputClass(!!error)} ${rightElement ? 'pr-10' : ''} ${className || ''}`}
+            onFocus={onFocus}
+            {...registration}
+            onChange={(e) => {
+              registration.onChange(e);
+              onChange?.(e);
+            }}
+            value={value}
         />
         {rightElement && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">

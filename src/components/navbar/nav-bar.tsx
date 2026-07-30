@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';import {
+import { usePathname } from 'next/navigation'; import {
   Home,
   Grid2X2,
   ShoppingCart,
@@ -53,97 +53,110 @@ export default function Navbar() {
     <>
       <nav className="hidden md:flex fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl items-center justify-between space-x-4 bg-zinc-900 rounded-2xl px-6 py-3 shadow-xl">
         <Link href="/">
-          <Image src="/Logo.png" alt="Bum Nation" width={100} height={100} className="object-contain" />
+          <Image src="/Logo.svg" alt="Bum Nation" width={100} height={100} className="object-contain" />
         </Link>
 
-        <div className="flex items-center gap-6">
+        {isAuthenticated && user?.role === 'ADMIN' ? (
           <Link
-            href="/"
-            className={`text-md font-medium transition-colors ${
-              pathname === '/' ? 'text-[#6BFF3C]' : 'text-zinc-300 hover:text-white'
-            }`}
+            href="/admin"
+            className={`text-md font-medium transition-colors ${pathname === '/admin' ? 'text-[#6BFF3C]' : 'text-zinc-300 hover:text-white'
+              }`}
           >
             Inicio
           </Link>
+        ) : (
+          <>
+          <div className="flex items-center gap-6">
+              <Link
+                href="/"
+                className={`text-md font-medium transition-colors ${pathname === '/' ? 'text-[#6BFF3C]' : 'text-zinc-300 hover:text-white'
+                  }`}
+              >
+                Inicio
+              </Link>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center cursor-pointer gap-1 text-md font-medium text-zinc-300 hover:text-white transition-colors outline-none">
-              Productos <ChevronDown size={14} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-zinc-900 border-zinc-700 text-white">
-              {categories.map((cat) => (
-                <DropdownMenuItem key={cat.id} asChild className="text-md w-auto">
-                  <Link href={`/products?category=${cat.id}`} className="cursor-pointer hover:text-[#6BFF3C]">
-                    {cat.name}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center cursor-pointer gap-1 text-md font-medium text-zinc-300 hover:text-white transition-colors outline-none">
+                  Productos <ChevronDown size={14} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-zinc-900 border-zinc-700 text-white">
+                  {categories.map((cat) => (
+                    <DropdownMenuItem key={cat.id} asChild className="text-md w-auto">
+                      <Link href={`/products?category=${cat.id}`} className="cursor-pointer hover:text-[#6BFF3C]">
+                        {cat.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-          <Link href="/about" className="text-md font-medium text-zinc-300 hover:text-white transition-colors">
-            Sobre nosotros
-          </Link>
-        </div>
-
-        <div ref={desktopContainerRef} className="relative w-100">
-          <form
-            onSubmit={(e) => search.handleSubmit(e)}
-            className="flex items-center gap-2 bg-zinc-800 rounded-full px-4 py-2 w-full"
-          >
-            <svg className="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              value={search.query}
-              onChange={(e) => search.setQuery(e.target.value)}
-              onFocus={desktopDropdown.open}
-              placeholder="¿Qué estás buscando?"
-              className="bg-transparent text-md text-zinc-300 placeholder-zinc-500 outline-none w-full"
-            />
-          </form>
-
-          {desktopDropdown.isOpen && search.showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl overflow-hidden z-50">
-              {search.isLoadingSuggestions && (
-                <p className="px-4 py-3 text-sm text-zinc-500">Buscando…</p>
-              )}
-              {!search.isLoadingSuggestions && search.suggestions.length === 0 && (
-                <p className="px-4 py-3 text-sm text-zinc-500">Sin resultados</p>
-              )}
-              {!search.isLoadingSuggestions &&
-                search.suggestions.map((product) => (
-                  <button
-                    key={product.id}
-                    type="button"
-                    // onClick={() => search.onSelectSuggestion(product.id, desktopDropdown.close)}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
-                  >
-                    <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg bg-zinc-800">
-                      {product.imageUrl && (
-                        <Image
-                          src={product.imageUrl}
-                          alt={product.name}
-                          fill
-                          sizes="36px"
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                    <span className="truncate">{product.name}</span>
-                  </button>
-                ))}
+              <Link href="/about" className="text-md font-medium text-zinc-300 hover:text-white transition-colors">
+                Sobre nosotros
+              </Link>
             </div>
-          )}
-        </div>
+
+            <div ref={desktopContainerRef} className="relative w-100">
+              <form
+                onSubmit={(e) => search.handleSubmit(e)}
+                className="flex items-center gap-2 bg-zinc-800 rounded-full px-4 py-2 w-full"
+              >
+                <svg className="w-4 h-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  type="text"
+                  value={search.query}
+                  onChange={(e) => search.setQuery(e.target.value)}
+                  onFocus={desktopDropdown.open}
+                  placeholder="¿Qué estás buscando?"
+                  className="bg-transparent text-md text-zinc-300 placeholder-zinc-500 outline-none w-full"
+                />
+              </form>
+
+              {desktopDropdown.isOpen && search.showDropdown && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-zinc-900 border border-zinc-700 rounded-2xl shadow-2xl overflow-hidden z-50">
+                  {search.isLoadingSuggestions && (
+                    <p className="px-4 py-3 text-sm text-zinc-500">Buscando…</p>
+                  )}
+                  {!search.isLoadingSuggestions && search.suggestions.length === 0 && (
+                    <p className="px-4 py-3 text-sm text-zinc-500">Sin resultados</p>
+                  )}
+                  {!search.isLoadingSuggestions &&
+                    search.suggestions.map((product) => (
+                      <button
+                        key={product.id}
+                        type="button"
+                        // onClick={() => search.onSelectSuggestion(product.id, desktopDropdown.close)}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
+                      >
+                        <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg bg-zinc-800">
+                          {product.imageUrl && (
+                            <Image
+                              src={product.imageUrl}
+                              alt={product.name}
+                              fill
+                              sizes="36px"
+                              className="object-cover"
+                            />
+                          )}
+                        </div>
+                        <span className="truncate">{product.name}</span>
+                      </button>
+                    ))}
+                </div>
+              )}
+            </div>
+          </>
+
+        )}
+
 
         <div className="flex items-center gap-4">
           {isAuthenticated ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex flex-col items-center text-zinc-300 hover:text-white transition-colors outline-none">
+              <DropdownMenuTrigger className="flex cursor-pointer flex-col items-center text-zinc-300 hover:text-white transition-colors outline-none">
                 <User size={22} />
-                <span className="text-md mt-0.5">Cuenta</span>
+                <span className="text-md mt-0.5 ">Cuenta</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-zinc-900 border-zinc-700 text-white" align="end">
                 <div className="px-2 py-1.5 text-xs text-zinc-400">
@@ -174,7 +187,7 @@ export default function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link href="/login" className="flex items-center gap-1.5 text-md font-medium text-zinc-300 hover:text-white transition-colors">
+            <Link href="/login" className="flex flex-col items-center  text-md font-medium text-zinc-300 hover:text-white transition-colors">
               <LogIn size={22} />
               LogIn
             </Link>
@@ -278,9 +291,8 @@ export default function Navbar() {
           <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[92%] max-h-[75vh] overflow-y-auto bg-zinc-900 rounded-2xl px-5 py-5 shadow-2xl flex flex-col gap-1">
             <Link
               href="/"
-              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
-                pathname === '/' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
-              }`}
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${pathname === '/' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+                }`}
             >
               <Home size={18} />
               Inicio
@@ -317,9 +329,8 @@ export default function Navbar() {
 
             <Link
               href="/about"
-              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
-                pathname === '/about' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
-              }`}
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${pathname === '/about' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+                }`}
             >
               Sobre nosotros
             </Link>

@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
   const showPagination = onNextPage && onPrevPage && page && totalPages;
 
   return (
-    <div className="flex flex-col gap-3 p-5">
+    <div className="flex flex-col gap-2 p-3">
       {showSearch && (
         <div className="flex items-center">
           <input
@@ -51,20 +51,20 @@ export function DataTable<TData, TValue>({
             placeholder={searchPlaceholder}
             value={searchValue ?? ""}
             onChange={(event) => onSearchChange?.(event.target.value)}
-            className="w-full max-w-sm bg-zinc-100 text-zinc-800 placeholder-zinc-400 rounded-lg px-3.5 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#6BFF3C] transition-shadow"
+            className="w-full max-w-xs bg-zinc-100 text-zinc-800 placeholder-zinc-400 rounded-md px-3 py-1.5 text-xs outline-none focus:ring-2 focus:ring-[#6BFF3C] transition-shadow"
           />
         </div>
       )}
 
-      <div className="rounded-xl border border-zinc-200 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="rounded-lg border border-zinc-200 overflow-hidden overflow-x-auto">
+        <table className="w-full text-xs">
           <thead className="bg-zinc-50 border-b border-zinc-200">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-zinc-500"
+                    className="px-3 py-2 text-left text-[11px] font-medium uppercase tracking-wide text-zinc-500 whitespace-nowrap"
                   >
                     {header.isPlaceholder
                       ? null
@@ -81,7 +81,7 @@ export function DataTable<TData, TValue>({
           <tbody className="divide-y divide-zinc-100">
             {isLoading ? (
               <tr>
-                <td colSpan={columns.length} className="h-24 text-center text-zinc-400">
+                <td colSpan={columns.length} className="h-16 text-center text-zinc-400">
                   Cargando...
                 </td>
               </tr>
@@ -89,7 +89,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <tr key={row.id} className="hover:bg-zinc-50 transition-colors">
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-3 text-zinc-800">
+                    <td key={cell.id} className="px-3 py-1.5 text-zinc-800 whitespace-nowrap">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
@@ -97,7 +97,7 @@ export function DataTable<TData, TValue>({
               ))
             ) : (
               <tr>
-                <td colSpan={columns.length} className="h-24 text-center text-zinc-400">
+                <td colSpan={columns.length} className="h-16 text-center text-zinc-400">
                   Sin resultados.
                 </td>
               </tr>
@@ -107,8 +107,8 @@ export function DataTable<TData, TValue>({
       </div>
 
       {showPagination && (
-        <div className="flex items-center justify-between py-4">
-          <p className="text-sm text-zinc-500">
+        <div className="flex items-center justify-between py-2">
+          <p className="text-xs text-zinc-500">
             Página {page} de {totalPages}
           </p>
           <div className="flex items-center space-x-2">
@@ -117,6 +117,7 @@ export function DataTable<TData, TValue>({
               size="sm"
               onClick={onPrevPage}
               disabled={page <= 1}
+              className="h-7 px-2 text-xs"
             >
               Previous
             </Button>
@@ -125,6 +126,7 @@ export function DataTable<TData, TValue>({
               size="sm"
               onClick={onNextPage}
               disabled={page >= totalPages}
+              className="h-7 px-2 text-xs"
             >
               Next
             </Button>
