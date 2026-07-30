@@ -1,3 +1,4 @@
+import { UpdateUserFormValues } from "@/common/schemas/user.schema";
 import { GymMembership, MembershipWithStats } from "./membership.types";
 
 export type Role = 'CLIENT' | 'ADMIN';
@@ -42,6 +43,9 @@ export interface UpdateUserData {
   secondLastName?: string;
   phone?: string;
 }
+
+
+export type UpdateUserDataAdmin = UpdateUserFormValues;
 
 /**
 export interface ChangePasswordData {

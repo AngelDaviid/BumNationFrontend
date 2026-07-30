@@ -11,7 +11,7 @@ interface FetchOptions {
 export async function apiClient<T>(
     endpoint: string,
     options: FetchOptions = {},
-): Promise<T> {
+): Promise<T> { 
 
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -23,9 +23,13 @@ export async function apiClient<T>(
 
     const { method = 'GET', body, token, tags, signal } = options;
 
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-    };
+    const isFormData = body instanceof FormData;
+
+    const headers: Record<string, string> = {};
+
+    if (!isFormData) {
+        headers['Content-Type'] = 'application/json';
+    }
 
     if (token) {
         headers['Authorization'] = `Bearer ${token}`;
@@ -38,7 +42,7 @@ export async function apiClient<T>(
     const response = await fetch(url, {
         method,
         headers,
-        body: body ? JSON.stringify(body) : undefined,
+        body: isFormData ? (body as FormData) : (body ? JSON.stringify(body) : undefined),
         next: tags ? { tags } : undefined,
         signal
     })

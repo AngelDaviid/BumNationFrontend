@@ -6,11 +6,11 @@ import { StatusBadge } from "@/components/membership/status-badge";
 import {formatDateOnly} from "@/lib/utils/date";
 
 export const columns: ColumnDef<User>[] = [
-      {
+  {
     id: "select",
     header: ({ table }) => (
       <Checkbox
-      className="cursor-pointer"
+        className="cursor-pointer"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
