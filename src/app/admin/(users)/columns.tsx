@@ -1,18 +1,9 @@
 import { MembershipStatus, User } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
 import { UserActionsCell } from "./user-actions-cell";
 import { StatusBadge } from "@/components/membership/status-badge";
-import { formatDateOnly } from "@/lib/utils/date";
+import {formatDateOnly} from "@/lib/utils/date";
 
 export const columns: ColumnDef<User>[] = [
       {
@@ -60,9 +51,8 @@ export const columns: ColumnDef<User>[] = [
     header: "Próximo pago",
     accessorFn: (row) => row.gymMembership?.nextPaymentDate ?? null,
     cell: ({ getValue }) => {
-      const nextPaymentDate = getValue<string | null>();
-      if (!nextPaymentDate) return "No inscrito";
-      return new Date(nextPaymentDate).toLocaleDateString("es-ES");
+      const nextPaymentDate = formatDateOnly(getValue<string | null>(), "No inscrito");
+      return nextPaymentDate;
     },
   },
   {
@@ -103,22 +93,6 @@ export const columns: ColumnDef<User>[] = [
   {
     id: "actions",
     header: "Acciones",
-    cell: ({  }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel className="px-2 py-1.5 text-sm font-semibold">Acciones</DropdownMenuLabel>
-            <DropdownMenuItem className="cursor-pointer">Editar Usuario</DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">Ver Historial de Pagos</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <UserActionsCell user={row.original} />,
   },
 ]

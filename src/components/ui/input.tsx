@@ -9,7 +9,7 @@ interface InputProps {
   type?: 'text' | 'email' | 'password' | 'tel' | 'number';
   placeholder?: string;
   inputMode?: 'text' | 'numeric' | 'tel' | 'email' | 'none' | 'search' | 'decimal';
-  registration?: UseFormRegisterReturn;
+  registration: UseFormRegisterReturn;
   rightElement?: ReactNode; 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
@@ -42,14 +42,17 @@ export function Input({
 
       <div className="relative">
         <input
-          type={type}
-          inputMode={inputMode}
-          placeholder={placeholder}
-          className={`${inputClass(!!error)} ${rightElement ? 'pr-10' : ''} ${className || ''}`}
-          {...registration}
-          onChange={onChange}
-          value={value}
-          onFocus={onFocus}
+            type={type}
+            inputMode={inputMode}
+            placeholder={placeholder}
+            className={`${inputClass(!!error)} ${rightElement ? 'pr-10' : ''} ${className || ''}`}
+            onFocus={onFocus}
+            {...registration}
+            onChange={(e) => {
+              registration.onChange(e);
+              onChange?.(e);
+            }}
+            value={value}
         />
         {rightElement && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
