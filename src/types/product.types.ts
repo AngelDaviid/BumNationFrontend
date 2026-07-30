@@ -1,3 +1,5 @@
+import {UpdateProductFormValues} from "@/common/schemas/product.schema";
+
 export interface Category {
   id: number;
   name: string;
@@ -25,4 +27,4 @@ export interface CreateProductData {
   categoryId: number;
 }
 
-export type UpdateProductData = Partial<CreateProductData>;
+export type UpdateProductData = UpdateProductFormValues;

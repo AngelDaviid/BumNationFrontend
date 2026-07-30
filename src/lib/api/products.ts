@@ -1,31 +1,26 @@
-import { CreateProductData, PaginatedResponse, Product, UpdateProductData } from "@/types";
+import {CreateProductData, PaginatedResponse, Product, UpdateProductData} from "@/types";
 import { apiClient } from "./client";
 
-interface GetAllProductsParams {
-    page?: number;
-    limit?: number;
-    search?: string;
-    categoryId?: string;
-}
 
-interface RequestConfig {
-    signal?: AbortSignal;
-}
 
 export const productsApi = {
-    getAll: (params: GetAllProductsParams = {}, config: RequestConfig = {}) => {
-        const { page = 1, limit = 10, search, categoryId } = params;
- 
-        const query = new URLSearchParams();
-        query.set('page', String(page));
-        query.set('limit', String(limit));
-        if (search) query.set('search', search);
-        if (categoryId) query.set('category', categoryId);
- 
-        return apiClient<PaginatedResponse<Product>>(`/products?${query.toString()}`, {
-            tags: ['products'],
-            signal: config.signal,
+    getAll: (token: string, page = 1, limit = 10, search?: string, categoryId?: string) => {
+        const params = new URLSearchParams({
+            page: String(page),
+            limit: String(limit),
         });
+
+        if(search) {
+            params.set("search", search);
+        }
+
+        if(categoryId) {
+            params.set("categoryId", categoryId);
+        }
+
+        return apiClient<PaginatedResponse<Product>>(`/products?${params.toString()}`, { token });
+
+
     },
 
     getById: (id: number) =>
