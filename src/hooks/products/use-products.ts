@@ -1,46 +1,47 @@
-import { useEffect, useState } from 'react';
+import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import { productsApi } from '@/lib/api/products';
-import { Product } from '@/types/product.types';
+import {useAuthStore} from "@/stores/auth.store";
+import {useEffect, useState} from "react";
 
 interface UseProductsParams {
-  search?: string;
   categoryId?: string;
+  initialPage?: number;
+  limit?: number;
 }
 
-interface UseProductsResult {
-  products: Product[];
-  isLoading: boolean;
-  error: string | null;
-}
-
-export function useProducts({ search, categoryId }: UseProductsParams): UseProductsResult {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  const requestKey = JSON.stringify({ search: search ?? null, categoryId: categoryId ?? null });
-
-  const [completedKey, setCompletedKey] = useState<string | null>(null);
-  const isLoading = completedKey !== requestKey;
+export function useProducts({ categoryId, initialPage = 1, limit = 10 }: UseProductsParams) {
+  const { token } = useAuthStore();
+  const [page, setPage] = useState(initialPage);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   useEffect(() => {
-    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1)
+    }, 400)
+    return () => clearTimeout(timeout)
+  }, [search])
 
-    productsApi
-      .getAll({ search: search || undefined, categoryId }, { signal: controller.signal })
-      .then((response) => {
-        setProducts(response.data);
-        setError(null);
-        setCompletedKey(requestKey);
-      })
-      .catch((err) => {
-        if (err.name === 'AbortError') return;
-        console.error(err);
-        setError('No se pudieron cargar los productos.');
-        setCompletedKey(requestKey);
-      });
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['products', search, categoryId],
+    queryFn: () => productsApi.getAll(token!, page, limit, debouncedSearch, categoryId),
+    enabled: !!token,
+    placeholderData: keepPreviousData
+  });
 
-    return () => controller.abort();
-  }, [search, categoryId, requestKey]);
+  const totalPages = data?.meta.totalPage ?? 1
 
-  return { products, isLoading, error };
+  return {
+    products: data?.data ?? [],
+    total: data?.meta.total ?? 0,
+    totalPages,
+    page,
+    isLoading,
+    error: error instanceof Error ? 'No se pudieron cargar los productos.' : null,
+    search,
+    setSearch,
+    nextPage: () => setPage((p) => (p < totalPages ? p + 1 : p )),
+    prevPage: () => setPage((p) => ( p > 1 ? p - 1 : p )),
+  };
 }
