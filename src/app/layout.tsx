@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Kanchenjunga } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
+import { Toaster } from "sonner";
 
 const kanchenjunga = Kanchenjunga({
   subsets: ["latin"],
@@ -23,7 +25,7 @@ export default function RootLayout({
       lang="en"
       className={`${kanchenjunga.className} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col"> <Providers>{children}<Toaster /> </Providers></body>
     </html>
   );
 }
