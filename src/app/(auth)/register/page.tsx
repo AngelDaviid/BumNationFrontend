@@ -31,6 +31,7 @@ export default function RegisterPage() {
       onSubmit={handleSubmit(onSubmit)}
       error={serverError}
       maxWidth={'2xl'}
+      className={"min-h-screen"}
       header={<FormTitle title="Crear cuenta" logoSrc="/LogoNegro.svg" logoAlt="Bum Nation" />}
       footer={
         <>
