@@ -62,7 +62,7 @@ export const columns: ColumnDef<User>[] = [
       const daysUntilExpire = row.original.membershipStats?.daysUntilExpire;
       if (daysUntilExpire === 0) return "Expirado";
       if (!daysUntilExpire) return "No inscrito";
-      return daysUntilExpire;
+      return daysUntilExpire + 1;
     }
   },
   {
