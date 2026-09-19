@@ -4,7 +4,7 @@ import { apiClient } from "./client";
 
 
 export const productsApi = {
-    getAll: (token: string, page = 1, limit = 10, search?: string, categoryId?: string) => {
+    getAll: (page = 1, limit = 10, search?: string, categoryId?: string) => {
         const params = new URLSearchParams({
             page: String(page),
             limit: String(limit),
@@ -18,7 +18,7 @@ export const productsApi = {
             params.set("categoryId", categoryId);
         }
 
-        return apiClient<PaginatedResponse<Product>>(`/products?${params.toString()}`, { token });
+        return apiClient<PaginatedResponse<Product>>(`/products?${params.toString()}`,);
 
 
     },
