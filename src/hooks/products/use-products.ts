@@ -1,6 +1,5 @@
 import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import { productsApi } from '@/lib/api/products';
-import {useAuthStore} from "@/stores/auth.store";
 import {useEffect, useState} from "react";
 
 interface UseProductsParams {
@@ -10,7 +9,6 @@ interface UseProductsParams {
 }
 
 export function useProducts({ categoryId, initialPage = 1, limit = 10 }: UseProductsParams) {
-  const { token } = useAuthStore();
   const [page, setPage] = useState(initialPage);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -25,8 +23,7 @@ export function useProducts({ categoryId, initialPage = 1, limit = 10 }: UseProd
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['products', search, categoryId],
-    queryFn: () => productsApi.getAll(token!, page, limit, debouncedSearch, categoryId),
-    enabled: !!token,
+    queryFn: () => productsApi.getAll( page, limit, debouncedSearch, categoryId),
     placeholderData: keepPreviousData
   });
 
