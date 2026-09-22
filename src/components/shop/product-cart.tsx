@@ -28,14 +28,22 @@ export default function ProductCard({
   const isOutOfStock = product.stock <= 0;
 
   return (
-    <div className="w-70 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-all hover:scale-105 hover:shadow-xl cursor-pointer">
+    <div className="w-70 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-all  cursor-pointer">
       <div className="relative aspect-square w-full bg-neutral-900">
-        <Image
-          src={product.imageUrl || "/placeholder.png"}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, 320px"
-          className="object-cover"
+          <span onClick={() => {handleFavoriteClick()}} className={"absolute position-fixed flex justify-center items-center top-2 right-2 z-10 "}>
+                <Heart
+                    className="h-6 w-6"
+                    fill={isFavorite ? "#65C33A" : "#ffffff"}
+                    strokeWidth={2}
+                    color={isFavorite ? "#65C33A" : "#ffffff"}
+                />
+            </span>
+         <Image
+              src={product.imageUrl || "/placeholder.png"}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 320px"
+              className="object-cover"
         />
       </div>
 
@@ -84,7 +92,7 @@ export default function ProductCard({
             />
             Favoritos
           </button> */}
-        
+
          <button
             type="button"
             onClick={() => onAddToCart?.(product)}

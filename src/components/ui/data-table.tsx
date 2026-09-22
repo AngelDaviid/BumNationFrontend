@@ -19,6 +19,7 @@ interface DataTableProps<TData, TValue> {
   totalPages?: number;
   onNextPage?: () => void;
   onPrevPage?: () => void;
+  onRowClick?: (row: TData) => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -32,6 +33,7 @@ export function DataTable<TData, TValue>({
   totalPages,
   onNextPage,
   onPrevPage,
+  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -64,7 +66,7 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-3 py-2 text-left text-[11px] font-medium uppercase tracking-wide text-zinc-500 whitespace-nowrap"
+                    className="px-3 py-2 text-center text-[11px] font-medium uppercase tracking-wide text-zinc-500 whitespace-nowrap"
                   >
                     {header.isPlaceholder
                       ? null
@@ -87,7 +89,7 @@ export function DataTable<TData, TValue>({
               </tr>
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="hover:bg-zinc-50 transition-colors">
+                <tr key={row.id} className="hover:bg-zinc-50 transition-colors" onClick={() => onRowClick?.(row.original)}>
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-3 py-1.5 text-zinc-800 whitespace-nowrap">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
