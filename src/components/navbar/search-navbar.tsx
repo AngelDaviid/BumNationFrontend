@@ -58,7 +58,12 @@ export function SearchBar({
               <button
                 key={product.id}
                 type="button"
-                // onClick={() => search.onSelectSuggestion(product.id, dropdown.close)}
+                onClick={() =>
+                  search.selectSuggestion(product.id, () => {
+                    dropdown.close();
+                    onSubmitClose?.();
+                  })
+                }
                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-zinc-300 hover:text-white transition-colors ${
                   isDesktop ? 'hover:bg-zinc-800' : 'hover:bg-zinc-700'
                 }`}

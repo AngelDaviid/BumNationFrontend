@@ -1,37 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { productsApi } from "@/lib/api/products";
 import { Product } from "@/types/product.types";
 import ProductCard from "@/components/shop/product-cart";
+import {useProducts} from "@/hooks/products/use-products";
 
 export default function ProductList() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let isMounted = true;
+  const { isLoading, products, error} = useProducts({initialPage: 1, limit: 10 });
 
-    productsApi
-      .getAll()
-      .then((response) => {
-        if (!isMounted) return;
-        setProducts(response.data);
-      })
-      .catch((err) => {
-        if (!isMounted) return;
-        console.error(err);
-        setError("No se pudieron cargar los productos.");
-      })
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const handleAddToCart = (product: Product) => {
     console.log("Agregado al carrito:", product);
@@ -55,10 +31,10 @@ export default function ProductList() {
 
   return (
     <div className="grid grid-cols-1 gap-6 p-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {products.map((product) => (
+      {products.map((products) => (
         <ProductCard
-          key={product.id}
-          product={product}
+          key={products.id}
+          product={products}
           onAddToCart={handleAddToCart}
           onToggleFavorite={handleToggleFavorite}
         />

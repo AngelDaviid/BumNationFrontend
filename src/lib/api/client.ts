@@ -13,7 +13,7 @@ export async function apiClient<T>(
     options: FetchOptions = {},
 ): Promise<T> { 
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
     if (!API_URL) {
         throw new Error(

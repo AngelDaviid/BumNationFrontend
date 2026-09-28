@@ -7,6 +7,8 @@ interface AuthState {
     token: string | null;
     user: User | null;
     isAuthenticated: boolean;
+    // true cuando la sesión ya se leyó de la cookie (solo en el cliente)
+    hasHydrated: boolean;
     setAuth: (token: string, user: User) => void;
     updateUser: (user: User) => void;
     logout: () => void;
@@ -36,8 +38,9 @@ export const useAuthStore = create<AuthState>()(
             token: null,
             user: null,
             isAuthenticated: false,
+            hasHydrated: false,
 
-            setAuth: (token, user) => 
+            setAuth: (token, user) =>
                 set({ token, user, isAuthenticated: true }),
 
             updateUser: (user) => 
@@ -49,6 +52,15 @@ export const useAuthStore = create<AuthState>()(
         {
             name: "auth-storage",
             storage: createJSONStorage(() => cookieStorage),
+            // El servidor no puede leer la cookie desde aquí: si el cliente la
+            // leyera al crear el store, el primer render no coincidiría con el
+            // HTML del servidor (error de hidratación). Se rehidrata en
+            // AuthHydration, después del primer render.
+            skipHydration: true,
+            partialize: ({ token, user, isAuthenticated }) => ({ token, user, isAuthenticated }),
+            onRehydrateStorage: () => () => {
+                useAuthStore.setState({ hasHydrated: true });
+            },
         },
     )
 )

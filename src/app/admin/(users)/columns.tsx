@@ -41,9 +41,8 @@ export const columns: ColumnDef<User>[] = [
     header: "Fecha de inicio",
     accessorFn: (row) => row.gymMembership?.startDate ?? null,
     cell: ({ getValue }) => {
-      const startDate = getValue<string | null>();
-      if (!startDate) return "No inscrito";
-      return new Date(startDate).toLocaleDateString("es-ES");
+      const startDate = formatDateOnly(getValue<string | null>(), "No inscrito");
+      return startDate;
     },
   },
   {
