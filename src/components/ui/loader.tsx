@@ -34,9 +34,12 @@ export function Loader({ size = "md", tone = "dark", label, className }: LoaderP
       <span
         aria-hidden
         className={cn(
-          "animate-spin rounded-full border-t-[#6BFF3C]",
+          "animate-spin rounded-full",
           sizeClasses[size],
           trackClasses[tone],
+          // Debe ir después del color del aro: tailwind-merge descarta
+          // border-t-* si un border-color general aparece más tarde
+          "border-t-[#6BFF3C]",
         )}
       />
       {label ? (
