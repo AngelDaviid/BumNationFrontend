@@ -27,6 +27,8 @@ import { StatCard } from "@/components/dashboard/stat-card";
 import { StatusBadge as MembershipStatusBadge } from "@/components/membership/status-badge";
 import ProductCard from "@/components/shop/product-cart";
 import ProductList from "@/app/(shop)/products/product-list";
+import { ProductCardSkeleton, ProductGridSkeleton } from "@/components/shop/product-card-skeleton";
+import { CategoryFilter } from "@/components/shop/category-filter";
 
 // Navbar
 import Navbar from "@/components/navbar/nav-bar";
@@ -214,6 +216,8 @@ const sections: {
     items: [
       { id: "product-card", label: "ProductCard" },
       { id: "product-list", label: "ProductList" },
+      { id: "product-card-skeleton", label: "ProductCardSkeleton" },
+      { id: "category-filter", label: "CategoryFilter" },
     ],
   },
   {
@@ -550,6 +554,36 @@ export function UiTest() {
               notes={["Consume la API real: necesita el backend corriendo"]}
             >
               <ProductList />
+            </ComponentPreview>
+
+            <ComponentPreview
+              id="product-card-skeleton"
+              title="ProductCardSkeleton / ProductGridSkeleton"
+              file="src/components/shop/product-card-skeleton.tsx"
+              dark
+            >
+              <div className="space-y-8">
+                <div className="flex flex-wrap gap-6">
+                  <ProductCardSkeleton />
+                  {mockProducts.slice(0, 1).map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+                <ProductGridSkeleton count={4} />
+              </div>
+            </ComponentPreview>
+
+            <ComponentPreview
+              id="category-filter"
+              title="CategoryFilter"
+              file="src/components/shop/category-filter.tsx"
+              dark
+            >
+              <CategoryFilter
+                categories={mockCategories}
+                activeCategoryId="2"
+                buildHref={(id) => (id ? `#category-${id}` : "#category-filter")}
+              />
             </ComponentPreview>
           </div>
 
