@@ -64,10 +64,16 @@ export function useProductSearch() {
     }
   };
 
+  const selectSuggestion = (productId: number, onClose?: () => void) => {
+    onClose?.();
+    router.push(`${PRODUCTS_PATH}/${productId}`);
+  };
+
   return {
     query,
     setQuery,
     handleSubmit,
+    selectSuggestion,
     suggestions,
     isLoadingSuggestions,
     showDropdown,
