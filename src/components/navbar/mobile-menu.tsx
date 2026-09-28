@@ -13,7 +13,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ categories, menu }: MobileMenuProps) {
   const pathname = usePathname();
-  const { isAuthenticated, user, logout } = useAuthStore();
+  const { isAuthenticated, user, logout, hasHydrated } = useAuthStore();
 
   if (!menu.isOpen) return null;
 
@@ -73,7 +73,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
 
         <DropdownMenuSeparator className="bg-zinc-700 my-2" />
 
-        {isAuthenticated ? (
+        {!hasHydrated ? null : isAuthenticated ? (
           <>
             <div className="px-3 py-1.5 text-xs text-zinc-500">
               {user?.firstName} {user?.firstLastName}

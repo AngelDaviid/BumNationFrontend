@@ -21,7 +21,7 @@ interface DesktopNavbarProps {
 
 export function DesktopNavbar({ categories, search, containerRef, dropdown }: DesktopNavbarProps) {
   const pathname = usePathname();
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, hasHydrated } = useAuthStore();
   const isAdmin = isAuthenticated && user?.role === 'ADMIN';
 
   return (
@@ -40,7 +40,9 @@ export function DesktopNavbar({ categories, search, containerRef, dropdown }: De
           Inicio
         </Link>
       ) : (
-        <>
+        // Hasta cargar la sesión se ocultan (sin quitarlos del HTML) para que
+        // un admin no vea un instante los enlaces de la tienda
+        <div className={`contents ${hasHydrated ? '' : '[&>*]:invisible'}`}>
           <div className="flex items-center gap-6">
             <Link
               href="/"
@@ -59,7 +61,7 @@ export function DesktopNavbar({ categories, search, containerRef, dropdown }: De
           </div>
 
           <SearchBar containerRef={containerRef} search={search} dropdown={dropdown} variant="desktop" />
-        </>
+        </div>
       )}
 
       <div className="flex items-center gap-4">

@@ -4,7 +4,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { usersApi } from "@/lib/api/users";
 
 export function useUsers({ initialPage = 1, limit = 10 } = {}) {
-  const { token } = useAuthStore();
+  const { token, hasHydrated } = useAuthStore();
   const [page, setPage] = useState(initialPage);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -31,7 +31,8 @@ export function useUsers({ initialPage = 1, limit = 10 } = {}) {
     total: data?.meta.total ?? 0,
     totalPages,
     page,
-    isLoading,
+    // Sin sesión cargada la consulta está deshabilitada, pero aún no hay datos
+    isLoading: !hasHydrated || isLoading,
     error: error instanceof Error ? error.message : null,
     search,
     setSearch,

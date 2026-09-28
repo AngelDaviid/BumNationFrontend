@@ -3,7 +3,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { usersApi } from "@/lib/api/users";
 
 export function useUserStats() {
-  const { token } = useAuthStore();
+  const { token, hasHydrated } = useAuthStore();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["users-stats"],
@@ -20,7 +20,7 @@ export function useUserStats() {
     total,
     active,
     withoutMembership,
-    isLoading,
+    isLoading: !hasHydrated || isLoading,
     error: error instanceof Error ? error.message : null,
   };
 }
