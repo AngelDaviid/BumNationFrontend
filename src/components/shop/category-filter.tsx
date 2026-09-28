@@ -13,8 +13,12 @@ export function CategoryFilter({ categories, activeCategoryId, buildHref }: Cate
   const items = [{ id: undefined, name: "Todos" }, ...categories.map((c) => ({ id: String(c.id), name: c.name }))];
 
   return (
-    <nav aria-label="Categorías" className="-mx-4 overflow-x-auto px-4 pb-1">
-      <ul className="flex w-max gap-2">
+    <nav
+      aria-label="Categorías"
+      // Se puede desplazar horizontalmente, pero sin mostrar la barra de scroll
+      className="-mx-4 overflow-x-auto px-4 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
+      <ul className="flex w-max gap-3">
         {items.map((item) => {
           const isActive = item.id === activeCategoryId;
           return (
@@ -24,10 +28,10 @@ export function CategoryFilter({ categories, activeCategoryId, buildHref }: Cate
                 scroll={false}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "block whitespace-nowrap rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
+                  "block whitespace-nowrap rounded-full border px-5 py-2 text-sm font-medium transition-colors",
                   isActive
-                    ? "border-[#6BFF3C] bg-[#6BFF3C] text-black"
-                    : "border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white",
+                    ? "border-[#65C33A] bg-[#65C33A] text-white"
+                    : "border-neutral-300 bg-white text-neutral-700 hover:border-[#65C33A] hover:text-[#65C33A]",
                 )}
               >
                 {item.name}

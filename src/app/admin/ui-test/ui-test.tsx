@@ -577,7 +577,6 @@ export function UiTest() {
               id="category-filter"
               title="CategoryFilter"
               file="src/components/shop/category-filter.tsx"
-              dark
             >
               <CategoryFilter
                 categories={mockCategories}

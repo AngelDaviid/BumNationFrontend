@@ -13,8 +13,10 @@ export default function ProductsPage() {
     // useSearchParams necesita un límite de Suspense
     <Suspense
       fallback={
-        <div className="mx-auto w-full max-w-6xl px-4 py-8">
-          <ProductGridSkeleton />
+        <div className="-mt-20 min-h-screen bg-white pt-20">
+          <div className="mx-auto w-full max-w-6xl px-4 py-8">
+            <ProductGridSkeleton />
+          </div>
         </div>
       }
     >
