@@ -10,7 +10,12 @@ import {
 import { useAuthStore } from '@/stores/auth.store';
 
 export function UserMenu() {
-  const { isAuthenticated, user, logout } = useAuthStore();
+  const { isAuthenticated, user, logout, hasHydrated } = useAuthStore();
+
+  // Evita mostrar "LogIn" un instante antes de cargar la sesión
+  if (!hasHydrated) {
+    return <div className="h-12 w-12" aria-hidden />;
+  }
 
   if (!isAuthenticated) {
     return (
