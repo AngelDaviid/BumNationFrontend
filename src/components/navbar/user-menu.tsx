@@ -16,7 +16,7 @@ export function UserMenu() {
     return (
       <Link
         href="/login"
-        className="flex items-center gap-1.5 text-md font-medium text-zinc-300 hover:text-white transition-colors"
+        className="flex flex-col items-center text-md font-medium text-zinc-300 hover:text-white transition-colors"
       >
         <LogIn size={22} />
         LogIn
@@ -26,7 +26,7 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex flex-col items-center text-zinc-300 hover:text-white transition-colors outline-none">
+      <DropdownMenuTrigger className="flex cursor-pointer flex-col items-center text-zinc-300 hover:text-white transition-colors outline-none">
         <User size={22} />
         <span className="text-md mt-0.5">Cuenta</span>
       </DropdownMenuTrigger>
