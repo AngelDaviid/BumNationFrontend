@@ -9,7 +9,7 @@ export const updateUserSchema = z.object({
     secondLastName: z.string().optional(),
     phone: z.string().min(10, 'El teléfono debe tener al menos 10 caracteres').nullable().optional(),
     imageUrl: z.string().url({message: "La URL de la imagen no es válida"}).nullable().optional(),
-    role: z.enum(["user", "admin"]).optional(),
+    role: z.enum(["CLIENT", "ADMIN"]).optional(),
 });
 
 export type UpdateUserFormValues = z.infer<typeof updateUserSchema>;
