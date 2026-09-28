@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Heart, ShoppingCart } from "lucide-react";
+import { Heart, ImageOff, ShoppingCart } from "lucide-react";
 import { formattedPrice } from "@/common/formatted-price";
 import { Product } from "@/types/product.types";
 
@@ -30,21 +30,33 @@ export default function ProductCard({
   return (
     <div className="w-70 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-all  cursor-pointer">
       <div className="relative aspect-square w-full bg-neutral-900">
-          <span onClick={() => {handleFavoriteClick()}} className={"absolute position-fixed flex justify-center items-center top-2 right-2 z-10 "}>
-                <Heart
-                    className="h-6 w-6"
-                    fill={isFavorite ? "#65C33A" : "#ffffff"}
-                    strokeWidth={2}
-                    color={isFavorite ? "#65C33A" : "#ffffff"}
-                />
-            </span>
-         <Image
-              src={product.imageUrl || "/placeholder.png"}
-              alt={product.name}
-              fill
-              sizes="(max-width: 768px) 100vw, 320px"
-              className="object-cover"
-        />
+        <button
+          type="button"
+          onClick={handleFavoriteClick}
+          aria-pressed={isFavorite}
+          aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+          className="absolute top-2 right-2 z-10 flex items-center justify-center cursor-pointer"
+        >
+          <Heart
+            className="h-6 w-6"
+            fill={isFavorite ? "#65C33A" : "#ffffff"}
+            strokeWidth={2}
+            color={isFavorite ? "#65C33A" : "#ffffff"}
+          />
+        </button>
+        {product.imageUrl ? (
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 320px"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-neutral-600">
+            <ImageOff className="h-12 w-12" strokeWidth={1.5} aria-label="Sin imagen" />
+          </div>
+        )}
       </div>
 
       <div className="space-y-3 p-4">
@@ -64,13 +76,13 @@ export default function ProductCard({
               COP
             </span>
           </span>
-          <span
-            className={`text-sm font-medium text-[#65C33A]${
-              isOutOfStock ? "text-red-500" : "text-neutral-500"
-            }`}
-          >
+          <span className="text-sm font-medium text-neutral-500">
             Stock:{" "}
-            <span className="font-semibold text-[#65C33A]">
+            <span
+              className={`font-semibold ${
+                isOutOfStock ? "text-red-500" : "text-[#65C33A]"
+              }`}
+            >
               {isOutOfStock ? "Agotado" : product.stock}
             </span>
           </span>
