@@ -45,6 +45,7 @@ import { useMobileMenu } from "@/hooks/search/use-mobiel-menu";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { NavUser } from "@/components/ui/nav-user";
 import { DataTable } from "@/components/ui/data-table";
+import { Loader, LoadingScreen } from "@/components/ui/loader";
 import { DynamicModal } from "@/components/ui/dynamic-modal";
 import { Field } from "@/components/ui/field";
 import { FormCard } from "@/components/ui/form-card";
@@ -248,6 +249,7 @@ const sections: {
     title: "UI propios",
     origin: "propio",
     items: [
+      { id: "loader", label: "Loader / LoadingScreen" },
       { id: "data-table", label: "DataTable" },
       { id: "dynamic-modal", label: "DynamicModal" },
       { id: "form-components", label: "FormCard / FormTitle / FormGrid / Field / Input" },
@@ -775,6 +777,23 @@ export function UiTest() {
           {/* ------------------------------------------------------------ UI propios */}
           <div className="space-y-6">
             <h2 className="text-xl font-bold">UI propios</h2>
+
+            <ComponentPreview id="loader" title="Loader / LoadingScreen" file="src/components/ui/loader.tsx">
+              <div className="space-y-6">
+                <div className="flex flex-wrap items-center gap-8 rounded-lg bg-zinc-950 p-6">
+                  <Loader size="sm" />
+                  <Loader size="md" />
+                  <Loader size="lg" />
+                  <Loader label="Cargando productos…" />
+                </div>
+                <div className="flex flex-wrap items-center gap-8 rounded-lg border border-zinc-200 p-6">
+                  <Loader size="sm" tone="light" />
+                  <Loader tone="light" />
+                  <Loader tone="light" label="Guardando…" />
+                </div>
+                <LoadingScreen className="min-h-80 rounded-lg" />
+              </div>
+            </ComponentPreview>
 
             <ComponentPreview id="data-table" title="DataTable" file="src/components/ui/data-table.tsx">
               <div className="space-y-6">
