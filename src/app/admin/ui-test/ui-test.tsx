@@ -7,7 +7,13 @@ import { ChevronDown, Info } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import type { Category, Product, User } from "@/types";
 
-import { ComponentPreview, ErrorReporterContext, FixedFrame } from "./component-preview";
+import {
+  ComponentOrigin,
+  ComponentPreview,
+  FixedFrame,
+  OriginBadge,
+  UiTestContext,
+} from "./component-preview";
 
 // Admin
 import { EditProductsForm } from "@/components/admin/products/edit-products-form";
@@ -196,9 +202,14 @@ const demoRows: DemoRow[] = [
 // Índice de secciones
 // ---------------------------------------------------------------------------
 
-const sections: { title: string; items: { id: string; label: string }[] }[] = [
+const sections: {
+  title: string;
+  origin: ComponentOrigin;
+  items: { id: string; label: string }[];
+}[] = [
   {
     title: "Tienda",
+    origin: "propio",
     items: [
       { id: "product-card", label: "ProductCard" },
       { id: "product-list", label: "ProductList" },
@@ -206,6 +217,7 @@ const sections: { title: string; items: { id: string; label: string }[] }[] = [
   },
   {
     title: "Navbar",
+    origin: "propio",
     items: [
       { id: "navbar", label: "Navbar (completo)" },
       { id: "desktop-navbar", label: "DesktopNavbar" },
@@ -219,6 +231,7 @@ const sections: { title: string; items: { id: string; label: string }[] }[] = [
   },
   {
     title: "Admin",
+    origin: "propio",
     items: [
       { id: "app-sidebar", label: "AppSidebar" },
       { id: "nav-user", label: "NavUser" },
@@ -233,6 +246,7 @@ const sections: { title: string; items: { id: string; label: string }[] }[] = [
   },
   {
     title: "UI propios",
+    origin: "propio",
     items: [
       { id: "data-table", label: "DataTable" },
       { id: "dynamic-modal", label: "DynamicModal" },
@@ -243,6 +257,7 @@ const sections: { title: string; items: { id: string; label: string }[] }[] = [
   },
   {
     title: "UI shadcn",
+    origin: "shadcn",
     items: [
       { id: "button", label: "Button" },
       { id: "badge", label: "Badge" },
@@ -261,6 +276,15 @@ const sections: { title: string; items: { id: string; label: string }[] }[] = [
     ],
   },
 ];
+
+const originById: Record<string, ComponentOrigin> = Object.fromEntries(
+  sections.flatMap((section) => section.items.map((item) => [item.id, section.origin])),
+);
+
+const originCount = sections.reduce(
+  (count, section) => ({ ...count, [section.origin]: count[section.origin] + section.items.length }),
+  { propio: 0, shadcn: 0 } as Record<ComponentOrigin, number>,
+);
 
 // ---------------------------------------------------------------------------
 // Demos que necesitan hooks
@@ -414,19 +438,25 @@ export function UiTest() {
     setErrors((prev) => (prev[id] === error.message ? prev : { ...prev, [id]: error.message }));
   }, []);
 
-  const reporter = useMemo(() => ({ reportError }), [reportError]);
+  const contextValue = useMemo(
+    () => ({ reportError, originOf: (id: string) => originById[id] ?? "propio" }),
+    [reportError],
+  );
   const errorIds = Object.keys(errors);
 
   return (
-    <ErrorReporterContext.Provider value={reporter}>
-      <div className="flex min-h-screen bg-zinc-50 text-zinc-900">
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 overflow-y-auto border-r border-zinc-200 bg-white p-4 lg:block">
+    <UiTestContext.Provider value={contextValue}>
+      <div className="flex gap-6 text-zinc-900">
+        <aside className="sticky top-4 hidden max-h-[calc(100vh-2rem)] w-60 shrink-0 self-start overflow-y-auto rounded-xl border border-zinc-200 bg-white p-4 xl:block">
           <p className="mb-4 text-lg font-bold">UI Test</p>
           {sections.map((section) => (
             <div key={section.title} className="mb-4">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">
-                {section.title}
-              </p>
+              <div className="mb-1 flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
+                  {section.title}
+                </p>
+                <OriginBadge origin={section.origin} />
+              </div>
               <ul>
                 {section.items.map((item) => (
                   <li key={item.id}>
@@ -446,7 +476,7 @@ export function UiTest() {
           ))}
         </aside>
 
-        <main className="min-w-0 flex-1 space-y-10 p-4 sm:p-8">
+        <div className="min-w-0 flex-1 space-y-10">
           <header className="space-y-3">
             <h1 className="text-3xl font-bold">Catálogo de componentes</h1>
             <p className="text-sm text-zinc-600">
@@ -455,6 +485,15 @@ export function UiTest() {
               (onClick, etc.), las imágenes rotas y los errores de red no se capturan aquí: revisa
               también la consola del navegador.
             </p>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-lg border border-zinc-200 bg-white p-4 text-sm text-zinc-600">
+              <span className="flex items-center gap-2">
+                <OriginBadge origin="propio" /> {originCount.propio} creados por ti
+              </span>
+              <span className="flex items-center gap-2">
+                <OriginBadge origin="shadcn" /> {originCount.shadcn} generados con{" "}
+                <code className="text-xs">npx shadcn add</code>
+              </span>
+            </div>
             {errorIds.length > 0 ? (
               <div className="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-700">
                 <p className="font-semibold">
@@ -1014,8 +1053,8 @@ export function UiTest() {
               </div>
             </ComponentPreview>
           </div>
-        </main>
+        </div>
       </div>
-    </ErrorReporterContext.Provider>
+    </UiTestContext.Provider>
   );
 }

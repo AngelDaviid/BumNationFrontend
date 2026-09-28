@@ -9,13 +9,29 @@ import {
   useContext,
 } from "react";
 
-interface ErrorReporter {
+export type ComponentOrigin = "propio" | "shadcn";
+
+interface UiTestContextValue {
   reportError: (id: string, error: Error) => void;
+  originOf: (id: string) => ComponentOrigin;
 }
 
-export const ErrorReporterContext = createContext<ErrorReporter>({
+export const UiTestContext = createContext<UiTestContextValue>({
   reportError: () => {},
+  originOf: () => "propio",
 });
+
+export function OriginBadge({ origin }: { origin: ComponentOrigin }) {
+  return (
+    <span
+      className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+        origin === "shadcn" ? "bg-zinc-900 text-white" : "bg-[#6BFF3C]/20 text-[#2f7a14]"
+      }`}
+    >
+      {origin === "shadcn" ? "shadcn" : "Propio"}
+    </span>
+  );
+}
 
 interface BoundaryProps {
   id: string;
@@ -81,12 +97,15 @@ export function ComponentPreview({
   dark = false,
   children,
 }: ComponentPreviewProps) {
-  const { reportError } = useContext(ErrorReporterContext);
+  const { reportError, originOf } = useContext(UiTestContext);
 
   return (
     <section id={id} className="scroll-mt-6 rounded-xl border border-zinc-200 bg-white">
-      <header className="flex flex-wrap items-baseline justify-between gap-2 border-b border-zinc-200 px-5 py-3">
-        <h3 className="font-semibold text-zinc-900">{title}</h3>
+      <header className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-200 px-5 py-3">
+        <div className="flex items-center gap-2">
+          <h3 className="font-semibold text-zinc-900">{title}</h3>
+          <OriginBadge origin={originOf(id)} />
+        </div>
         <code className="text-xs text-zinc-500">{file}</code>
       </header>
 

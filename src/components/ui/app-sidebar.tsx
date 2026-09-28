@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGrid, Package, CreditCard, ChevronRight } from "lucide-react";
+import { LayoutGrid, Package, CreditCard, ChevronRight, FlaskConical } from "lucide-react";
 import {
   Sidebar,
   SidebarHeader,
@@ -37,6 +37,10 @@ const navItems = [
     ],
   },
   { label: "Pagos", href: "/admin/pagos", icon: CreditCard },
+  // Catálogo de componentes: solo en desarrollo
+  ...(process.env.NODE_ENV !== "production"
+    ? [{ label: "UI Test", href: "/admin/ui-test", icon: FlaskConical }]
+    : []),
 ];
 
 export function AppSidebar() {
