@@ -1,54 +1,38 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { StatusSelect } from "@/components/admin/status-select";
 import { formattedPrice } from "@/common/formatted-price";
-import { useCancelOrder, useUpdateOrderStatus } from "@/hooks/orders/use-admin-orders";
-import { getApiErrorMessage } from "@/hooks/memberships/use-memberships";
 import { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS, OrderStatusBadge } from "./order-status-badge";
+import { useOrderDetail } from '../../../hooks/orders/use-order-detail'
 
 const STATUS_OPTIONS = (Object.entries(ORDER_STATUS_LABELS) as [OrderStatus, string][])
   .filter(([value]) => value !== "CANCELLED")
   .map(([value, label]) => ({ value, label }));
 
 export function OrderDetail({ order, onChanged }: { order: Order; onChanged?: () => void }) {
-  const [status, setStatus] = useState(order.status);
-  const [showCancel, setShowCancel] = useState(false);
-  const [cancelled, setCancelled] = useState(order.status === "CANCELLED");
-  const statusMutation = useUpdateOrderStatus();
-  const cancelMutation = useCancelOrder();
-  const { register, handleSubmit } = useForm<{ reason: string }>({ defaultValues: { reason: "" } });
-
-  function handleStatus(next: OrderStatus) {
-    const previous = status;
-    setStatus(next);
-    statusMutation.mutate({ id: order.id, status: next }, { onError: () => setStatus(previous), onSuccess: onChanged });
-  }
-
-  const onCancel = ({ reason }: { reason: string }) => {
-    cancelMutation.mutate(
-      { id: order.id, reason: reason.trim() || undefined },
-      {
-        onSuccess: () => {
-          setCancelled(true);
-          setShowCancel(false);
-          onChanged?.();
-        },
-      },
-    );
-  };
+  const {
+    status,
+    cancelled,
+    changeStatus,
+    isChangingStatus,
+    showCancel,
+    openCancel,
+    closeCancel,
+    register,
+    onCancel,
+    isCancelling,
+  } = useOrderDetail(order, onChanged);
 
   return (
     <div className="flex flex-col gap-4 text-sm">
       <div className="flex items-center justify-between">
-        <OrderStatusBadge status={cancelled ? "CANCELLED" : status} />
-        <span className="text-lg font-semibold text-[#3fbf1f]">${formattedPrice(order.total)} COP</span>
+        <OrderStatusBadge status={status} />
+        <span className="text-lg font-semibold ">${formattedPrice(order.total)} COP</span>
       </div>
 
       {order.user && (
@@ -90,41 +74,35 @@ export function OrderDetail({ order, onChanged }: { order: Order; onChanged?: ()
         </p>
       ) : (
         <>
-          <Field
-            label="Estado"
-            error={getApiErrorMessage(statusMutation.error) ?? undefined}
-          >
+          <Field label="Estado">
             <StatusSelect
               value={status}
               options={STATUS_OPTIONS}
-              disabled={statusMutation.isPending}
-              onChange={handleStatus}
+              disabled={isChangingStatus}
+              onChange={changeStatus}
             />
           </Field>
 
           {showCancel ? (
             <form
-              onSubmit={handleSubmit(onCancel)}
+              onSubmit={onCancel}
               className="flex flex-col gap-2 rounded-lg border border-red-200 p-3"
             >
-              <Field
-                label="Motivo de la cancelación (opcional)"
-                error={getApiErrorMessage(cancelMutation.error) ?? undefined}
-              >
+              <Field label="Motivo de la cancelación (opcional)">
                 <Input placeholder="Ej. El cliente no respondió" registration={register("reason", { maxLength: 500 })} />
               </Field>
               <p className="text-xs text-zinc-500">Al cancelar, el stock vuelve al inventario.</p>
               <div className="flex gap-2">
-                <Button type="submit" variant="destructive" disabled={cancelMutation.isPending}>
-                  {cancelMutation.isPending ? "Cancelando..." : "Confirmar cancelación"}
+                <Button type="submit" variant="destructive" disabled={isCancelling}>
+                  {isCancelling ? "Cancelando..." : "Confirmar cancelación"}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => setShowCancel(false)}>
+                <Button type="button" variant="outline" onClick={closeCancel}>
                   Volver
                 </Button>
               </div>
             </form>
           ) : (
-            <Button variant="destructive" className="self-start" onClick={() => setShowCancel(true)}>
+            <Button variant="destructive" className="self-start" onClick={openCancel}>
               Cancelar orden
             </Button>
           )}
