@@ -1,17 +1,17 @@
 import { EditUserForm } from "@/components/admin/users/edit-user-form";
-import { CreateMembershipForm, RenewMembershipForm } from "@/components/admin/memberships/membership-forms";
+import { CreateMembershipForm } from "@/components/admin/memberships/membership-forms";
 import { PaymentHistory } from "@/components/admin/memberships/payment-history";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { DynamicModal } from "@/components/ui/dynamic-modal";
 import { User } from "@/types";
 import { MoreHorizontal } from "lucide-react";
+import {RenewMembershipForm} from "@/components/admin/memberships/renew-membership-formt";
 
 export function UserActionsCell({ user }: { user: User }) {
   const membership = user.gymMembership;
   const fullName = `${user.firstName} ${user.firstLastName}`;
-  // Una membresía cancelada se reactiva creando una nueva
-  const canCreate = !membership || membership.status === "CANCELLED";
+      const canCreate = !membership || membership.status === "CANCELLED";
 
   return (
     <DropdownMenu>
@@ -98,7 +98,7 @@ export function UserActionsCell({ user }: { user: User }) {
             </DropdownMenuItem>
           }
         >
-          <PaymentHistory userId={user.id} />
+          <PaymentHistory userId={user.id} readOnly />
         </DynamicModal>
       </DropdownMenuContent>
     </DropdownMenu>

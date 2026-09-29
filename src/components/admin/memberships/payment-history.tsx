@@ -9,8 +9,8 @@ import { formattedPrice } from "@/common/formatted-price";
 import { formatDate } from "@/lib/utils/date";
 import { useUserMembership } from "@/hooks/memberships/use-memberships";
 import { useUpdateMembershipStatus } from "@/hooks/memberships/use-membership-mutations";
-import { getApiErrorMessage } from "@/hooks/memberships/use-memberships";
 import { MembershipStatus } from "@/types";
+import {Info} from "@/components/ui/info";
 
 const STATUS_OPTIONS: { value: MembershipStatus; label: string }[] = [
   { value: "ACTIVE", label: "Activo" },
@@ -19,14 +19,19 @@ const STATUS_OPTIONS: { value: MembershipStatus; label: string }[] = [
   { value: "CANCELLED", label: "Cancelado" },
 ];
 
-export function PaymentHistory({ userId }: { userId: string }) {
+interface PaymentHistoryProps {
+  userId: string;
+  readOnly?: boolean;
+}
+
+export function PaymentHistory({userId, readOnly}: PaymentHistoryProps ) {
   const { membership, isLoading, error } = useUserMembership(userId);
-  const { mutate: updateStatus, isPending, error: statusError } = useUpdateMembershipStatus();
+  const { mutate: updateStatus, isPending } = useUpdateMembershipStatus();
 
   if (isLoading) {
     return (
       <div className="flex justify-center p-6">
-        <Loader size="sm" tone="light" />
+        <Loader size="md" tone="light" />
       </div>
     );
   }
@@ -49,14 +54,16 @@ export function PaymentHistory({ userId }: { userId: string }) {
         />
       </div>
 
-      <Field label="Cambiar estado" error={getApiErrorMessage(statusError) ?? undefined}>
-        <StatusSelect
-          value={membership.status}
-          options={STATUS_OPTIONS}
-          disabled={isPending}
-          onChange={(status) => updateStatus({ userId, status })}
-        />
-      </Field>
+      {!readOnly && (
+          <Field label="Cambiar estado">
+            <StatusSelect
+                value={membership.status}
+                options={STATUS_OPTIONS}
+                disabled={isPending}
+                onChange={(status) => updateStatus({ userId, status })}
+            />
+          </Field>
+      )}
 
       <div className="rounded-lg border border-zinc-200">
         <Table className="text-xs">
@@ -90,15 +97,6 @@ export function PaymentHistory({ userId }: { userId: string }) {
           </TableBody>
         </Table>
       </div>
-    </div>
-  );
-}
-
-function Info({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div>
-      <p className="text-xs text-zinc-400">{label}</p>
-      <div className="mt-0.5 text-zinc-800">{value}</div>
     </div>
   );
 }
