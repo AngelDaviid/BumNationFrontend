@@ -9,7 +9,7 @@ import {FormGrid} from "@/components/ui/from-grid";
 import {Field} from "@/components/ui/field";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {Loader2} from "lucide-react";
+import {Loader} from "@/components/ui/loader";
 import {useForm} from "react-hook-form";
 
 
@@ -99,7 +99,7 @@ export function EditProductsForm({productId, defaultValues, onSuccess}: EditProd
                     disabled={isPending || !isDirty}
                     className="flex items-center gap-2 bg-[#6BFF3C] hover:bg-[#5de52f] disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed text-black font-semibold text-sm rounded-lg px-6 py-2.5 transition-colors"
                 >
-                    {isPending && <Loader2 size={16} className="animate-spin"/>}
+                    {isPending && <Loader size="sm"/>}
                     {isPending ? 'Actualizando...' : 'Actualizar'}
                 </Button>
             </div>
