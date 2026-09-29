@@ -5,13 +5,16 @@ import { useUsers } from "@/hooks/users/use-all-users";
 import { DataTable } from "@/components/ui/data-table";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { useUserStats } from "@/hooks/users/use-users-stats";
+import { useMemberships } from "@/hooks/memberships/use-memberships";
 
 export default function AllUsersPage() {
   const { users, isLoading, error, page, totalPages, nextPage, prevPage, search, setSearch } =
     useUsers({ limit: 10 });
 
   const { total, active, withoutMembership, isLoading: isLoadingStats } = useUserStats();
+  const { memberships, isLoading: isLoadingMemberships } = useMemberships();
   const stat = (value: number) => (isLoadingStats ? "…" : value);
+  const expiringSoon = memberships.filter((m) => m.status === "ACTIVE" && m.isAboutExpire).length;
 
   if (error) {
     return <p className="text-red-500 p-6">{error}</p>;
@@ -25,7 +28,7 @@ export default function AllUsersPage() {
             <StatCard label="Total usuarios" value={stat(total)} />
             <StatCard label="Activos" value={stat(active)} accent />
             <StatCard label="Sin membresía" value={stat(withoutMembership)} />
-            <StatCard label="Próximos a vencer" value="—" />
+            <StatCard label="Próximos a vencer" value={isLoadingMemberships ? "…" : expiringSoon} />
           </div>
 
           <div className="rounded-lg border border-zinc-200 bg-white overflow-hidden">
