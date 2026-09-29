@@ -1,9 +1,11 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/data-table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { DynamicModal } from "@/components/ui/dynamic-modal";
 import { OrderDetail } from "@/components/admin/orders/order-detail";
 import { OrderStatusBadge } from "@/components/admin/orders/order-status-badge";
@@ -36,11 +38,10 @@ export default function OrdersPage() {
   const { orders, isLoading, error, page, totalPages, nextPage, prevPage } = useAdminOrders({ limit: 10 });
   const { token } = useAuthStore();
   const [selected, setSelected] = useState<Order | null>(null);
-  const [number, setNumber] = useState("");
   const [searchError, setSearchError] = useState<string | null>(null);
+  const { register, handleSubmit } = useForm<{ number: string }>({ defaultValues: { number: "" } });
 
-  async function handleSearch(e: FormEvent) {
-    e.preventDefault();
+  async function handleSearch({ number }: { number: string }) {
     const orderNumber = Number(number.replace("#", ""));
     if (!token || !Number.isInteger(orderNumber) || orderNumber <= 0) return;
     setSearchError(null);
@@ -58,18 +59,18 @@ export default function OrdersPage() {
   return (
     <div className="flex min-h-screen bg-zinc-50">
       <main className="flex-1 space-y-4 p-6">
-        <form onSubmit={handleSearch} className="flex flex-wrap items-center gap-2">
-          <input
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-            inputMode="numeric"
-            placeholder="Buscar por número de orden"
-            className="w-56 rounded-md bg-white px-3 py-1.5 text-xs text-zinc-800 outline-none ring-1 ring-zinc-200 focus:ring-2 focus:ring-[#6BFF3C]"
-          />
-          <Button type="submit" variant="outline" size="sm">
+        <form onSubmit={handleSubmit(handleSearch)} className="flex flex-wrap items-start gap-2">
+          <div className="w-64">
+            <Input
+              inputMode="numeric"
+              placeholder="Buscar por número de orden"
+              error={searchError ?? undefined}
+              registration={register("number")}
+            />
+          </div>
+          <Button type="submit" variant="outline" size="lg">
             Buscar
           </Button>
-          {searchError && <span className="text-xs text-red-500">{searchError}</span>}
         </form>
 
         <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white">

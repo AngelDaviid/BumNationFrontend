@@ -1,7 +1,10 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { StatusBadge } from "@/components/membership/status-badge";
+import { StatusSelect } from "@/components/admin/status-select";
+import { Field } from "@/components/ui/field";
+import { Loader } from "@/components/ui/loader";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formattedPrice } from "@/common/formatted-price";
 import { formatDate } from "@/lib/utils/date";
 import { useUserMembership } from "@/hooks/memberships/use-memberships";
@@ -16,15 +19,14 @@ const STATUS_OPTIONS: { value: MembershipStatus; label: string }[] = [
   { value: "CANCELLED", label: "Cancelado" },
 ];
 
-// Estado, fechas e historial completo de pagos de la membresía de un usuario
 export function PaymentHistory({ userId }: { userId: string }) {
   const { membership, isLoading, error } = useUserMembership(userId);
   const { mutate: updateStatus, isPending, error: statusError } = useUpdateMembershipStatus();
 
   if (isLoading) {
     return (
-      <div className="flex justify-center p-6 text-zinc-400">
-        <Loader2 className="animate-spin" size={18} />
+      <div className="flex justify-center p-6">
+        <Loader size="sm" tone="light" />
       </div>
     );
   }
@@ -47,54 +49,46 @@ export function PaymentHistory({ userId }: { userId: string }) {
         />
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-zinc-700">
-        Cambiar estado
-        <select
+      <Field label="Cambiar estado" error={getApiErrorMessage(statusError) ?? undefined}>
+        <StatusSelect
           value={membership.status}
+          options={STATUS_OPTIONS}
           disabled={isPending}
-          onChange={(e) => updateStatus({ userId, status: e.target.value as MembershipStatus })}
-          className="rounded-md bg-zinc-100 px-2 py-1.5 text-sm outline-none focus:ring-2 focus:ring-[#6BFF3C]"
-        >
-          {STATUS_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </label>
-      {statusError && <p className="text-sm text-red-500">{getApiErrorMessage(statusError)}</p>}
+          onChange={(status) => updateStatus({ userId, status })}
+        />
+      </Field>
 
-      <div className="overflow-x-auto rounded-lg border border-zinc-200">
-        <table className="w-full text-xs">
-          <thead className="border-b border-zinc-200 bg-zinc-50 text-[11px] uppercase tracking-wide text-zinc-500">
-            <tr>
-              <th className="px-3 py-2 text-left">Pagado</th>
-              <th className="px-3 py-2 text-left">Valor</th>
-              <th className="px-3 py-2 text-left">Periodo</th>
-              <th className="px-3 py-2 text-left">Notas</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-100">
+      <div className="rounded-lg border border-zinc-200">
+        <Table className="text-xs">
+          <TableHeader className="bg-zinc-50 text-[11px] uppercase tracking-wide">
+            <TableRow>
+              <TableHead className="text-zinc-500">Pagado</TableHead>
+              <TableHead className="text-zinc-500">Valor</TableHead>
+              <TableHead className="text-zinc-500">Periodo</TableHead>
+              <TableHead className="text-zinc-500">Notas</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {payments.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="h-14 text-center text-zinc-400">
+              <TableRow>
+                <TableCell colSpan={4} className="h-14 text-center text-zinc-400">
                   Sin pagos registrados.
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ) : (
               payments.map((p) => (
-                <tr key={p.id}>
-                  <td className="px-3 py-2">{formatDate(p.paidAt)}</td>
-                  <td className="px-3 py-2">${formattedPrice(p.amount)}</td>
-                  <td className="px-3 py-2">
+                <TableRow key={p.id}>
+                  <TableCell>{formatDate(p.paidAt)}</TableCell>
+                  <TableCell>${formattedPrice(p.amount)}</TableCell>
+                  <TableCell>
                     {formatDate(p.validFrom)} – {formatDate(p.validUntil)}
-                  </td>
-                  <td className="px-3 py-2 text-zinc-500">{p.notes || "—"}</td>
-                </tr>
+                  </TableCell>
+                  <TableCell className="text-zinc-500">{p.notes || "—"}</TableCell>
+                </TableRow>
               ))
             )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

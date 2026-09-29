@@ -149,17 +149,17 @@ export default function MembershipsPage() {
 
         <div className="flex flex-wrap gap-2">
           {(Object.keys(FILTERS) as FilterKey[]).map((key) => (
-            <button
+            <Button
               key={key}
+              size="sm"
+              variant="outline"
               onClick={() => setFilter(key)}
-              className={`cursor-pointer rounded-full border px-3 py-1 text-xs transition-colors ${
-                filter === key
-                  ? "border-[#6BFF3C] bg-[#6BFF3C]/15 text-[#3f9c1f]"
-                  : "border-zinc-200 bg-white text-zinc-500 hover:text-zinc-800"
+              className={`rounded-full ${
+                filter === key ? "border-[#6BFF3C] bg-[#6BFF3C]/15 text-[#3f9c1f] hover:bg-[#6BFF3C]/25" : "text-zinc-500"
               }`}
             >
               {FILTERS[key].label} <span className="opacity-60">{isLoading ? "" : count(key)}</span>
-            </button>
+            </Button>
           ))}
         </div>
 
