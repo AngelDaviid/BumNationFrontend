@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { DynamicModal } from "@/components/ui/dynamic-modal";
 import { User } from "@/types";
 import { MoreHorizontal } from "lucide-react";
-import {RenewMembershipForm} from "@/components/admin/memberships/renew-membership-formt";
+import {RenewMembershipForm} from "@/components/admin/memberships/renew-membership-form";
 
 export function UserActionsCell({ user }: { user: User }) {
   const membership = user.gymMembership;

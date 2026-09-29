@@ -1,9 +1,9 @@
-import {useRenewMembershipForm} from "@/hooks/memberships/use-membership-forms";
 import {Field} from "@/components/ui/field";
 import {Input} from "@/components/ui/input";
 import {formatDate} from "@/lib/utils/date";
 import {Button} from "@/components/ui/button";
-import {Loader2} from "lucide-react";
+import {Loader} from "@/components/ui/loader";
+import {useRenewMembershipForm} from "@/hooks/memberships/use-renew-membership-form";
 
 
 const submitClass =
@@ -34,7 +34,7 @@ export function RenewMembershipForm({
             </p>
             <div className="flex justify-end">
                 <Button type="submit" disabled={isPending} className={submitClass}>
-                    {isPending && <Loader2 size={16} className="animate-spin"/>}
+                    {isPending && <Loader size="sm"/>}
                     {isPending ? "Registrando..." : "Registrar pago"}
                 </Button>
             </div>

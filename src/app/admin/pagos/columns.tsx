@@ -6,7 +6,7 @@ import {formattedPrice} from "@/common/formatted-price";
 import {DynamicModal} from "@/components/ui/dynamic-modal";
 import {Button} from "@/components/ui/button";
 import {PaymentHistory} from "@/components/admin/memberships/payment-history";
-import {RenewMembershipForm} from "@/components/admin/memberships/renew-membership-formt";
+import {RenewMembershipForm} from "@/components/admin/memberships/renew-membership-form";
 
 export const memberName = (m: MembershipWithStats) => `${m.user?.firstName ?? ""} ${m.user?.firstLastName ?? ""}`;
 

@@ -19,7 +19,6 @@ export type MembershipFilterKey = keyof typeof MEMBERSHIP_FILTERS;
 
 export const MEMBERSHIP_FILTER_KEYS = Object.keys(MEMBERSHIP_FILTERS) as MembershipFilterKey[];
 
-// Filtro por estado, búsqueda por texto y conteos para las tarjetas de pagos
 export function useMembershipFilters(memberships: MembershipWithStats[]) {
   const [filter, setFilter] = useState<MembershipFilterKey>("all");
   const [search, setSearch] = useState("");

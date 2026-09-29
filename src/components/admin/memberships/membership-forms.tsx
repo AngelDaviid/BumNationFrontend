@@ -1,10 +1,10 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { Loader } from "@/components/ui/loader";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useCreateMembershipForm } from "@/hooks/memberships/use-membership-forms";
+import { useCreateMembershipForm } from "@/hooks/memberships/use-create-membership-form";
 import { formatDate } from "@/lib/utils/date";
 
 const submitClass =
@@ -31,7 +31,7 @@ export function CreateMembershipForm({ userId, onSuccess }: { userId: string; on
       )}
       <div className="flex justify-end">
         <Button type="submit" disabled={isPending} className={submitClass}>
-          {isPending && <Loader2 size={16} className="animate-spin" />}
+          {isPending && <Loader size="sm" />}
           {isPending ? "Creando..." : "Crear membresía"}
         </Button>
       </div>
