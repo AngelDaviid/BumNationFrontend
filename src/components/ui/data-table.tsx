@@ -7,6 +7,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Button } from "./button";
+import {Loader} from "@/components/ui/loader";
+import { cn } from "@/lib/utils/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -20,6 +22,7 @@ interface DataTableProps<TData, TValue> {
   onNextPage?: () => void;
   onPrevPage?: () => void;
   onRowClick?: (row: TData) => void;
+  tableClassName?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -34,6 +37,7 @@ export function DataTable<TData, TValue>({
   onNextPage,
   onPrevPage,
   onRowClick,
+  tableClassName,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -58,7 +62,7 @@ export function DataTable<TData, TValue>({
         </div>
       )}
 
-      <div className="rounded-lg border border-zinc-200 overflow-hidden overflow-x-auto">
+      <div className={cn("relative min-h-80 rounded-lg border border-zinc-200 overflow-hidden overflow-x-auto", tableClassName)}>
         <table className="w-full text-xs">
           <thead className="bg-zinc-50 border-b border-zinc-200">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -81,13 +85,7 @@ export function DataTable<TData, TValue>({
           </thead>
 
           <tbody className="divide-y divide-zinc-100">
-            {isLoading ? (
-              <tr>
-                <td colSpan={columns.length} className="h-16 text-center text-zinc-400">
-                  Cargando...
-                </td>
-              </tr>
-            ) : table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <tr key={row.id} className="hover:bg-zinc-50 transition-colors" onClick={() => onRowClick?.(row.original)}>
                   {row.getVisibleCells().map((cell) => (
@@ -97,15 +95,21 @@ export function DataTable<TData, TValue>({
                   ))}
                 </tr>
               ))
-            ) : (
+            ) : !isLoading ? (
               <tr>
                 <td colSpan={columns.length} className="h-16 text-center text-zinc-400">
                   Sin resultados.
                 </td>
               </tr>
-            )}
+            ) : null}
           </tbody>
         </table>
+
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/60">
+            <Loader size="lg" tone="dark" />
+          </div>
+        )}
       </div>
 
       {showPagination && (

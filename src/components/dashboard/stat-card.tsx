@@ -1,12 +1,15 @@
+import {Loader} from "@/components/ui/loader";
+
 interface StatCardProps {
   label: string;
-  value: string | number;
+  value: string | number ;
   accent?: boolean;
+  isLoading?: boolean;
 }
 
-export function StatCard({ label, value, accent }: StatCardProps) {
+export function StatCard({ label, value, accent, isLoading }: StatCardProps) {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-4 flex flex-col gap-1">
+    <div className="rounded-lg border border-zinc-200 bg-white p-4 flex flex-col items-center justify-center gap-1">
       <span className="text-xs font-medium uppercase tracking-wide text-zinc-400">
         {label}
       </span>
@@ -15,7 +18,7 @@ export function StatCard({ label, value, accent }: StatCardProps) {
           accent ? "text-[#3fbf1f]" : "text-zinc-800"
         }`}
       >
-        {value}
+        {isLoading ?<Loader size={"sm"} tone={"dark"} /> :value}
       </span>
     </div>
   );

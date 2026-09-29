@@ -13,7 +13,6 @@ export default function AllUsersPage() {
 
   const { total, active, withoutMembership, isLoading: isLoadingStats } = useUserStats();
   const { memberships, isLoading: isLoadingMemberships } = useMemberships();
-  const stat = (value: number) => (isLoadingStats ? "…" : value);
   const expiringSoon = memberships.filter((m) => m.status === "ACTIVE" && m.isAboutExpire).length;
 
   if (error) {
@@ -25,10 +24,10 @@ export default function AllUsersPage() {
       <div className="flex-1 flex flex-col">
         <main className="flex-1 p-6 space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard label="Total usuarios" value={stat(total)} />
-            <StatCard label="Activos" value={stat(active)} accent />
-            <StatCard label="Sin membresía" value={stat(withoutMembership)} />
-            <StatCard label="Próximos a vencer" value={isLoadingMemberships ? "…" : expiringSoon} />
+            <StatCard label="Total usuarios" value={total} isLoading={isLoadingStats} />
+            <StatCard label="Activos" value={active} accent isLoading={isLoadingStats}/>
+            <StatCard label="Sin membresía" value={withoutMembership} isLoading={isLoadingStats}/>
+            <StatCard label="Próximos a vencer" value={expiringSoon} isLoading={isLoadingMemberships} />
           </div>
 
           <div className="rounded-lg border border-zinc-200 bg-white overflow-hidden">

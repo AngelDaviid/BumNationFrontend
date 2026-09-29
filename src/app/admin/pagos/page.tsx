@@ -19,20 +19,20 @@ export default function MembershipsPage() {
     return <p className="text-red-500 p-6">{error}</p>;
   }
 
-  const stat = (value: number) => (isLoading ? "…" : value);
 
   return (
     <div className="flex min-h-screen bg-zinc-50">
       <main className="flex-1 space-y-6 p-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard label="Membresías" value={stat(stats.total)} />
+          <StatCard label="Membresías" value={stats.total} isLoading={isLoading} />
           <StatCard
             label="Activas al día"
-            value={stat(stats.activeUpToDate)}
+            value={stats.activeUpToDate}
             accent
+            isLoading={isLoading}
           />
-          <StatCard label="Por vencer (7 días)" value={stat(stats.expiring)} />
-          <StatCard label="Vencidas" value={stat(stats.expired)} />
+          <StatCard label="Por vencer (7 días)" value={stats.expiring} isLoading={isLoading} />
+          <StatCard label="Vencidas" value={stats.expired} isLoading={isLoading} />
         </div>
 
         <div className="flex flex-wrap gap-2">
