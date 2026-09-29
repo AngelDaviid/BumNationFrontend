@@ -29,7 +29,7 @@ export function EditProductsForm({productId, defaultValues, onSuccess}: EditProd
         defaultValues,
     })
 
-    const {mutate: updateProduct, isPending, isError, error} = useUpdateProducts()
+    const {mutate: updateProduct, isPending} = useUpdateProducts()
 
     const onSubmit = (data: UpdateProductFormValues) => {
         updateProduct(
@@ -43,7 +43,6 @@ export function EditProductsForm({productId, defaultValues, onSuccess}: EditProd
     return (
         <FormCard
             onSubmit={handleSubmit(onSubmit)}
-            error={isError ? (error as Error).message : undefined}
             header={<FormTitle title={"Actualizar producto"}/>}
             maxWidth={"2xl"}
         >

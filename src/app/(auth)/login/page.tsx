@@ -13,13 +13,12 @@ import { FormCard } from '@/components/ui/form-card';
 export default function LoginPage() {
   const {
     register, handleSubmit, onSubmit, errors,
-    isSubmitting, showPassword, setShowPassword, serverError,
+    isSubmitting, showPassword, setShowPassword,
   } = useLogin();
 
   return (
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
-      error={serverError}
       header={<FormTitle title="Iniciar sesión" logoSrc="/LogoNegro.svg" logoAlt="Bum Nation" />}
       className={"min-h-screen"}
       footer={

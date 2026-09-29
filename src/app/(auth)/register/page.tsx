@@ -21,7 +21,6 @@ export default function RegisterPage() {
      isSubmitting, 
      showPassword, 
      setShowPassword, 
-     serverError, 
      onSubmit 
     } = useRegistration();
 
@@ -29,7 +28,6 @@ export default function RegisterPage() {
   return (
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
-      error={serverError}
       maxWidth={'2xl'}
       className={"min-h-screen"}
       header={<FormTitle title="Crear cuenta" logoSrc="/LogoNegro.svg" logoAlt="Bum Nation" />}

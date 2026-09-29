@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/auth.store";
 import { membershipApi } from "@/lib/api/membership";
+import { toast } from "sonner";
+import { getApiErrorMessage } from "@/hooks/memberships/use-memberships";
 import { CreateMembershipData, MembershipStatus, RenewMembershipData } from "@/types";
 
-// Tras cualquier cambio se refrescan membresías, usuarios y sus estadísticas
 function useInvalidateMemberships() {
   const queryClient = useQueryClient();
   return () => {
@@ -20,7 +21,11 @@ export function useCreateMembership() {
   return useMutation({
     mutationFn: ({ userId, data }: { userId: string; data: CreateMembershipData }) =>
       membershipApi.create(userId, data, token!),
-    onSuccess: invalidate,
+    onSuccess: () => {
+      invalidate();
+      toast.success("Membresía creada");
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error) ?? "No se pudo crear la membresía"),
   });
 }
 
@@ -31,7 +36,11 @@ export function useRenewMembership() {
   return useMutation({
     mutationFn: ({ userId, data }: { userId: string; data: RenewMembershipData }) =>
       membershipApi.renew(userId, data, token!),
-    onSuccess: invalidate,
+    onSuccess: () => {
+      invalidate();
+      toast.success("Pago registrado, membresía renovada");
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error) ?? "No se pudo renovar la membresía"),
   });
 }
 
@@ -42,6 +51,10 @@ export function useUpdateMembershipStatus() {
   return useMutation({
     mutationFn: ({ userId, status }: { userId: string; status: MembershipStatus }) =>
       membershipApi.updateStatus(userId, status, token!),
-    onSuccess: invalidate,
+    onSuccess: () => {
+      invalidate();
+      toast.success("Estado de la membresía actualizado");
+    },
+    onError: (error) => toast.error(getApiErrorMessage(error) ?? "No se pudo cambiar el estado de la membresía"),
   });
 }

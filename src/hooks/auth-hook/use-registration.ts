@@ -4,6 +4,7 @@ import { RegisterData } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 
 interface RegisterFormData extends RegisterData {
@@ -15,7 +16,6 @@ export const useRegistration = () => {
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
@@ -37,7 +37,6 @@ export const useRegistration = () => {
   });
 
   async function onSubmit(data: RegisterFormData) {
-    setServerError(null);
 
     const { confirmPassword, ...rest } = data;
     const payload: RegisterData = {
@@ -49,9 +48,10 @@ export const useRegistration = () => {
     try {
       const { access_token, user } = await authApi.register(payload);
       setAuth(access_token, user);
+      toast.success('Cuenta creada, ¡bienvenido a Bum Nation!');
       router.push('/');
     } catch {
-      setServerError('No se pudo crear la cuenta. Verifica tus datos e intenta de nuevo.');
+      toast.error('No se pudo crear la cuenta. Verifica tus datos e intenta de nuevo.');
     }
   }
 
@@ -63,7 +63,6 @@ export const useRegistration = () => {
     isSubmitting,
     showPassword,
     setShowPassword,
-    serverError,
     onSubmit,
   }
 }

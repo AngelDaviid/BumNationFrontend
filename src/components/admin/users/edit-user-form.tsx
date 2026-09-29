@@ -28,7 +28,7 @@ export function EditUserForm({userId, defaultValues, imageUrl, onSuccess}: EditU
         defaultValues,
     })
 
-    const {mutate: updateUser, isPending, isError, error} = useUpdateUser()
+    const {mutate: updateUser, isPending} = useUpdateUser()
     //const { mutate: uploadImage, isPending: isUploadingImage } = useUploadUserImage();
 
     const onSubmit = (data: UpdateUserFormValues) => {
@@ -58,7 +58,6 @@ export function EditUserForm({userId, defaultValues, imageUrl, onSuccess}: EditU
     return (
         <FormCard
             onSubmit={handleSubmit(onSubmit)}
-            error={isError ? (error as Error).message : undefined}
             header={<FormTitle title="Actualizar usuario"/>}
             maxWidth="2xl"
         >
