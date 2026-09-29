@@ -49,4 +49,5 @@ export interface CreateMembershipData {
 export interface RenewMembershipData {
   amount: number;
   notes?: string;
+  paidAt?: string;
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { todayInputValue } from "@/lib/utils/date";
 
 const amount = z
   .string()
@@ -12,6 +13,10 @@ export const createMembershipSchema = z.object({
 });
 
 export const renewMembershipSchema = z.object({
+  paidAt: z
+    .string()
+    .min(1, "Elige la fecha del pago")
+    .refine((value) => value <= todayInputValue(), "La fecha no puede ser posterior a hoy"),
   amount,
   notes: z.string().max(500).optional(),
 });

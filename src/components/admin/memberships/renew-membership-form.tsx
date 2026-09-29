@@ -1,4 +1,6 @@
+import {Controller} from "react-hook-form";
 import {Field} from "@/components/ui/field";
+import {DatePicker} from "@/components/ui/date-picker";
 import {Input} from "@/components/ui/input";
 import {formatDate} from "@/lib/utils/date";
 import {Button} from "@/components/ui/button";
@@ -19,10 +21,24 @@ export function RenewMembershipForm({
     nextPaymentDate: string;
     onSuccess?: () => void;
 }) {
-    const {register, errors, onSubmit, isPending, coverage} = useRenewMembershipForm(userId, nextPaymentDate, onSuccess);
+    const {register, control, errors, onSubmit, isPending, coverage} = useRenewMembershipForm(userId, nextPaymentDate, onSuccess);
 
     return (
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
+            <Field label="Fecha del pago">
+                <Controller
+                    control={control}
+                    name="paidAt"
+                    render={({field}) => (
+                        <DatePicker
+                            value={field.value}
+                            onChange={field.onChange}
+                            maxDate={new Date()}
+                            error={errors.paidAt?.message}
+                        />
+                    )}
+                />
+            </Field>
             <Field label="Valor pagado (COP)" error={errors.amount?.message}>
                 <Input type="text" inputMode="numeric" placeholder="Ej. 90000" registration={register("amount")}/>
             </Field>
