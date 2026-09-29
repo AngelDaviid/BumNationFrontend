@@ -11,7 +11,7 @@ export interface Product {
   description: string | null;
   price: string;
   stock: number;
-  brand: string | null;
+  brand: string;
   categoryId: number;
   category: Category;
   imageUrl: string | null;
@@ -24,9 +24,7 @@ export interface CreateProductData {
   description?: string;
   price: number;
   stock: number;
-  brand?: string;
   categoryId: number;
-  imageUrl?: string;
 }
 
 export type UpdateProductData = UpdateProductFormValues;
