@@ -24,7 +24,7 @@ export function MobileNavbar({ categories, search, menu, containerRef, dropdown 
     <>
       <nav className="md:hidden fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] flex items-center justify-between bg-zinc-900 rounded-2xl px-4 py-3 shadow-xl">
         <Link href="/" onClick={menu.close}>
-          <Image src="/Logo.png" alt="Bum Nation" width={80} height={80} className="object-contain" />
+          <Image src="/Logo.svg" alt="Bum Nation" width={80} height={80} className="object-contain" />
         </Link>
 
         <SearchBar

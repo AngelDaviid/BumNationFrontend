@@ -8,8 +8,12 @@ interface FetchOptions {
     signal?: AbortSignal;
 }
 
-function buildUrl(endpoint: string) {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export async function apiClient<T>(
+    endpoint: string,
+    options: FetchOptions = {},
+): Promise<T> { 
+
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
     if (!API_URL) {
         throw new Error(
@@ -17,17 +21,34 @@ function buildUrl(endpoint: string) {
         );
     }
 
+    const { method = 'GET', body, token, tags, signal } = options;
+
+    const isFormData = body instanceof FormData;
+
+    const headers: Record<string, string> = {};
+
+    if (!isFormData) {
+        headers['Content-Type'] = 'application/json';
+    }
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const baseUrl = API_URL.replace(/\/+$/, ''); 
     const path = endpoint.replace(/^\/+/, ''); 
-    return `${baseUrl}/${path}`;
-}
+    const url = `${baseUrl}/${path}`;
 
-async function handleResponse<T>(response: Response): Promise<T> {
+    const response = await fetch(url, {
+        method,
+        headers,
+        body: isFormData ? (body as FormData) : (body ? JSON.stringify(body) : undefined),
+        next: tags ? { tags } : undefined,
+        signal
+    })
+
     if (!response.ok) {
-        const error = await response.json().catch(() => ({
-            statusCode: response.status,
-            message: response.statusText,
-        }));
+        const error = await response.json();
         throw error;
     }
 
@@ -36,58 +57,4 @@ async function handleResponse<T>(response: Response): Promise<T> {
     }
 
     return response.json()
-}
-
-export async function apiClient<T>(
-    endpoint: string,
-    options: FetchOptions = {},
-): Promise<T> {
-    const { method = 'GET', body, token, tags, signal } = options;
-
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-    };
-
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    const response = await fetch(buildUrl(endpoint), {
-        method,
-        headers,
-        body: body ? JSON.stringify(body) : undefined,
-        next: tags ? { tags } : undefined,
-        signal
-    })
-
-    return handleResponse<T>(response);
-}
-
-// Sube un archivo como multipart/form-data (campo "file"), usado para imágenes
-export async function apiUpload<T>(
-    endpoint: string,
-    file: File,
-    token: string,
-    method: HttpMethod = 'PATCH',
-): Promise<T> {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const response = await fetch(buildUrl(endpoint), {
-        method,
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-    });
-
-    return handleResponse<T>(response);
-}
-
-// Convierte el error del backend en un mensaje legible
-export function getErrorMessage(error: unknown, fallback = 'Ocurrió un error inesperado.') {
-    if (error && typeof error === 'object' && 'message' in error) {
-        const message = (error as { message: unknown }).message;
-        if (Array.isArray(message)) return message.join(', ');
-        if (typeof message === 'string' && message) return message;
-    }
-    return fallback;
 }

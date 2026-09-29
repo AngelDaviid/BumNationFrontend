@@ -1,5 +1,13 @@
+import { UpdateUserFormValues } from "@/common/schemas/user.schema";
+import { GymMembership, MembershipStats } from "./membership.types";
+
 export type Role = 'CLIENT' | 'ADMIN';
 
+export interface Stats {
+  total: number;
+  active: number;
+  withoutMembership: number;
+}
 export interface User {
   id: string;
   identification: string;
@@ -8,11 +16,13 @@ export interface User {
   firstLastName: string;
   secondLastName?: string;
   email: string;
-  phone: string;
+  phone: string | null;
   imageUrl: string | null;
   role: Role;
   createdAt: string;
   updatedAt: string;
+  gymMembership: GymMembership | null;
+  membershipStats: MembershipStats | null
 }
 
 export interface RegisterData {
@@ -34,9 +44,8 @@ export interface UpdateUserData {
   phone?: string;
 }
 
-export interface AdminUpdateUserData extends UpdateUserData {
-  email?: string;
-}
+
+export type UpdateUserDataAdmin = UpdateUserFormValues;
 
 /**
 export interface ChangePasswordData {

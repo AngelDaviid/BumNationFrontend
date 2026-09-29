@@ -21,7 +21,7 @@ export function useProductSuggestions(query: string) {
 
     const timeoutId = setTimeout(() => {
       productsApi
-        .getAll({ search: trimmed, limit: MAX_SUGGESTIONS }, { signal: controller.signal })
+        .getAll(1, MAX_SUGGESTIONS, trimmed, undefined, { signal: controller.signal })
         .then((response) => {
           setSuggestions(response.data);
           setCompletedQuery(trimmed);

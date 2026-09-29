@@ -9,6 +9,7 @@ interface FormCardProps {
     footer?: ReactNode;
     error?: string | null;
     maxWidth?: 'sm' | 'md' | 'lg' | '2xl';
+    className?: string;
 }
 
 const maxWidthMap = {
@@ -25,9 +26,10 @@ export function FormCard({
     footer,
     error,
     maxWidth = 'md',
+    className = ""
 }: FormCardProps) {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-zinc-950 px-4 py-10">
+        <div className={`flex items-center justify-center px-4 py-10 ${className}`}>
             <div className={`w-full ${maxWidthMap[maxWidth]} bg-white rounded-3xl shadow-2xl p-8 sm:p-10`}>
                 {header}
 

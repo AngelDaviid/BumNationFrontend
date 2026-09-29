@@ -12,7 +12,7 @@ export function FormTitle({ title, subtitle, logoSrc, logoAlt }: FormTitleProps)
         <>
             {logoSrc && (
                 <div className="flex justify-center mb-6">
-                    <Image src={logoSrc} alt={logoAlt || 'Logo'} width={100} height={100} className="object-contain" />
+                    <Image src={logoSrc} alt={logoAlt || 'Logo'} width={150} height={150} className="object-contain" />
                 </div>
             )}
             <h1 className="text-center text-xl font-semibold text-zinc-800 mb-6">{title}</h1>

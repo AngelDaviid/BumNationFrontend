@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Kanchenjunga } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import {Toaster} from "@/components/ui/sonner";
+
 
 const kanchenjunga = Kanchenjunga({
   subsets: ["latin"],
@@ -23,7 +27,14 @@ export default function RootLayout({
       lang="en"
       className={`${kanchenjunga.className} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+         <Providers>
+          <Toaster />
+          <TooltipProvider>
+                {children}
+          </TooltipProvider>
+        </Providers>
+      </body>
     </html>
   );
 }
