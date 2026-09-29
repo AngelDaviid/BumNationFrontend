@@ -29,6 +29,7 @@ export function useCreateMembershipForm(userId: string, onSuccess?: () => void) 
 
   return {
     register,
+    control,
     errors,
     onSubmit,
     isPending,
