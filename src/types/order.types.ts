@@ -29,5 +29,5 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
   items: OrderItem[];
-  user?: Pick<User, 'firstName' | 'firstLastName' | 'email' | 'phone'>;
+  user?: Pick<User, 'id' | 'firstName' | 'firstLastName' | 'email' | 'phone'>;
 }

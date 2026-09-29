@@ -18,12 +18,18 @@ export interface GymMembership {
   status: MembershipStatus;
   createdAt: string;
   updatedAt: string;
-  payments: MembershipPayment[];
+  membershipPayments?: MembershipPayment[];
+  user?: {
+    firstName: string;
+    firstLastName: string;
+    email: string;
+    phone: string | null;
+  };
 }
 
 export interface MembershipWithStats extends GymMembership {
   daysAsMember: number;
-  daysUntilExpiry: number;
+  daysUntilExpire: number;
   isAboutToExpire: boolean;
   isExpired: boolean;
 }

@@ -1,5 +1,5 @@
 import { CreateProductData, PaginatedResponse, Product, UpdateProductData } from "@/types";
-import { apiClient } from "./client";
+import { apiClient, apiUpload } from "./client";
 
 interface GetAllProductsParams {
     page?: number;
@@ -46,6 +46,9 @@ export const productsApi = {
             body: data,
             token,
         }),
+
+    uploadImage: (id: number, file: File, token: string) =>
+        apiUpload<Product>(`/products/${id}/image`, file, token),
 
     delete: (id: number, token: string) =>
         apiClient<void>(`/products/${id}`, {

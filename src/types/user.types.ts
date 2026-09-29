@@ -34,6 +34,10 @@ export interface UpdateUserData {
   phone?: string;
 }
 
+export interface AdminUpdateUserData extends UpdateUserData {
+  email?: string;
+}
+
 /**
 export interface ChangePasswordData {
   currentPassword: string;
