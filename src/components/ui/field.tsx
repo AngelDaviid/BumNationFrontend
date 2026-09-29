@@ -6,7 +6,7 @@ export const Field = ({
   children,
 }: {
   label: string;
-  error?: string;
+  error?: string ;
   children: React.ReactNode;
 }) => {
   return (

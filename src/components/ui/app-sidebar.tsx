@@ -39,7 +39,6 @@ const navItems = [
   { label: "Categorías", href: "/admin/categorias", icon: Tags },
   { label: "Membresías y pagos", href: "/admin/pagos", icon: CreditCard },
   { label: "Órdenes", href: "/admin/ordenes", icon: ClipboardList },
-  // Catálogo de componentes: solo en desarrollo
   ...(process.env.NODE_ENV !== "production"
     ? [{ label: "UI Test", href: "/admin/ui-test", icon: FlaskConical }]
     : []),

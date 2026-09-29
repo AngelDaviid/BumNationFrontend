@@ -18,7 +18,6 @@ export function useMemberships() {
   };
 }
 
-// Detalle de la membresía de un usuario, con todo su historial de pagos
 export function useUserMembership(userId: string | null) {
   const { token } = useAuthStore();
 
