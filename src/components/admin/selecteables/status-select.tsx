@@ -17,7 +17,6 @@ interface StatusSelectProps<T extends string> {
   disabled?: boolean;
 }
 
-// Selector de estado con el DropdownMenu del proyecto, para usar dentro de un Field
 export function StatusSelect<T extends string>({ value, options, onChange, disabled }: StatusSelectProps<T>) {
   const current = options.find((option) => option.value === value);
 

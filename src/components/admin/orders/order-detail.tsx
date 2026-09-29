@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { StatusSelect } from "@/components/admin/status-select";
+import { StatusSelect } from "@/components/admin/selecteables/status-select";
 import { formattedPrice } from "@/common/formatted-price";
 import { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS, OrderStatusBadge } from "./order-status-badge";

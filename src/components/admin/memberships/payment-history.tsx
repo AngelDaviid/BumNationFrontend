@@ -1,7 +1,7 @@
 "use client";
 
 import { StatusBadge } from "@/components/membership/status-badge";
-import { StatusSelect } from "@/components/admin/status-select";
+import { StatusSelect } from "@/components/admin/selecteables/status-select";
 import { Field } from "@/components/ui/field";
 import { Loader } from "@/components/ui/loader";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
