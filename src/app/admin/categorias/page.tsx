@@ -4,6 +4,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { useState } from "react";
 import { Check, Pencil, Plus, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DynamicModal } from "@/components/ui/dynamic-modal";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
@@ -17,7 +18,7 @@ interface CategoryFormValues {
 
 function CategoryRow({ category }: { category: Category }) {
   const { update, remove } = useCategoryMutations();
-  const rowError = update.error ?? remove.error;
+  const rowError = update.error;
   const [isEditing, setIsEditing] = useState(false);
   const { register, handleSubmit, reset } = useForm<CategoryFormValues>({
     defaultValues: { name: category.name },
@@ -33,9 +34,13 @@ function CategoryRow({ category }: { category: Category }) {
     setIsEditing(false);
   }
 
-  function handleDelete() {
-    if (!confirm(`¿Eliminar la categoría "${category.name}"?`)) return;
-    remove.mutate(category.id);
+  function handleDelete(close: () => void) {
+    remove.mutate(category.id, { onSuccess: close });
+  }
+
+  function handleCloseDelete(close: () => void) {
+    remove.reset();
+    close();
   }
 
   if (isEditing) {
@@ -64,16 +69,38 @@ function CategoryRow({ category }: { category: Category }) {
       <Button size="icon" variant="ghost" onClick={() => setIsEditing(true)} aria-label="Renombrar">
         <Pencil />
       </Button>
-      <Button
-        size="icon"
-        variant="ghost"
-        className="text-red-500 hover:text-red-600"
-        onClick={handleDelete}
-        disabled={remove.isPending}
-        aria-label="Eliminar"
+      <DynamicModal
+        title="Eliminar categoría"
+        description={category.name}
+        size="sm"
+        trigger={
+          <Button size="icon" variant="ghost" className="text-red-500 hover:text-red-600" aria-label="Eliminar">
+            <Trash2 />
+          </Button>
+        }
       >
-        <Trash2 />
-      </Button>
+        {(close) => (
+          <div className="flex flex-col gap-4 text-sm">
+            <p className="text-zinc-600">
+              ¿Seguro que quieres eliminar la categoría <span className="font-semibold">{category.name}</span>? Solo
+              se puede borrar si no tiene productos.
+            </p>
+            {remove.error && (
+              <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-red-600">
+                {getApiErrorMessage(remove.error)}
+              </p>
+            )}
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => handleCloseDelete(close)}>
+                Cancelar
+              </Button>
+              <Button variant="destructive" onClick={() => handleDelete(close)} disabled={remove.isPending}>
+                {remove.isPending ? "Eliminando..." : "Eliminar"}
+              </Button>
+            </div>
+          </div>
+        )}
+      </DynamicModal>
       </div>
       {rowError && <p className="mt-1 text-xs text-red-500">{getApiErrorMessage(rowError)}</p>}
     </li>
