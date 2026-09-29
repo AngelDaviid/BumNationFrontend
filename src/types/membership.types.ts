@@ -16,6 +16,7 @@ export interface GymMembership {
   startDate: string;
   nextPaymentDate: string;
   status: MembershipStatus;
+  expiredAt: string | null;
   createdAt: string;
   updatedAt: string;
   membershipPayments?: MembershipPayment[];
@@ -27,21 +28,27 @@ export interface GymMembership {
   };
 }
 
-export interface MembershipWithStats extends GymMembership {
+export interface MembershipStats {
   daysAsMember: number;
   daysUntilExpire: number;
-  isAboutToExpire: boolean;
+  daysSinceExpired: number;
+  isAboutExpire: boolean;
   isExpired: boolean;
 }
 
+export type MembershipWithStats = GymMembership & MembershipStats;
+
+// El backend calcula las fechas: la membresía dura un mes desde startDate
 export interface CreateMembershipData {
   startDate: string;
-  nextPaymentDate: string;
+  initialPayment: {
+    amount: number;
+    notes?: string;
+  };
 }
 
+// La renovación suma un mes desde el próximo pago (o desde hoy si ya venció)
 export interface RenewMembershipData {
   amount: number;
-  validFrom: string;
-  validUntil: string;
   notes?: string;
 }

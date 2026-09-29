@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 interface InputProps {
   label?: string;
   error?: string;
-  type?: 'text' | 'email' | 'password' | 'tel' | 'number';
+  type?: 'text' | 'email' | 'password' | 'tel' | 'number' | 'date';
   placeholder?: string;
   inputMode?: 'text' | 'numeric' | 'tel' | 'email' | 'none' | 'search' | 'decimal';
   registration: UseFormRegisterReturn;
