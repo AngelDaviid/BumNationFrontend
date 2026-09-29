@@ -15,16 +15,17 @@ interface StatusSelectProps<T extends string> {
   options: { value: T; label: string }[];
   onChange: (value: T) => void;
   disabled?: boolean;
+  placeholder?: string;
 }
 
-export function StatusSelect<T extends string>({ value, options, onChange, disabled }: StatusSelectProps<T>) {
+export function StatusSelect<T extends string>({ value, options, onChange, disabled, placeholder }: StatusSelectProps<T>) {
   const current = options.find((option) => option.value === value);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild disabled={disabled}>
         <Button variant="outline" size="lg" className="w-full justify-between sm:w-56">
-          {current?.label ?? value}
+          {current?.label ?? <span className="text-zinc-400">{placeholder ?? value}</span>}
           <ChevronDown className="text-zinc-400" />
         </Button>
       </DropdownMenuTrigger>

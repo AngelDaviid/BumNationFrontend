@@ -27,25 +27,20 @@ export function useCreateCategoryForm() {
   };
 }
 
-export function useCategoryRow(category: Category) {
+export function useCategoryActions(category: Category) {
   const { update, remove } = useCategoryMutations();
-  const [isEditing, setIsEditing] = useState(false);
   const { register, handleSubmit, reset } = useForm<CategoryFormValues>({
     defaultValues: { name: category.name },
   });
 
-  const onRename = handleSubmit(({ name }) => {
-    if (!name.trim()) return;
-    update.mutate({ id: category.id, name: name.trim() }, { onSuccess: () => setIsEditing(false) });
-  });
+  const renameCategory = (onRenamed: () => void) =>
+    handleSubmit(({ name }) => {
+      if (!name.trim()) return;
+      update.mutate({ id: category.id, name: name.trim() }, { onSuccess: onRenamed });
+    });
 
-  function startEditing() {
-    setIsEditing(true);
-  }
-
-  function cancelEditing() {
+  function resetName() {
     reset({ name: category.name });
-    setIsEditing(false);
   }
 
   function deleteCategory(onDeleted: () => void) {
@@ -54,12 +49,18 @@ export function useCategoryRow(category: Category) {
 
   return {
     register,
-    isEditing,
-    startEditing,
-    cancelEditing,
-    onRename,
+    renameCategory,
+    resetName,
     deleteCategory,
     isRenaming: update.isPending,
     isDeleting: remove.isPending,
   };
+}
+
+export function useCategorySearch(categories: Category[]) {
+  const [search, setSearch] = useState("");
+  const term = search.trim().toLowerCase();
+  const visible = term ? categories.filter((c) => c.name.toLowerCase().includes(term)) : categories;
+
+  return { search, setSearch, visible };
 }
