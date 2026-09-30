@@ -56,10 +56,10 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
         </div>
 
         <Image
-          src="/SuplementacionDeportiva.svg"
-          alt="Suplementación deportiva"
-          width={653}
-          height={435}
+          src="/LogoPerformance.svg"
+          alt="BN Performance"
+          width={866}
+          height={489}
           priority
           className="mx-auto hidden w-full max-w-sm object-contain md:block"
         />

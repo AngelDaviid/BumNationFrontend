@@ -9,6 +9,7 @@ import { ProductGridSkeleton } from "@/components/shop/product-card-skeleton";
 import { CategoryFilter } from "@/components/shop/category-filter";
 import { CatalogToolbar } from "@/components/shop/catalog-toolbar";
 import { ShopHero } from "@/components/shop/shop-hero";
+import { BrandSection } from "@/components/shop/brand-divider";
 import { EmptyState } from "@/components/shop/empty-state";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -79,63 +80,65 @@ export function ProductsCatalog({ showHero = false }: { showHero?: boolean }) {
         />
       </header>
 
-      {isLoading ? (
-        <ProductGridSkeleton count={PAGE_SIZE} />
-      ) : error ? (
-        <EmptyState
-          icon={RotateCw}
-          title={error}
-          description="Revisa tu conexión e inténtalo de nuevo."
-          action={
-            <Button
-              onClick={() => refetch()}
-              className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]"
-            >
-              <RotateCw /> Reintentar
-            </Button>
-          }
-        />
-      ) : products.length === 0 ? (
-        <EmptyState
-          icon={PackageSearch}
-          title="No encontramos productos"
-          description={
-            filters.hasActiveFilters ? "Prueba con otra búsqueda o quita algunos filtros." : "Aún no hay productos."
-          }
-          action={
-            filters.hasActiveFilters && (
-              <Button variant="outline" onClick={filters.clearFilters} className={outlineButton}>
-                Quitar filtros
-              </Button>
-            )
-          }
-        />
-      ) : (
-        <>
-          <ProductGrid products={products} className={cn("transition-opacity", isFetching && "opacity-60")} />
-
-          {totalPages > 1 && (
-            <nav aria-label="Paginación" className="flex items-center justify-center gap-2 sm:gap-4">
-              <Button variant="outline" onClick={prevPage} disabled={page <= 1 || isFetching} className={outlineButton}>
-                <ChevronLeft />
-                <span className="hidden sm:inline">Anterior</span>
-              </Button>
-              <span className="text-sm text-zinc-500">
-                Página <span className="font-semibold text-zinc-900">{page}</span> de {totalPages}
-              </span>
+      <BrandSection className="space-y-6">
+        {isLoading ? (
+          <ProductGridSkeleton count={PAGE_SIZE} />
+        ) : error ? (
+          <EmptyState
+            icon={RotateCw}
+            title={error}
+            description="Revisa tu conexión e inténtalo de nuevo."
+            action={
               <Button
-                variant="outline"
-                onClick={nextPage}
-                disabled={page >= totalPages || isFetching}
-                className={outlineButton}
+                onClick={() => refetch()}
+                className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]"
               >
-                <span className="hidden sm:inline">Siguiente</span>
-                <ChevronRight />
+                <RotateCw /> Reintentar
               </Button>
-            </nav>
-          )}
-        </>
-      )}
+            }
+          />
+        ) : products.length === 0 ? (
+          <EmptyState
+            icon={PackageSearch}
+            title="No encontramos productos"
+            description={
+              filters.hasActiveFilters ? "Prueba con otra búsqueda o quita algunos filtros." : "Aún no hay productos."
+            }
+            action={
+              filters.hasActiveFilters && (
+                <Button variant="outline" onClick={filters.clearFilters} className={outlineButton}>
+                  Quitar filtros
+                </Button>
+              )
+            }
+          />
+        ) : (
+          <>
+            <ProductGrid products={products} className={cn("transition-opacity", isFetching && "opacity-60")} />
+
+            {totalPages > 1 && (
+              <nav aria-label="Paginación" className="flex items-center justify-center gap-2 sm:gap-4">
+                <Button variant="outline" onClick={prevPage} disabled={page <= 1 || isFetching} className={outlineButton}>
+                  <ChevronLeft />
+                  <span className="hidden sm:inline">Anterior</span>
+                </Button>
+                <span className="text-sm text-zinc-500">
+                  Página <span className="font-semibold text-zinc-900">{page}</span> de {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  onClick={nextPage}
+                  disabled={page >= totalPages || isFetching}
+                  className={outlineButton}
+                >
+                  <span className="hidden sm:inline">Siguiente</span>
+                  <ChevronRight />
+                </Button>
+              </nav>
+            )}
+          </>
+        )}
+      </BrandSection>
     </div>
   );
 }
