@@ -61,6 +61,13 @@ export const productsApi = {
             token,
         }),
 
+    changeCategory: (id: number, categoryId: number, token: string) =>
+        apiClient<Product>(`/products/${id}`, {
+            method: 'PATCH',
+            body: { categoryId },
+            token,
+        }),
+
     delete: (id: number, token: string) =>
         apiClient<void>(`/products/${id}`, {
             method: 'DELETE',

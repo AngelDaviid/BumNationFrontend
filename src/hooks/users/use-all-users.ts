@@ -31,7 +31,6 @@ export function useUsers({ initialPage = 1, limit = 10 } = {}) {
     total: data?.meta.total ?? 0,
     totalPages,
     page,
-    // Sin sesión cargada la consulta está deshabilitada, pero aún no hay datos
     isLoading: !hasHydrated || isLoading,
     error: error instanceof Error ? error.message : null,
     search,

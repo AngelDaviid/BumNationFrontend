@@ -17,7 +17,7 @@ export const ordersApi = {
     cancel: (id: string, reason: string | undefined, token: string) =>
         apiClient <Order>(`/orders/${id}/cancel`, {
             method: 'PATCH',
-            body: { reason },
+            body: { cancelReason: reason },
             token,
         }),
     
@@ -27,12 +27,19 @@ export const ordersApi = {
         ),
 
     searchByNumber: (orderNumber: number, token: string) =>
-        apiClient<Order>(`/orders/search?number=${orderNumber}`, { token }),
+        apiClient<Order>(`/orders/search/${orderNumber}`, { token }),
 
     updateStatus: (id: string, status: string, token: string) =>
         apiClient<Order>(`/orders/${id}/status`, {
             method: 'PATCH',
             body: { status },
             token,
-        }),   
+        }),
+
+    cancelAsAdmin: (id: string, reason: string | undefined, token: string) =>
+        apiClient<Order>(`/orders/${id}/admin-cancel`, {
+            method: 'PATCH',
+            body: { cancelReason: reason },
+            token,
+        }),
 }

@@ -16,26 +16,38 @@ export interface GymMembership {
   startDate: string;
   nextPaymentDate: string;
   status: MembershipStatus;
+  expiredAt: string | null;
   createdAt: string;
   updatedAt: string;
-  payments: MembershipPayment[];
+  membershipPayments?: MembershipPayment[];
+  user?: {
+    firstName: string;
+    firstLastName: string;
+    email: string;
+    phone: string | null;
+  };
 }
 
-export interface MembershipWithStats extends GymMembership {
+export interface MembershipStats {
   daysAsMember: number;
   daysUntilExpire: number;
-  isAboutToExpire: boolean;
+  daysSinceExpired: number;
+  isAboutExpire: boolean;
   isExpired: boolean;
 }
 
+export type MembershipWithStats = GymMembership & MembershipStats;
+
 export interface CreateMembershipData {
   startDate: string;
-  nextPaymentDate: string;
+  initialPayment: {
+    amount: number;
+    notes?: string;
+  };
 }
 
 export interface RenewMembershipData {
   amount: number;
-  validFrom: string;
-  validUntil: string;
   notes?: string;
+  paidAt?: string;
 }

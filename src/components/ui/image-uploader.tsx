@@ -2,7 +2,8 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { ImagePlus, X, Loader2 } from "lucide-react";
+import { ImagePlus, X } from "lucide-react";
+import { Loader } from "@/components/ui/loader";
 import { cn } from "@/lib/utils/utils";
 
 interface ImageUploadProps {
@@ -62,7 +63,7 @@ export function ImageUpload({
 
       {isUploading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
-          <Loader2 className="w-6 h-6 text-white animate-spin" />
+          <Loader size="md" />
         </div>
       )}
 

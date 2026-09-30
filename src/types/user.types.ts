@@ -1,5 +1,5 @@
 import { UpdateUserFormValues } from "@/common/schemas/user.schema";
-import { GymMembership, MembershipWithStats } from "./membership.types";
+import { GymMembership, MembershipStats } from "./membership.types";
 
 export type Role = 'CLIENT' | 'ADMIN';
 
@@ -22,7 +22,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   gymMembership: GymMembership | null;
-  membershipStats: MembershipWithStats | null
+  membershipStats: MembershipStats | null
 }
 
 export interface RegisterData {

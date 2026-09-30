@@ -1,4 +1,4 @@
-import { CreateMembershipData, GymMembership, MembershipPayment, MembershipWithStats, RenewMembershipData } from '@/types';
+import { CreateMembershipData, GymMembership, MembershipPayment, MembershipStatus, MembershipWithStats, RenewMembershipData } from '@/types';
 import { apiClient } from './client';
 
 export const membershipApi = {
@@ -28,7 +28,7 @@ export const membershipApi = {
       token,
     }),
 
-  updateStatus: (userId: string, status: string, token: string) =>
+  updateStatus: (userId: string, status: MembershipStatus, token: string) =>
     apiClient<GymMembership>(`/gym-membership/${userId}/status`, {
       method: 'PATCH',
       body: { status },

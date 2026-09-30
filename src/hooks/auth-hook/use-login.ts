@@ -3,6 +3,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
   interface LoginFormData {
   identification: string;
@@ -15,7 +16,6 @@ export const useLogin = () => {
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
@@ -26,13 +26,13 @@ export const useLogin = () => {
   });
 
   async function onSubmit(data: LoginFormData) {
-    setServerError(null);
     try {
       const { access_token, user } = await authApi.login(data.identification, data.password);
       setAuth(access_token, user);
+      toast.success(`Bienvenido, ${user.firstName}`);
       router.push('/');
     } catch {
-      setServerError('Identificación o contraseña incorrectas.');
+      toast.error('Identificación o contraseña incorrectas.');
     }
   }
 
@@ -44,6 +44,5 @@ export const useLogin = () => {
     isSubmitting,
     showPassword,
     setShowPassword,
-    serverError,
   }
 }

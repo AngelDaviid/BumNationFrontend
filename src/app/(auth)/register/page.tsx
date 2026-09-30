@@ -7,7 +7,8 @@ import { FormTitle } from '@/components/ui/form-title';
 import { FormGrid } from '@/components/ui/from-grid';
 import { Input } from '@/components/ui/input';
 import { useRegistration } from '@/hooks/auth-hook/use-registration';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
+import { Loader } from '@/components/ui/loader';
 import Link from 'next/link';
 
 
@@ -21,7 +22,6 @@ export default function RegisterPage() {
      isSubmitting, 
      showPassword, 
      setShowPassword, 
-     serverError, 
      onSubmit 
     } = useRegistration();
 
@@ -29,7 +29,6 @@ export default function RegisterPage() {
   return (
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
-      error={serverError}
       maxWidth={'2xl'}
       className={"min-h-screen"}
       header={<FormTitle title="Crear cuenta" logoSrc="/LogoNegro.svg" logoAlt="Bum Nation" />}
@@ -43,7 +42,7 @@ export default function RegisterPage() {
             disabled={isSubmitting}
             className="flex items-center gap-2 bg-[#6BFF3C] hover:bg-[#5de52f] disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed text-black font-semibold text-sm rounded-lg px-6 py-2.5 transition-colors"
           >
-            {isSubmitting && <Loader2 size={16} className="animate-spin" />}
+            {isSubmitting && <Loader size="sm" />}
             {isSubmitting ? 'Creando cuenta...' : 'Crear cuenta'}
           </Button>
         </>

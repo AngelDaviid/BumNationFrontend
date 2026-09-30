@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGrid, Package, CreditCard, ChevronRight, FlaskConical } from "lucide-react";
+import { LayoutGrid, Package, CreditCard, ChevronRight, FlaskConical, ClipboardList, Tags } from "lucide-react";
 import {
   Sidebar,
   SidebarHeader,
@@ -36,8 +36,9 @@ const navItems = [
       { label: "Editar producto", href: "/admin/productos/editar" },
     ],
   },
-  { label: "Pagos", href: "/admin/pagos", icon: CreditCard },
-  // Catálogo de componentes: solo en desarrollo
+  { label: "Categorías", href: "/admin/categorias", icon: Tags },
+  { label: "Membresías y pagos", href: "/admin/pagos", icon: CreditCard },
+  { label: "Órdenes", href: "/admin/ordenes", icon: ClipboardList },
   ...(process.env.NODE_ENV !== "production"
     ? [{ label: "UI Test", href: "/admin/ui-test", icon: FlaskConical }]
     : []),

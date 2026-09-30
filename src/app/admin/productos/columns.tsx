@@ -2,6 +2,8 @@ import {ColumnDef} from "@tanstack/react-table";
 import {Product} from "@/types";
 import Image from "next/image";
 import {StatusBadge} from "@/components/ui/status-badge";
+import {formattedPrice} from "@/common/formatted-price";
+import {Field} from "@/components/ui/field";
 
 export const columns: ColumnDef<Product>[] = [
     {
@@ -14,7 +16,7 @@ export const columns: ColumnDef<Product>[] = [
             if (!imageUrl) return null
 
             return (
-                <div className="h-10 w-10 mx-auto relative rounded-md overflow-hidden">
+                <div className="h-14 w-14 mx-auto relative rounded-md overflow-hidden">
                     <Image
                         src={imageUrl}
                         alt="Imagen del producto"
@@ -42,6 +44,10 @@ export const columns: ColumnDef<Product>[] = [
     {
         accessorKey: 'price',
         header: 'Precio',
+        cell: ({row}) => {
+            const price = row.original.price;
+            return (formattedPrice(price))
+        }
     },
     {
         accessorKey: 'stock',
@@ -50,9 +56,23 @@ export const columns: ColumnDef<Product>[] = [
             const stock = row.original.stock
 
             if (stock <= 5) {
-                return <StatusBadge TypeStatus={"warning"}/>
+                return (
+                    <>
+                        <div className={"flex items-center justify-center space-y-2"}>
+                            <Field label={""}>{stock}</Field>
+                            <StatusBadge TypeStatus={"warning"}/>
+                        </div>
+                    </>
+                        )
             } else {
-                return <StatusBadge TypeStatus={"success"}/>
+                return (
+                    <>
+                        <div className={"flex flex-col items-center justify-center space-y-2"}>
+                            <Field label={""}>{stock}</Field>
+                            <StatusBadge TypeStatus={"success"}/>
+                        </div>
+                    </>
+                )
             }
         }
     },

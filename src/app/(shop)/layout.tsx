@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Navbar from "@/components/navbar/nav-bar";
 
 export default function ShopLayout({
@@ -7,7 +8,9 @@ export default function ShopLayout({
 }) {
   return (
     <div className="min-h-screen bg-zinc-950">
-      <Navbar />
+      <Suspense>
+        <Navbar />
+      </Suspense>
       <main className="pb-28 md:pb-0">
         {children}
       </main>
