@@ -541,7 +541,7 @@ export function UiTest() {
                     key={product.id}
                     product={product}
                     onAddToCart={(p) => toast(`Agregar al carrito: ${p.name}`)}
-                    onToggleFavorite={(p, fav) => toast(`${p.name}: favorito = ${fav}`)}
+                    onToggleFavorite={(p) => toast(`Favorito: ${p.name}`)}
                   />
                 ))}
               </div>

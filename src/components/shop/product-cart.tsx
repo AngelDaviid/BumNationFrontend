@@ -1,121 +1,113 @@
-"use client";
-
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
 import { Heart, ImageOff, ShoppingCart } from "lucide-react";
 import { formattedPrice } from "@/common/formatted-price";
+import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
+import { cn } from "@/lib/utils/utils";
 import { Product } from "@/types/product.types";
 
 interface ProductCardProps {
   product: Product;
+  isFavorite?: boolean;
+  isAddingToCart?: boolean;
   onAddToCart?: (product: Product) => void;
-  onToggleFavorite?: (product: Product, isFavorite: boolean) => void;
+  onToggleFavorite?: (product: Product) => void;
 }
 
 export default function ProductCard({
   product,
+  isFavorite = false,
+  isAddingToCart = false,
   onAddToCart,
   onToggleFavorite,
 }: ProductCardProps) {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const handleFavoriteClick = () => {
-    const next = !isFavorite;
-    setIsFavorite(next);
-    onToggleFavorite?.(product, next);
-  };
-
   const isOutOfStock = product.stock <= 0;
+  const href = `/products/${product.id}`;
 
   return (
-    <div className="w-70 overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-all  cursor-pointer">
+    <article className="group flex w-full flex-col overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-shadow hover:shadow-xl">
       <div className="relative aspect-square w-full bg-neutral-900">
-        <button
-          type="button"
-          onClick={handleFavoriteClick}
-          aria-pressed={isFavorite}
-          aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-          className="absolute top-2 right-2 z-10 flex items-center justify-center cursor-pointer"
-        >
-          <Heart
-            className="h-6 w-6"
-            fill={isFavorite ? "#65C33A" : "#ffffff"}
-            strokeWidth={2}
-            color={isFavorite ? "#65C33A" : "#ffffff"}
-          />
-        </button>
-        {product.imageUrl ? (
-          <Image
-            src={product.imageUrl}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, 320px"
-            className="object-cover"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-neutral-600">
-            <ImageOff className="h-12 w-12" strokeWidth={1.5} aria-label="Sin imagen" />
-          </div>
+        <Link href={href} aria-label={product.name} className="absolute inset-0">
+          {product.imageUrl ? (
+            <Image
+              src={product.imageUrl}
+              alt={product.name}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center text-neutral-600">
+              <ImageOff className="h-10 w-10 sm:h-12 sm:w-12" strokeWidth={1.5} aria-label="Sin imagen" />
+            </div>
+          )}
+        </Link>
+
+        {onToggleFavorite && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => onToggleFavorite(product)}
+            aria-pressed={isFavorite}
+            aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+            className="absolute top-2 right-2 z-10 size-9 rounded-full bg-black/40 backdrop-blur-sm hover:bg-black/60"
+          >
+            <Heart
+              className={cn("size-5 transition-colors", isFavorite ? "fill-[#65C33A] text-[#65C33A]" : "text-white")}
+              strokeWidth={2}
+            />
+          </Button>
+        )}
+
+        {isOutOfStock && (
+          <span className="absolute bottom-2 left-2 rounded-full bg-red-500 px-2.5 py-0.5 text-xs font-semibold text-white">
+            Agotado
+          </span>
         )}
       </div>
 
-      <div className="space-y-3 p-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
+      <div className="flex flex-1 flex-col gap-2 p-3 sm:gap-3 sm:p-4">
+        <div className="flex-1">
+          <p className="truncate text-[10px] font-semibold uppercase tracking-wide text-neutral-400 sm:text-xs">
             {product.brand}
           </p>
-          <h3 className="text-base font-bold leading-snug text-neutral-900">
-            {product.name}
-          </h3>
+          <Link href={href}>
+            <h3 className="line-clamp-2 text-sm font-bold leading-snug text-neutral-900 hover:text-[#3f8f1f] sm:text-base">
+              {product.name}
+            </h3>
+          </Link>
         </div>
 
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-[#65C33A]">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-2">
+          <span className="text-base font-bold text-[#65C33A] sm:text-lg">
             ${formattedPrice(product.price)}
-            <span className="ml-1 text-sm font-medium text-neutral-500">
-              COP
-            </span>
+            <span className="ml-1 text-xs font-medium text-neutral-500 sm:text-sm">COP</span>
           </span>
-          <span className="text-sm font-medium text-neutral-500">
-            Stock:{" "}
-            <span
-              className={`font-semibold ${
-                isOutOfStock ? "text-red-500" : "text-[#65C33A]"
-              }`}
-            >
-              {isOutOfStock ? "Agotado" : product.stock}
+          {!isOutOfStock && (
+            <span className="text-xs font-medium text-neutral-500 sm:text-sm">
+              Stock: <span className="font-semibold text-[#65C33A]">{product.stock}</span>
             </span>
-          </span>
+          )}
         </div>
 
-        <div className="flex pt-1">
-        {/*<button
+        {onAddToCart && (
+          <Button
             type="button"
-            onClick={handleFavoriteClick}
-            aria-pressed={isFavorite}
-            aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-neutral-300 px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 active:scale-95"
+            onClick={() => onAddToCart(product)}
+            disabled={isOutOfStock || isAddingToCart}
+            className="h-9 w-full rounded-sm bg-[#65C33A] text-xs font-semibold text-white hover:bg-[#58ad32] disabled:bg-neutral-300 disabled:opacity-100 sm:h-10 sm:text-sm"
           >
-            <Heart
-              className="h-4 w-4"
-              fill={isFavorite ? "currentColor" : "none"}
-              strokeWidth={2}
-              color={isFavorite ? "#ef4444" : "currentColor"}
-            />
-            Favoritos
-          </button> */}
-
-         <button
-            type="button"
-            onClick={() => onAddToCart?.(product)}
-            disabled={isOutOfStock}
-            className="flex flex-1 items-center justify-center gap-2 cursor-pointer rounded-sm bg-[#65C33A] px-4 py-2.5 text-sm font-semibold text-white transition active:scale-95 disabled:cursor-not-allowed disabled:bg-neutral-300"
-          >
-            <ShoppingCart className="h-5 w-5" strokeWidth={2} />
-            {isOutOfStock ? "Sin stock" : "Agregar al carrito"}
-          </button>
-        </div>
+            {isAddingToCart ? (
+              <Loader size="sm" />
+            ) : (
+              <ShoppingCart className="size-4 sm:size-5" strokeWidth={2} />
+            )}
+            {isOutOfStock ? "Sin stock" : isAddingToCart ? "Agregando…" : "Agregar"}
+          </Button>
+        )}
       </div>
-    </div>
+    </article>
   );
 }

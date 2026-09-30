@@ -1,24 +1,14 @@
 "use client";
 
-import { Product } from "@/types/product.types";
-import ProductCard from "@/components/shop/product-cart";
-import {useProducts} from "@/hooks/products/use-products";
+import { useProducts } from "@/hooks/products/use-products";
+import { ProductGrid } from "@/components/shop/product-grid";
+import { ProductGridSkeleton } from "@/components/shop/product-card-skeleton";
 
 export default function ProductList() {
-
-  const { isLoading, products, error} = useProducts({initialPage: 1, limit: 10 });
-
-
-  const handleAddToCart = (product: Product) => {
-    console.log("Agregado al carrito:", product);
-  };
-
-  const handleToggleFavorite = (product: Product, isFavorite: boolean) => {
-    console.log(product.name, "favorito:", isFavorite);
-  };
+  const { isLoading, products, error } = useProducts({ initialPage: 1, limit: 8 });
 
   if (isLoading) {
-    return <p className="p-8 text-center text-neutral-500">Cargando productos…</p>;
+    return <ProductGridSkeleton count={8} />;
   }
 
   if (error) {
@@ -29,16 +19,5 @@ export default function ProductList() {
     return <p className="p-8 text-center text-neutral-500">No hay productos disponibles.</p>;
   }
 
-  return (
-    <div className="grid grid-cols-1 gap-6 p-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {products.map((products) => (
-        <ProductCard
-          key={products.id}
-          product={products}
-          onAddToCart={handleAddToCart}
-          onToggleFavorite={handleToggleFavorite}
-        />
-      ))}
-    </div>
-  );
+  return <ProductGrid products={products} className="w-full max-w-6xl px-4" />;
 }

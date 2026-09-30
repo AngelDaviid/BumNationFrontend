@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedRoutes = ['/profile', '/orders', '/membership', '/cart'];
+const protectedRoutes = ['/profile', '/orders', '/membership', '/cart', '/favorites'];
 
 const adminRoutes = ['/admin'];
 

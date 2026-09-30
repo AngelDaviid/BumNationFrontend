@@ -1,9 +1,11 @@
-import ProductList from "../product-list";
+import { ProductDetail } from "@/components/shop/product-detail";
 
-export default function ProductsPage() {
+export default async function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   return (
-    <div className="flex flex-col items-center justify-center w-75 h-70">
-        <ProductList />
+    <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:py-8">
+      <ProductDetail productId={Number(id)} />
     </div>
-  )
+  );
 }

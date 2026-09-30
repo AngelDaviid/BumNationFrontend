@@ -4,3 +4,4 @@ export * from './user.types';
 export * from './cart.types';
 export * from './order.types';
 export * from './membership.types';
+export * from './favorite.types';
