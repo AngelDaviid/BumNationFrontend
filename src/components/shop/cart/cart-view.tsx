@@ -53,7 +53,7 @@ export function CartView() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_340px] lg:items-start">
+    <div className="grid gap-6 lg:grid-cols-[1fr_340px] xl:grid-cols-[1fr_400px] lg:items-start">
       <section className="rounded-2xl border border-zinc-200 bg-white px-4 sm:px-5">
         <div className="flex items-center justify-between border-b border-zinc-200 py-3">
           <h2 className="text-sm font-semibold text-zinc-700">

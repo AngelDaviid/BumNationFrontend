@@ -21,7 +21,7 @@ export function ProductDetail({ productId }: { productId: number }) {
   const { addToCart, isAdding } = useAddToCart();
   const { isFavorite, toggleFavorite } = useToggleFavorite();
   const quantity = useQuantitySelector(product?.stock ?? 1);
-  const related = useRelatedProducts(product);
+  const related = useRelatedProducts(product, 6);
 
   if (isLoading) {
     return (
@@ -58,7 +58,7 @@ export function ProductDetail({ productId }: { productId: number }) {
         <ChevronLeft size={16} /> Volver a la tienda
       </Link>
 
-      <div className="grid gap-6 md:grid-cols-2 md:gap-10">
+      <div className="grid gap-6 md:grid-cols-2 md:gap-10 xl:grid-cols-[minmax(0,640px)_1fr]">
         <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-white ring-1 ring-zinc-200">
           {product.imageUrl ? (
             <Image

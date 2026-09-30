@@ -19,5 +19,5 @@ export default function ProductList() {
     return <p className="p-8 text-center text-neutral-500">No hay productos disponibles.</p>;
   }
 
-  return <ProductGrid products={products} className="w-full max-w-6xl px-4" />;
+  return <ProductGrid products={products} className="w-full max-w-[110rem] px-4 sm:px-6 lg:px-10" />;
 }

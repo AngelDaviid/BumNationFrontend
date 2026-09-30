@@ -32,7 +32,7 @@ export function ProductsCatalog({ showHero = false }: { showHero?: boolean }) {
   const Heading = withHero ? "h2" : "h1";
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 sm:space-y-8 sm:py-8">
+    <div className="mx-auto w-full max-w-[110rem] space-y-6 px-4 sm:px-6 lg:px-10 py-6 sm:space-y-8 sm:py-8">
       {withHero && (
         <ShopHero categories={categories} buildCategoryHref={buildCategoryHref} />
       )}
