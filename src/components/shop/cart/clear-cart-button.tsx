@@ -14,7 +14,7 @@ export function ClearCartButton() {
       description="Se quitarán todos los productos del carrito."
       size="sm"
       trigger={
-        <Button variant="ghost" className="text-zinc-400 hover:bg-zinc-800 hover:text-red-400">
+        <Button variant="ghost" className="text-zinc-500 hover:bg-zinc-100 hover:text-red-500">
           <Trash2 /> Vaciar carrito
         </Button>
       }

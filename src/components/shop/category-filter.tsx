@@ -26,8 +26,8 @@ export function CategoryFilter({ categories, activeCategoryId, buildHref }: Cate
                 className={cn(
                   "block whitespace-nowrap rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
                   isActive
-                    ? "border-[#6BFF3C] bg-[#6BFF3C] text-black"
-                    : "border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white",
+                    ? "border-[#65C33A] bg-[#65C33A] text-white"
+                    : "border-zinc-300 text-zinc-700 hover:border-zinc-400 hover:text-zinc-900",
                 )}
               >
                 {item.name}

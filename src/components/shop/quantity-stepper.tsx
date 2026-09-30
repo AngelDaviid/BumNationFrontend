@@ -19,7 +19,7 @@ export function QuantityStepper({
   disabled = false,
 }: QuantityStepperProps) {
   return (
-    <div className="inline-flex items-center rounded-lg border border-zinc-700 bg-zinc-900">
+    <div className="inline-flex w-fit items-center rounded-lg border border-zinc-300 bg-white">
       <Button
         type="button"
         variant="ghost"
@@ -27,11 +27,11 @@ export function QuantityStepper({
         onClick={onDecrement}
         disabled={disabled || !canDecrement}
         aria-label="Quitar una unidad"
-        className="text-zinc-300 hover:bg-zinc-800 hover:text-white"
+        className="text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900"
       >
         <Minus />
       </Button>
-      <span aria-live="polite" className="w-9 text-center text-sm font-semibold text-white">
+      <span aria-live="polite" className="w-9 text-center text-sm font-semibold text-zinc-900">
         {quantity}
       </span>
       <Button
@@ -41,7 +41,7 @@ export function QuantityStepper({
         onClick={onIncrement}
         disabled={disabled || !canIncrement}
         aria-label="Agregar una unidad"
-        className="text-zinc-300 hover:bg-zinc-800 hover:text-white"
+        className="text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900"
       >
         <Plus />
       </Button>

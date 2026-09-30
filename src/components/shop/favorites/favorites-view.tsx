@@ -20,7 +20,7 @@ export function FavoritesView() {
         title="No pudimos cargar tus favoritos"
         description="Revisa tu conexión e inténtalo de nuevo."
         action={
-          <Button onClick={() => refetch()} className="h-10 bg-[#6BFF3C] px-5 font-semibold text-black hover:bg-[#5de52f]">
+          <Button onClick={() => refetch()} className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
             <RotateCw /> Reintentar
           </Button>
         }
@@ -35,7 +35,7 @@ export function FavoritesView() {
         title="Aún no tienes favoritos"
         description="Toca el corazón de un producto para guardarlo aquí."
         action={
-          <Button asChild className="h-10 bg-[#6BFF3C] px-5 font-semibold text-black hover:bg-[#5de52f]">
+          <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
             <Link href="/products">Explorar productos</Link>
           </Button>
         }

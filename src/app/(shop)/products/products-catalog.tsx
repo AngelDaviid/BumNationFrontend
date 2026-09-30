@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils/utils";
 const PAGE_SIZE = 12;
 
 const outlineButton =
-  "h-10 border-zinc-700 bg-transparent px-4 text-zinc-300 hover:border-[#6BFF3C] hover:bg-transparent hover:text-[#6BFF3C]";
+  "h-10 border-zinc-300 bg-transparent px-4 text-zinc-700 hover:border-[#65C33A] hover:bg-transparent hover:text-[#65C33A]";
 
 export function ProductsCatalog() {
   const { search, categoryId, categories, title, buildCategoryHref, clearSearchHref } = useCatalogFilters();
@@ -28,12 +28,12 @@ export function ProductsCatalog() {
       <header className="space-y-4 sm:space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#6BFF3C]">Tienda</p>
-            <h1 className="mt-1 break-words text-2xl font-bold text-white sm:text-4xl">{title}</h1>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#65C33A]">Tienda</p>
+            <h1 className="mt-1 break-words text-2xl font-bold text-zinc-900 sm:text-4xl">{title}</h1>
           </div>
 
-          <div className="flex h-6 items-center gap-3 text-sm text-zinc-400">
-            {isFetching && !isLoading && <Loader size="sm" />}
+          <div className="flex h-6 items-center gap-3 text-sm text-zinc-500">
+            {isFetching && !isLoading && <Loader tone="light" size="sm" />}
             {!isLoading && !error && (
               <span>
                 {total} {total === 1 ? "producto" : "productos"}
@@ -45,7 +45,7 @@ export function ProductsCatalog() {
         {search && (
           <Link
             href={clearSearchHref}
-            className="inline-block text-sm text-zinc-400 underline-offset-4 hover:text-[#6BFF3C] hover:underline"
+            className="inline-block text-sm text-zinc-500 underline-offset-4 hover:text-[#65C33A] hover:underline"
           >
             Quitar búsqueda
           </Link>
@@ -64,7 +64,7 @@ export function ProductsCatalog() {
           action={
             <Button
               onClick={() => refetch()}
-              className="h-10 bg-[#6BFF3C] px-5 font-semibold text-black hover:bg-[#5de52f]"
+              className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]"
             >
               <RotateCw /> Reintentar
             </Button>
@@ -91,8 +91,8 @@ export function ProductsCatalog() {
                 <ChevronLeft />
                 <span className="hidden sm:inline">Anterior</span>
               </Button>
-              <span className="text-sm text-zinc-400">
-                Página <span className="font-semibold text-white">{page}</span> de {totalPages}
+              <span className="text-sm text-zinc-500">
+                Página <span className="font-semibold text-zinc-900">{page}</span> de {totalPages}
               </span>
               <Button
                 variant="outline"

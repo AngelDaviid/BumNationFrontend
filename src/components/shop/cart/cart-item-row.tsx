@@ -23,12 +23,12 @@ export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = fal
     <li className="flex gap-3 py-4 sm:gap-4">
       <Link
         href={href}
-        className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-zinc-800 sm:size-24"
+        className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-zinc-100 sm:size-24"
       >
         {product.imageUrl ? (
           <Image src={product.imageUrl} alt={product.name} fill sizes="96px" className="object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-zinc-600">
+          <div className="flex h-full w-full items-center justify-center text-zinc-400">
             <ImageOff className="size-7" strokeWidth={1.5} aria-label="Sin imagen" />
           </div>
         )}
@@ -40,10 +40,10 @@ export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = fal
             <p className="truncate text-[10px] font-semibold uppercase tracking-wide text-zinc-500 sm:text-xs">
               {product.brand}
             </p>
-            <Link href={href} className="line-clamp-2 text-sm font-semibold text-white hover:text-[#6BFF3C] sm:text-base">
+            <Link href={href} className="line-clamp-2 text-sm font-semibold text-zinc-900 hover:text-[#65C33A] sm:text-base">
               {product.name}
             </Link>
-            <p className="mt-0.5 text-xs text-zinc-400">${formattedPrice(product.price)} c/u</p>
+            <p className="mt-0.5 text-xs text-zinc-500">${formattedPrice(product.price)} c/u</p>
           </div>
 
           <Button
@@ -52,7 +52,7 @@ export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = fal
             size="icon"
             onClick={onRemove}
             aria-label={`Quitar ${product.name} del carrito`}
-            className="shrink-0 text-zinc-400 hover:bg-zinc-800 hover:text-red-400"
+            className="shrink-0 text-zinc-500 hover:bg-zinc-100 hover:text-red-500"
           >
             <Trash2 />
           </Button>
@@ -67,11 +67,11 @@ export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = fal
             canIncrement={quantity < product.stock}
             disabled={isUpdating}
           />
-          <span className="text-base font-bold text-[#6BFF3C]">${formattedPrice(lineTotal)}</span>
+          <span className="text-base font-bold text-[#65C33A]">${formattedPrice(lineTotal)}</span>
         </div>
 
         {exceedsStock && (
-          <p className="text-xs font-medium text-red-400">
+          <p className="text-xs font-medium text-red-500">
             {product.stock <= 0
               ? "Este producto se agotó, quítalo para continuar."
               : `Solo quedan ${product.stock} unidades, ajusta la cantidad.`}

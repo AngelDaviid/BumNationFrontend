@@ -27,7 +27,7 @@ export default function ProductCard({
 
   return (
     <article className="group flex w-full flex-col overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-shadow hover:shadow-xl">
-      <div className="relative aspect-square w-full bg-neutral-900">
+      <div className="relative aspect-square w-full bg-neutral-100">
         <Link href={href} aria-label={product.name} className="absolute inset-0">
           {product.imageUrl ? (
             <Image
@@ -38,7 +38,7 @@ export default function ProductCard({
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-neutral-600">
+            <div className="flex h-full w-full items-center justify-center text-neutral-400">
               <ImageOff className="h-10 w-10 sm:h-12 sm:w-12" strokeWidth={1.5} aria-label="Sin imagen" />
             </div>
           )}

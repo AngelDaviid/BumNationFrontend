@@ -4,7 +4,7 @@ import { PRODUCT_GRID_CLASSES } from "./product-grid-classes";
 export function ProductCardSkeleton() {
   return (
     <div aria-hidden className="w-full overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5">
-      <div className="aspect-square w-full animate-pulse bg-neutral-800" />
+      <div className="aspect-square w-full animate-pulse bg-neutral-100" />
 
       <div className="space-y-3 p-3 sm:p-4">
         <div className="space-y-2">
