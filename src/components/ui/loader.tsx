@@ -10,7 +10,6 @@ const sizeClasses: Record<LoaderSize, string> = {
   lg: "size-12 border-4",
 };
 
-// El aro de fondo cambia según el fondo sobre el que se muestra
 const trackClasses: Record<LoaderTone, string> = {
   dark: "border-zinc-700",
   light: "border-zinc-200",
@@ -37,8 +36,7 @@ export function Loader({ size = "md", tone = "dark", label, className }: LoaderP
           "animate-spin rounded-full",
           sizeClasses[size],
           trackClasses[tone],
-          // Debe ir después del color del aro: tailwind-merge descarta
-          // border-t-* si un border-color general aparece más tarde
+
           "border-t-[#6BFF3C]",
         )}
       />
@@ -56,7 +54,6 @@ interface LoadingScreenProps {
   className?: string;
 }
 
-// Carga a pantalla completa (o del contenedor) con el logo de la marca
 export function LoadingScreen({ label = "Cargando…", className }: LoadingScreenProps) {
   return (
     <div

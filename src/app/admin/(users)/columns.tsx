@@ -41,8 +41,7 @@ export const columns: ColumnDef<User>[] = [
     header: "Fecha de inicio",
     accessorFn: (row) => row.gymMembership?.startDate ?? null,
     cell: ({ getValue }) => {
-      const startDate = formatDateOnly(getValue<string | null>(), "No inscrito");
-      return startDate;
+      return formatDateOnly(getValue<string | null>(), "No inscrito");
     },
   },
   {
@@ -50,8 +49,7 @@ export const columns: ColumnDef<User>[] = [
     header: "Próximo pago",
     accessorFn: (row) => row.gymMembership?.nextPaymentDate ?? null,
     cell: ({ getValue }) => {
-      const nextPaymentDate = formatDateOnly(getValue<string | null>(), "No inscrito");
-      return nextPaymentDate;
+      return formatDateOnly(getValue<string | null>(), "No inscrito");
     },
   },
   {

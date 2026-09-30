@@ -3,6 +3,7 @@ import { usersApi } from '@/lib/api/users';
 import { useAuthStore } from '@/stores/auth.store';
 import { User } from '@/types';
 import {UpdateUserFormValues} from "@/common/schemas/user.schema";
+import { toast } from "sonner";
 
 interface UpdateUserVariables {
   id: string;
@@ -20,6 +21,8 @@ export function useUpdateUser() {
       queryClient.invalidateQueries({ queryKey: ['users'] });
 
       queryClient.setQueryData(['users', id], updatedUser);
+      toast.success('Usuario actualizado');
     },
+    onError: (error) => toast.error(error.message || 'No se pudo actualizar el usuario'),
   });
 }

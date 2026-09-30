@@ -1,11 +1,18 @@
 import { EditUserForm } from "@/components/admin/users/edit-user-form";
+import { CreateMembershipForm } from "@/components/admin/memberships/membership-forms";
+import { PaymentHistory } from "@/components/admin/memberships/payment-history";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { DynamicModal } from "@/components/ui/dynamic-modal";
 import { User } from "@/types";
 import { MoreHorizontal } from "lucide-react";
+import {RenewMembershipForm} from "@/components/admin/memberships/renew-membership-form";
 
 export function UserActionsCell({ user }: { user: User }) {
+  const membership = user.gymMembership;
+  const fullName = `${user.firstName} ${user.firstLastName}`;
+      const canCreate = !membership || membership.status === "CANCELLED";
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -49,9 +56,50 @@ export function UserActionsCell({ user }: { user: User }) {
           )}
         </DynamicModal>
 
-        <DropdownMenuItem className="cursor-pointer">
-          Ver Historial de Pagos
-        </DropdownMenuItem>
+        {canCreate ? (
+          <DynamicModal
+            title="Crear membresía"
+            description={fullName}
+            trigger={
+              <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>
+                Crear Membresía
+              </DropdownMenuItem>
+            }
+          >
+            {(close) => <CreateMembershipForm userId={user.id} onSuccess={close} />}
+          </DynamicModal>
+        ) : (
+          <DynamicModal
+            title="Renovar membresía"
+            description={fullName}
+            trigger={
+              <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>
+                Renovar Membresía
+              </DropdownMenuItem>
+            }
+          >
+            {(close) => (
+              <RenewMembershipForm
+                userId={user.id}
+                nextPaymentDate={membership.nextPaymentDate}
+                onSuccess={close}
+              />
+            )}
+          </DynamicModal>
+        )}
+
+        <DynamicModal
+          title="Historial de pagos"
+          description={fullName}
+          size="xl"
+          trigger={
+            <DropdownMenuItem className="cursor-pointer" onSelect={(e) => e.preventDefault()}>
+              Ver Historial de Pagos
+            </DropdownMenuItem>
+          }
+        >
+          <PaymentHistory userId={user.id} readOnly />
+        </DynamicModal>
       </DropdownMenuContent>
     </DropdownMenu>
   );

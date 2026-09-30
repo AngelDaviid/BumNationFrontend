@@ -3,6 +3,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {useAuthStore} from "@/stores/auth.store";
 import {Product} from "@/types";
 import {productsApi} from "@/lib/api/products";
+import {toast} from "sonner";
 
 interface UpdateProductsVariables {
     id: number,
@@ -20,6 +21,8 @@ export function useUpdateProducts() {
             queryClient.invalidateQueries({queryKey: ['products']})
 
             queryClient.setQueryData(['products', id], updatedProduct)
+            toast.success("Producto actualizado")
         },
+        onError: (error) => toast.error(error.message || "No se pudo actualizar el producto"),
     });
 }
