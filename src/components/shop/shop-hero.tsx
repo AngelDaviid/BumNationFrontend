@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BrandLogo } from "@/components/shop/brand-divider";
 import { Category } from "@/types";
 
 interface ShopHeroProps {
@@ -9,7 +9,7 @@ interface ShopHeroProps {
   buildCategoryHref: (categoryId?: string) => string;
 }
 
-// Banner de bienvenida; cuando haya foto del gym puede ir de fondo
+// Banner de bienvenida; cuando haya foto del gym puede ir a la derecha o de fondo
 export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
   const featured = categories.slice(0, 3);
 
@@ -24,9 +24,9 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
         className="pointer-events-none absolute -bottom-32 -left-20 size-64 rounded-full bg-[#65C33A]/10 blur-3xl"
       />
 
-      <div className="relative grid items-center gap-6 md:grid-cols-[1.2fr_1fr]">
+      <div className="relative">
         <div className="space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#6BFF3C]">Bum Nation GYM</p>
+          <BrandLogo logo="performance" priority className="h-12 sm:h-16" />
           <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl">
             Todo para tu <span className="text-[#6BFF3C]">rendimiento</span>
           </h1>
@@ -55,14 +55,6 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
           </div>
         </div>
 
-        <Image
-          src="/LogoPerformance.svg"
-          alt="BN Performance"
-          width={866}
-          height={489}
-          priority
-          className="mx-auto hidden w-full max-w-sm object-contain md:block"
-        />
       </div>
     </section>
   );
