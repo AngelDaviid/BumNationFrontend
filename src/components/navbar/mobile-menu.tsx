@@ -96,7 +96,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
               href="/orders"
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
             >
-              Mis órdenes
+              Mis pedidos
             </Link>
             <Link
               href="/membership"

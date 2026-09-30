@@ -5,10 +5,12 @@ import Link from "next/link";
 import { ChevronLeft, Heart, ImageOff, PackageX, ShoppingCart } from "lucide-react";
 import { formattedPrice } from "@/common/formatted-price";
 import { useProduct } from "@/hooks/products/use-product";
+import { useRelatedProducts } from "@/hooks/products/use-related-products";
 import { useAddToCart } from "@/hooks/cart";
 import { useToggleFavorite } from "@/hooks/favorites";
 import { useQuantitySelector } from "@/hooks/shop/use-quantity-selector";
 import { EmptyState } from "@/components/shop/empty-state";
+import { ProductGrid } from "@/components/shop/product-grid";
 import { QuantityStepper } from "@/components/shop/quantity-stepper";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -19,6 +21,7 @@ export function ProductDetail({ productId }: { productId: number }) {
   const { addToCart, isAdding } = useAddToCart();
   const { isFavorite, toggleFavorite } = useToggleFavorite();
   const quantity = useQuantitySelector(product?.stock ?? 1);
+  const related = useRelatedProducts(product);
 
   if (isLoading) {
     return (
@@ -36,7 +39,7 @@ export function ProductDetail({ productId }: { productId: number }) {
         description="Puede que ya no esté disponible."
         action={
           <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
-            <Link href="/products">Volver a la tienda</Link>
+            <Link href="/">Volver a la tienda</Link>
           </Button>
         }
       />
@@ -49,7 +52,7 @@ export function ProductDetail({ productId }: { productId: number }) {
   return (
     <div className="space-y-6">
       <Link
-        href="/products"
+        href="/"
         className="inline-flex items-center gap-1 text-sm text-zinc-500 transition-colors hover:text-[#65C33A]"
       >
         <ChevronLeft size={16} /> Volver a la tienda
@@ -135,6 +138,13 @@ export function ProductDetail({ productId }: { productId: number }) {
           </div>
         </div>
       </div>
+
+      {related.products.length > 0 && (
+        <section className="space-y-4 pt-4 sm:pt-8">
+          <h2 className="text-xl font-bold text-zinc-900 sm:text-2xl">También te puede interesar</h2>
+          <ProductGrid products={related.products} />
+        </section>
+      )}
     </div>
   );
 }

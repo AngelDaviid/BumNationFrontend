@@ -52,7 +52,7 @@ export function UserMenu() {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/orders" className="cursor-pointer hover:text-[#6BFF3C]">
-            Mis órdenes
+            Mis pedidos
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>

@@ -36,7 +36,7 @@ export function FavoritesView() {
         description="Toca el corazón de un producto para guardarlo aquí."
         action={
           <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
-            <Link href="/products">Explorar productos</Link>
+            <Link href="/">Explorar productos</Link>
           </Button>
         }
       />

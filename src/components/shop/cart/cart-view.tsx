@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { RotateCw, ShoppingCart } from "lucide-react";
-import { useCart, useRemoveCartItem, useUpdateCartItem } from "@/hooks/cart";
+import { useCart, useCartItemActions } from "@/hooks/cart";
 import { EmptyState } from "@/components/shop/empty-state";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -12,8 +12,7 @@ import { ClearCartButton } from "./clear-cart-button";
 
 export function CartView() {
   const { items, itemCount, subtotal, hasStockIssues, isLoading, isError, refetch } = useCart();
-  const updateItem = useUpdateCartItem();
-  const removeItem = useRemoveCartItem();
+  const actions = useCartItemActions();
 
   if (isLoading) {
     return (
@@ -46,7 +45,7 @@ export function CartView() {
         description="Agrega productos desde la tienda y aparecerán aquí."
         action={
           <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
-            <Link href="/products">Ir a la tienda</Link>
+            <Link href="/">Ir a la tienda</Link>
           </Button>
         }
       />
@@ -68,9 +67,9 @@ export function CartView() {
             <CartItemRow
               key={item.id}
               item={item}
-              isUpdating={updateItem.isPending && updateItem.variables?.itemId === item.id}
-              onChangeQuantity={(quantity) => updateItem.mutate({ itemId: item.id, quantity })}
-              onRemove={() => removeItem.mutate(item)}
+              isUpdating={actions.isUpdating(item)}
+              onChangeQuantity={(quantity) => actions.changeQuantity(item, quantity)}
+              onRemove={() => actions.remove(item)}
             />
           ))}
         </ul>

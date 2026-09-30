@@ -17,7 +17,7 @@ export const ordersApi = {
     cancel: (id: string, reason: string | undefined, token: string) =>
         apiClient <Order>(`/orders/${id}/cancel`, {
             method: 'PATCH',
-            body: { reason },
+            body: { cancelReason: reason },
             token,
         }),
     

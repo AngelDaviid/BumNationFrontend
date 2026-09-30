@@ -2,10 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, ImageOff, ShoppingCart } from "lucide-react";
 import { formattedPrice } from "@/common/formatted-price";
+import { getProductBadges, ProductBadgeTone } from "@/common/product-badges";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
 import { cn } from "@/lib/utils/utils";
 import { Product } from "@/types/product.types";
+
+const badgeTone: Record<ProductBadgeTone, string> = {
+  danger: "bg-red-500 text-white",
+  warning: "bg-amber-400 text-zinc-900",
+  new: "bg-zinc-900 text-[#6BFF3C]",
+};
 
 interface ProductCardProps {
   product: Product;
@@ -23,6 +30,7 @@ export default function ProductCard({
   onToggleFavorite,
 }: ProductCardProps) {
   const isOutOfStock = product.stock <= 0;
+  const badges = getProductBadges(product);
   const href = `/products/${product.id}`;
 
   return (
@@ -61,10 +69,17 @@ export default function ProductCard({
           </Button>
         )}
 
-        {isOutOfStock && (
-          <span className="absolute bottom-2 left-2 rounded-full bg-red-500 px-2.5 py-0.5 text-xs font-semibold text-white">
-            Agotado
-          </span>
+        {badges.length > 0 && (
+          <div className="absolute bottom-2 left-2 flex flex-wrap gap-1">
+            {badges.map((badge) => (
+              <span
+                key={badge.label}
+                className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold sm:text-xs", badgeTone[badge.tone])}
+              >
+                {badge.label}
+              </span>
+            ))}
+          </div>
         )}
       </div>
 

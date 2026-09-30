@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formattedPrice } from "@/common/formatted-price";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { CheckoutButton } from "./checkout-button";
 
 interface CartSummaryProps {
   itemCount: number;
@@ -41,12 +42,14 @@ export function CartSummary({ itemCount, subtotal, hasStockIssues }: CartSummary
         </p>
       )}
 
+      <CheckoutButton total={subtotal} disabled={hasStockIssues || itemCount === 0} />
+
       <Button
         asChild
         variant="outline"
         className="h-10 w-full border-zinc-300 bg-transparent text-zinc-700 hover:border-[#65C33A] hover:bg-transparent hover:text-[#65C33A]"
       >
-        <Link href="/products">Seguir comprando</Link>
+        <Link href="/">Seguir comprando</Link>
       </Button>
     </aside>
   );

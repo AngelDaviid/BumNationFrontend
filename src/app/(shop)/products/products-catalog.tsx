@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, PackageSearch, RotateCw } from "lucide-react";
 import { useProducts } from "@/hooks/products/use-products";
-import { useCatalogFilters } from "@/hooks/shop/use-catalog-filters";
+import { SORT_OPTIONS, useCatalogFilters } from "@/hooks/shop/use-catalog-filters";
 import { ProductGrid } from "@/components/shop/product-grid";
 import { ProductGridSkeleton } from "@/components/shop/product-card-skeleton";
 import { CategoryFilter } from "@/components/shop/category-filter";
+import { CatalogToolbar } from "@/components/shop/catalog-toolbar";
+import { ShopHero } from "@/components/shop/shop-hero";
 import { EmptyState } from "@/components/shop/empty-state";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -17,19 +19,29 @@ const PAGE_SIZE = 12;
 const outlineButton =
   "h-10 border-zinc-300 bg-transparent px-4 text-zinc-700 hover:border-[#65C33A] hover:bg-transparent hover:text-[#65C33A]";
 
-export function ProductsCatalog() {
-  const { search, categoryId, categories, title, buildCategoryHref, clearSearchHref } = useCatalogFilters();
+// showHero: el banner solo va en la página principal y sin filtros
+export function ProductsCatalog({ showHero = false }: { showHero?: boolean }) {
+  const filters = useCatalogFilters();
+  const { search, categoryId, brand, sort, inStock, categories, title, buildCategoryHref, clearSearchHref } = filters;
 
   const { products, total, page, totalPages, isLoading, isFetching, error, refetch, nextPage, prevPage } =
-    useProducts({ search, categoryId, limit: PAGE_SIZE });
+    useProducts({ search, categoryId, brand, sort, inStock, limit: PAGE_SIZE });
+
+  // Con banner, el título principal (h1) es el del banner
+  const withHero = showHero && !filters.hasActiveFilters;
+  const Heading = withHero ? "h2" : "h1";
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-6 sm:space-y-8 sm:py-8">
-      <header className="space-y-4 sm:space-y-5">
+      {withHero && (
+        <ShopHero categories={categories} buildCategoryHref={buildCategoryHref} />
+      )}
+
+      <header id="catalogo" className="scroll-mt-32 space-y-4 sm:space-y-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-widest text-[#65C33A]">Tienda</p>
-            <h1 className="mt-1 break-words text-2xl font-bold text-zinc-900 sm:text-4xl">{title}</h1>
+            <Heading className="mt-1 break-words text-2xl font-bold text-zinc-900 sm:text-4xl">{title}</Heading>
           </div>
 
           <div className="flex h-6 items-center gap-3 text-sm text-zinc-500">
@@ -52,6 +64,19 @@ export function ProductsCatalog() {
         )}
 
         <CategoryFilter categories={categories} activeCategoryId={categoryId} buildHref={buildCategoryHref} />
+
+        <CatalogToolbar
+          sort={sort}
+          sortOptions={SORT_OPTIONS}
+          onSortChange={filters.setSort}
+          brand={brand}
+          brands={filters.brands}
+          onBrandChange={filters.setBrand}
+          inStock={inStock}
+          onInStockChange={filters.setInStock}
+          canClear={filters.hasActiveFilters}
+          onClear={filters.clearFilters}
+        />
       </header>
 
       {isLoading ? (
@@ -74,11 +99,15 @@ export function ProductsCatalog() {
         <EmptyState
           icon={PackageSearch}
           title="No encontramos productos"
-          description={search ? "Prueba con otra búsqueda o cambia de categoría." : "Aún no hay productos en esta categoría."}
+          description={
+            filters.hasActiveFilters ? "Prueba con otra búsqueda o quita algunos filtros." : "Aún no hay productos."
+          }
           action={
-            <Button asChild variant="outline" className={outlineButton}>
-              <Link href="/products">Ver todos los productos</Link>
-            </Button>
+            filters.hasActiveFilters && (
+              <Button variant="outline" onClick={filters.clearFilters} className={outlineButton}>
+                Quitar filtros
+              </Button>
+            )
           }
         />
       ) : (

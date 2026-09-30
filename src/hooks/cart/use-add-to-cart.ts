@@ -4,6 +4,7 @@ import { cartApi } from "@/lib/api/cart";
 import { getApiErrorMessage } from "@/lib/utils/api-error";
 import { useAuthStore } from "@/stores/auth.store";
 import { useRequireAuth } from "@/hooks/shop/use-require-auth";
+import { useCartDrawerStore } from "@/stores/cart-drawer.store";
 import { Product } from "@/types";
 import { useCart } from "./use-cart";
 
@@ -17,12 +18,14 @@ export function useAddToCart() {
   const queryClient = useQueryClient();
   const requireAuth = useRequireAuth();
   const { quantityInCart } = useCart();
+  const openDrawer = useCartDrawerStore((state) => state.open);
 
   const mutation = useMutation({
     mutationFn: ({ product, quantity }: AddToCartVariables) => cartApi.addItem(product.id, quantity, token!),
     onSuccess: (_item, { product }) => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       toast.success(`${product.name} se agregó al carrito`);
+      openDrawer();
     },
     onError: (error) => toast.error(getApiErrorMessage(error, "No se pudo agregar al carrito")),
   });

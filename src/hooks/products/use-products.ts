@@ -1,8 +1,9 @@
 import {keepPreviousData, useQuery} from '@tanstack/react-query';
 import { productsApi } from '@/lib/api/products';
 import {useEffect, useState} from "react";
+import {ProductListFilters} from "@/types";
 
-interface UseProductsParams {
+interface UseProductsParams extends ProductListFilters {
   categoryId?: string;
   // Búsqueda controlada desde fuera (p. ej. la URL). Si no se pasa, se usa
   // la búsqueda interna con setSearch.
@@ -11,7 +12,7 @@ interface UseProductsParams {
   limit?: number;
 }
 
-export function useProducts({ categoryId, search: externalSearch, initialPage = 1, limit = 10 }: UseProductsParams) {
+export function useProducts({ categoryId, search: externalSearch, initialPage = 1, limit = 10, brand, sort, inStock }: UseProductsParams) {
   const [page, setPage] = useState(initialPage);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -27,15 +28,17 @@ export function useProducts({ categoryId, search: externalSearch, initialPage = 
   const effectiveSearch = externalSearch ?? debouncedSearch;
 
   // Vuelve a la primera página cuando cambian los filtros externos
-  const [prevFilters, setPrevFilters] = useState({ externalSearch, categoryId });
-  if (prevFilters.externalSearch !== externalSearch || prevFilters.categoryId !== categoryId) {
-    setPrevFilters({ externalSearch, categoryId });
+  const filtersKey = [externalSearch, categoryId, brand, sort, inStock].join("|");
+  const [prevFiltersKey, setPrevFiltersKey] = useState(filtersKey);
+  if (prevFiltersKey !== filtersKey) {
+    setPrevFiltersKey(filtersKey);
     setPage(1);
   }
 
   const { data, isLoading, isFetching, error, refetch } = useQuery({
-    queryKey: ['products', page, limit, effectiveSearch, categoryId],
-    queryFn: () => productsApi.getAll(page, limit, effectiveSearch || undefined, categoryId),
+    queryKey: ['products', page, limit, effectiveSearch, categoryId, brand, sort, inStock],
+    queryFn: ({ signal }) =>
+      productsApi.getAll(page, limit, effectiveSearch || undefined, categoryId, { signal, brand, sort, inStock }),
     placeholderData: keepPreviousData
   });
 

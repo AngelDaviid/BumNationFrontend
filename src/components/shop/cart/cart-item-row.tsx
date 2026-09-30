@@ -4,6 +4,7 @@ import { ImageOff, Trash2 } from "lucide-react";
 import { formattedPrice } from "@/common/formatted-price";
 import { Button } from "@/components/ui/button";
 import { QuantityStepper } from "@/components/shop/quantity-stepper";
+import { cn } from "@/lib/utils/utils";
 import { CartItem } from "@/types";
 
 interface CartItemRowProps {
@@ -11,9 +12,11 @@ interface CartItemRowProps {
   onChangeQuantity: (quantity: number) => void;
   onRemove: () => void;
   isUpdating?: boolean;
+  // Versión más pequeña para el carrito lateral
+  compact?: boolean;
 }
 
-export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = false }: CartItemRowProps) {
+export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = false, compact = false }: CartItemRowProps) {
   const { product, quantity } = item;
   const lineTotal = String(parseFloat(product.price) * quantity);
   const exceedsStock = quantity > product.stock;
@@ -23,7 +26,10 @@ export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = fal
     <li className="flex gap-3 py-4 sm:gap-4">
       <Link
         href={href}
-        className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-zinc-100 sm:size-24"
+        className={cn(
+          "relative shrink-0 overflow-hidden rounded-xl bg-zinc-100",
+          compact ? "size-16" : "size-20 sm:size-24",
+        )}
       >
         {product.imageUrl ? (
           <Image src={product.imageUrl} alt={product.name} fill sizes="96px" className="object-cover" />
