@@ -1,3 +1,10 @@
-// Dos columnas en celular y hasta seis en pantallas grandes
-export const PRODUCT_GRID_CLASSES =
-  "grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6";
+// Hasta cinco columnas; la última fila se centra cuando no se llena.
+// Es flex en vez de grid para poder centrarla: el ancho de cada tarjeta descuenta los gaps de la fila
+export const PRODUCT_GRID_CLASSES = [
+  "flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8",
+  "*:w-[calc((100%-1rem)/2)]",
+  "sm:*:w-[calc((100%-1.5rem)/2)]",
+  "md:*:w-[calc((100%-3rem)/3)]",
+  "lg:*:w-[calc((100%-6rem)/4)]",
+  "xl:*:w-[calc((100%-8rem)/5)]",
+].join(" ");
