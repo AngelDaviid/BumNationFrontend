@@ -11,7 +11,7 @@ export default function ShopLayout({
       <Suspense>
         <Navbar />
       </Suspense>
-      <main className="pb-28 md:pb-0">
+      <main className="pt-6 pb-28 md:pt-10 md:pb-0">
         {children}
       </main>
     </div>

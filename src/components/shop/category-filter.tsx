@@ -13,8 +13,12 @@ export function CategoryFilter({ categories, activeCategoryId, buildHref }: Cate
   const items = [{ id: undefined, name: "Todos" }, ...categories.map((c) => ({ id: String(c.id), name: c.name }))];
 
   return (
-    <nav aria-label="Categorías" className="-mx-4 overflow-x-auto px-4 pb-1">
-      <ul className="flex w-max gap-2">
+    // En celular se desliza sin mostrar la barra; en escritorio las categorías bajan de línea
+    <nav
+      aria-label="Categorías"
+      className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"
+    >
+      <ul className="flex w-max gap-2 md:w-auto md:flex-wrap">
         {items.map((item) => {
           const isActive = item.id === activeCategoryId;
           return (
