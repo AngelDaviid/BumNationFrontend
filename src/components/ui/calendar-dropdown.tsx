@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Reemplaza el <select> nativo del mes y el año del calendario por el DropdownMenu del proyecto
 export function CalendarDropdown({ options = [], value, onChange, "aria-label": ariaLabel }: DropdownProps) {
   const current = options.find((option) => String(option.value) === String(value));
 
