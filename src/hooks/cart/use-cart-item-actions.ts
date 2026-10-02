@@ -2,7 +2,6 @@ import { CartItem } from "@/types";
 import { useUpdateCartItem } from "./use-update-cart-item";
 import { useRemoveCartItem } from "./use-remove-cart-item";
 
-// Acciones de una fila del carrito, compartidas por la página y el carrito lateral
 export function useCartItemActions() {
   const updateItem = useUpdateCartItem();
   const removeItem = useRemoveCartItem();

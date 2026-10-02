@@ -5,7 +5,6 @@ export const cartApi = {
     getCart: (token: string) =>
         apiClient<Cart>(`/cart`, { token }),
 
-    // El backend devuelve solo el item creado o actualizado, no el carrito
     addItem: (productId: number, quantity: number, token: string) =>
         apiClient<CartItem>(`/cart/items`, {
             method: 'POST',

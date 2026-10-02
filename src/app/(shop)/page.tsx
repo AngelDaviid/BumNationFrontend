@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: "Suplementación deportiva: proteínas, creatinas, pre-entrenos y más.",
 };
 
-// La tienda es la página principal
 export default function HomePage() {
   return (
     <Suspense

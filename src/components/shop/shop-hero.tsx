@@ -9,7 +9,6 @@ interface ShopHeroProps {
   buildCategoryHref: (categoryId?: string) => string;
 }
 
-// Banner de bienvenida; cuando haya foto del gym puede ir a la derecha o de fondo
 export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
   const featured = categories.slice(0, 3);
 

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { ordersApi } from "@/lib/api/orders";
 import { useAuthStore } from "@/stores/auth.store";
 
-// Órdenes del cliente con sesión, de la más reciente a la más antigua
 export function useMyOrders(limit = 10) {
   const { token, isAuthenticated, hasHydrated, user } = useAuthStore();
   const [page, setPage] = useState(1);

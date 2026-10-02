@@ -14,7 +14,6 @@ export function useRemoveCartItem() {
   return useMutation({
     mutationFn: (item: CartItem) => cartApi.removeItem(item.id, token!),
 
-    // Quita el producto de la lista al instante; si falla se restaura
     onMutate: async (item) => {
       await queryClient.cancelQueries({ queryKey });
       const previous = queryClient.getQueryData<Cart>(queryKey);

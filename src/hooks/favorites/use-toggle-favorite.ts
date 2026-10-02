@@ -4,7 +4,6 @@ import { useFavorites } from "./use-favorites";
 import { useAddFavorite } from "./use-add-favorite";
 import { useRemoveFavorite } from "./use-remove-favorite";
 
-// Une agregar y quitar para el botón de corazón de la tienda
 export function useToggleFavorite() {
   const requireAuth = useRequireAuth();
   const { isFavorite } = useFavorites();

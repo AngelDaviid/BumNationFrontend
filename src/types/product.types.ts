@@ -21,7 +21,6 @@ export interface Product {
 
 export type ProductSort = 'newest' | 'price_asc' | 'price_desc';
 
-// Filtros extra del catálogo que acepta GET /products
 export interface ProductListFilters {
   brand?: string;
   sort?: ProductSort;

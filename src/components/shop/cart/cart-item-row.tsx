@@ -12,7 +12,6 @@ interface CartItemRowProps {
   onChangeQuantity: (quantity: number) => void;
   onRemove: () => void;
   isUpdating?: boolean;
-  // Versión más pequeña para el carrito lateral
   compact?: boolean;
 }
 

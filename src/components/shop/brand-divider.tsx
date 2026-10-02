@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils/utils";
 
-// Los SVG de los logos traen mucho espacio vacío alrededor; estos porcentajes
-// recortan justo el dibujo (caja medida dentro del lienzo de cada archivo)
 const LOGOS = {
   suplementacion: {
     src: "/SuplementacionDeportiva.svg",
@@ -42,7 +40,6 @@ interface BrandSectionProps {
   className?: string;
 }
 
-// Panel gris con el logo montado sobre el borde, como separador de secciones
 export function BrandSection({ children, className }: BrandSectionProps) {
   return (
     <section className={cn("relative mt-12 rounded-3xl bg-zinc-200/70 px-3 pt-12 pb-6 sm:mt-16 sm:px-6 sm:pt-16 sm:pb-8 lg:px-8", className)}>

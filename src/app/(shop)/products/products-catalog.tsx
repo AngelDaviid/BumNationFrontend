@@ -20,7 +20,6 @@ const PAGE_SIZE = 12;
 const outlineButton =
   "h-10 border-zinc-300 bg-transparent px-4 text-zinc-700 hover:border-[#65C33A] hover:bg-transparent hover:text-[#65C33A]";
 
-// showHero: el banner solo va en la página principal y sin filtros
 export function ProductsCatalog({ showHero = false }: { showHero?: boolean }) {
   const filters = useCatalogFilters();
   const { search, categoryId, brand, sort, inStock, categories, title, buildCategoryHref, clearSearchHref } = filters;
@@ -28,7 +27,6 @@ export function ProductsCatalog({ showHero = false }: { showHero?: boolean }) {
   const { products, total, page, totalPages, isLoading, isFetching, error, refetch, nextPage, prevPage } =
     useProducts({ search, categoryId, brand, sort, inStock, limit: PAGE_SIZE });
 
-  // Con banner, el título principal (h1) es el del banner
   const withHero = showHero && !filters.hasActiveFilters;
   const Heading = withHero ? "h2" : "h1";
 

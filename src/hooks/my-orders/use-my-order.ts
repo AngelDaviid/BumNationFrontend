@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { ordersApi } from "@/lib/api/orders";
 import { useAuthStore } from "@/stores/auth.store";
 
-// Los estados en los que el cliente todavía puede cancelar (así lo valida el backend)
 const CANCELLABLE_STATUSES = ["PENDING_CONFIRMATION", "CONFIRMED"];
 
 export function useMyOrder(orderId: string) {

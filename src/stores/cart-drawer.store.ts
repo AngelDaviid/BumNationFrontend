@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 
-// Estado del carrito lateral que se abre al agregar un producto
 interface CartDrawerState {
   isOpen: boolean;
   open: () => void;

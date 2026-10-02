@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils/utils";
 interface CategoryFilterProps {
   categories: Category[];
   activeCategoryId?: string;
-  // Construye el enlace de cada categoría conservando el resto de filtros
   buildHref: (categoryId?: string) => string;
 }
 
@@ -13,7 +12,6 @@ export function CategoryFilter({ categories, activeCategoryId, buildHref }: Cate
   const items = [{ id: undefined, name: "Todos" }, ...categories.map((c) => ({ id: String(c.id), name: c.name }))];
 
   return (
-    // En celular se desliza sin mostrar la barra; en escritorio las categorías bajan de línea
     <nav
       aria-label="Categorías"
       className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"

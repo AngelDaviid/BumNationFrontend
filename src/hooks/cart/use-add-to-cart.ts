@@ -33,7 +33,6 @@ export function useAddToCart() {
   const addToCart = (product: Product, quantity = 1) => {
     if (!requireAuth("Inicia sesión para agregar productos al carrito")) return;
 
-    // El backend suma a lo que ya hay en el carrito sin revisar el total
     const available = product.stock - quantityInCart(product.id);
     if (available < quantity) {
       toast.error(

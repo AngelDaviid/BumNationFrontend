@@ -15,11 +15,9 @@ const isSort = (value: string | null): value is ProductSort =>
 
 type FilterUpdates = Partial<Record<"category" | "brand" | "sort" | "inStock", string | undefined>>;
 
-// Lee y cambia los filtros del catálogo en la URL (?search=&category=&brand=&sort=&inStock=)
 export function useCatalogFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // El catálogo vive en "/" y en "/products"; los enlaces se quedan en la misma ruta
   const basePath = usePathname();
 
   const search = searchParams.get("search")?.trim() || undefined;
@@ -53,7 +51,6 @@ export function useCatalogFilters() {
 
   const applyFilters = (updates: FilterUpdates) => router.replace(buildHref(updates), { scroll: false });
 
-  // Enlace de una categoría conservando el resto de filtros
   const buildCategoryHref = (nextCategoryId?: string) => buildHref({ category: nextCategoryId });
 
   const clearSearchHref = activeCategory ? `${basePath}?category=${activeCategory.id}` : basePath;

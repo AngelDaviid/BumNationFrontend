@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { cartApi } from "@/lib/api/cart";
 import { useAuthStore } from "@/stores/auth.store";
 
-// La clave incluye al usuario para no mostrar el carrito de otra sesión
 export function useCartQueryKey() {
   const userId = useAuthStore((state) => state.user?.id);
   return ["cart", userId] as const;
@@ -33,7 +32,6 @@ export function useCart() {
     subtotal,
     hasStockIssues,
     quantityInCart,
-    // Mientras se lee la sesión también cuenta como cargando
     isLoading: !hasHydrated || (isAuthenticated && isLoading),
     isError,
     refetch,

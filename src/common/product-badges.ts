@@ -10,7 +10,6 @@ export interface ProductBadge {
   tone: ProductBadgeTone;
 }
 
-// Etiquetas de la tarjeta: agotado, últimas unidades y nuevo
 export function getProductBadges(product: Product, now = Date.now()): ProductBadge[] {
   const badges: ProductBadge[] = [];
 

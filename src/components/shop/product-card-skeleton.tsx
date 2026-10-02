@@ -1,6 +1,5 @@
 import { PRODUCT_GRID_CLASSES } from "./product-grid-classes";
 
-// Mismas dimensiones que ProductCard para que no haya saltos al cargar
 export function ProductCardSkeleton() {
   return (
     <div aria-hidden className="w-full overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5">

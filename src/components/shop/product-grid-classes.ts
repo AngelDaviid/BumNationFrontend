@@ -1,5 +1,3 @@
-// Hasta cinco columnas; la última fila se centra cuando no se llena.
-// Es flex en vez de grid para poder centrarla: el ancho de cada tarjeta descuenta los gaps de la fila
 export const PRODUCT_GRID_CLASSES = [
   "flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8",
   "*:w-[calc((100%-1rem)/2)]",

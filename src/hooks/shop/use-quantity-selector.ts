@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-// Cantidad entre 1 y el stock disponible
 export function useQuantitySelector(max: number) {
   const [quantity, setQuantity] = useState(1);
   const safeMax = Math.max(max, 1);

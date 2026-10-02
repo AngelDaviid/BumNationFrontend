@@ -14,7 +14,6 @@ export function useAddFavorite() {
   return useMutation({
     mutationFn: (product: Product) => favoritesApi.add(product.id, token!),
 
-    // Marca el corazón al instante; si falla se restaura
     onMutate: async (product) => {
       await queryClient.cancelQueries({ queryKey });
       const previous = queryClient.getQueryData<Favorite[]>(queryKey);

@@ -19,7 +19,6 @@ export function useUpdateCartItem() {
   return useMutation({
     mutationFn: ({ itemId, quantity }: UpdateCartItemVariables) => cartApi.updateItem(itemId, quantity, token!),
 
-    // Cambia la cantidad en pantalla sin esperar al servidor
     onMutate: async ({ itemId, quantity }) => {
       await queryClient.cancelQueries({ queryKey });
       const previous = queryClient.getQueryData<Cart>(queryKey);
