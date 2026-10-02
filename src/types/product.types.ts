@@ -19,6 +19,14 @@ export interface Product {
   updatedAt: string;
 }
 
+export type ProductSort = 'newest' | 'price_asc' | 'price_desc';
+
+export interface ProductListFilters {
+  brand?: string;
+  sort?: ProductSort;
+  inStock?: boolean;
+}
+
 export interface CreateProductData {
   name: string;
   description?: string;

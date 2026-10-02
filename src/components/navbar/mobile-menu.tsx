@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Grid2X2, User, LogIn, ChevronDown } from 'lucide-react';
+import { Home, Grid2X2, User, LogIn, ChevronDown, Heart } from 'lucide-react';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Category } from '@/types';
 import { useAuthStore } from '@/stores/auth.store';
@@ -86,10 +86,17 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
               Mi perfil
             </Link>
             <Link
+              href="/favorites"
+              className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
+            >
+              <Heart size={18} />
+              Mis favoritos
+            </Link>
+            <Link
               href="/orders"
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
             >
-              Mis órdenes
+              Mis pedidos
             </Link>
             <Link
               href="/membership"

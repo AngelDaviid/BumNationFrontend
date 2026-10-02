@@ -1,4 +1,4 @@
-import {CreateProductData, PaginatedResponse, Product, UpdateProductData} from "@/types";
+import {CreateProductData, PaginatedResponse, Product, ProductListFilters, UpdateProductData} from "@/types";
 import { apiClient } from "./client";
 
 
@@ -9,7 +9,7 @@ export const productsApi = {
         limit = 10,
         search?: string,
         categoryId?: string,
-        options: { signal?: AbortSignal } = {},
+        options: { signal?: AbortSignal } & ProductListFilters = {},
     ) => {
         const params = new URLSearchParams({
             page: String(page),
@@ -24,12 +24,25 @@ export const productsApi = {
             params.set("categoryId", categoryId);
         }
 
+        if(options.brand) {
+            params.set("brand", options.brand);
+        }
+
+        if(options.sort) {
+            params.set("sort", options.sort);
+        }
+
+        if(options.inStock) {
+            params.set("inStock", "true");
+        }
+
         return apiClient<PaginatedResponse<Product>>(`/products?${params.toString()}`, {
             signal: options.signal,
         });
-
-
     },
+
+    getBrands: () =>
+        apiClient<string[]>('/products/brands'),
 
     getById: (id: number) =>
         apiClient<Product>(`/products/${id}`, {
