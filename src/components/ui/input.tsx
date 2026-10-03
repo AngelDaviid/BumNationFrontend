@@ -2,6 +2,7 @@
 
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { ReactNode } from 'react';
+import { FieldError } from './field-error';
 
 interface InputProps {
   label?: string;
@@ -9,7 +10,7 @@ interface InputProps {
   type?: 'text' | 'email' | 'password' | 'tel' | 'number' | 'date';
   placeholder?: string;
   inputMode?: 'text' | 'numeric' | 'tel' | 'email' | 'none' | 'search' | 'decimal';
-  registration: UseFormRegisterReturn;
+  registration?: UseFormRegisterReturn;
   rightElement?: ReactNode; 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
@@ -49,7 +50,7 @@ export function Input({
             onFocus={onFocus}
             {...registration}
             onChange={(e) => {
-              registration.onChange(e);
+              registration?.onChange(e);
               onChange?.(e);
             }}
             value={value}
@@ -61,7 +62,7 @@ export function Input({
         )}
       </div>
 
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      <FieldError message={error} />
     </div>
   );
 }
