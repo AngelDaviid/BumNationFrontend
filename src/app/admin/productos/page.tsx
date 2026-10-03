@@ -2,12 +2,10 @@
 import {DataTable} from "@/components/ui/data-table";
 import {columns} from "@/app/admin/productos/columns";
 import {useProducts} from "@/hooks/products/use-products";
-import {useRouter} from "next/navigation";
-import {Product} from "@/types";
+import {BrandSection} from "@/components/shop/brand-divider";
+import {CreateProductButton} from "@/app/admin/productos/create-product-button";
 
 export default function AdminProductsPage() {
-    const router = useRouter();
-
     const { products, isLoading, error, page, totalPages, nextPage, prevPage, search, setSearch  } = useProducts({ limit: 10 })
 
     if (error) {
@@ -16,8 +14,9 @@ export default function AdminProductsPage() {
 
    return (
     <div className="flex min-h-screen bg-zinc-50">
-      <div className="flex-1 flex flex-col cursor-pointer">
+      <div className="flex-1 flex flex-col">
         <main className="flex-1 p-6 space-y-6">
+          <BrandSection logo="inventario" className="bg-white ring-1 ring-zinc-200">
             <DataTable
                 columns={columns}
                 data={products}
@@ -29,10 +28,9 @@ export default function AdminProductsPage() {
                 totalPages={totalPages}
                 onNextPage={nextPage}
                 onPrevPage={prevPage}
-                onRowClick={(product: Product) => {
-                    router.push(`/admin/productos/editar/${product.id}`);
-                }}
+                toolbar={<CreateProductButton/>}
             />
+          </BrandSection>
         </main>
       </div>
     </div>

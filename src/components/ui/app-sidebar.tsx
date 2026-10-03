@@ -24,16 +24,22 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { NavUser } from "./nav-user";
+import type { LucideIcon } from "lucide-react";
 
-const navItems = [
+interface NavItem {
+  label: string;
+  icon: LucideIcon;
+  href?: string;
+  items?: { label: string; href: string }[];
+}
+
+const navItems: NavItem[] = [
   { label: "Resumen", href: "/admin", icon: LayoutGrid },
   {
     label: "Productos",
     icon: Package,
     items: [
       { label: "Ver productos", href: "/admin/productos" },
-      { label: "Agregar producto", href: "/admin/productos/agregar" },
-      { label: "Editar producto", href: "/admin/productos/editar" },
     ],
   },
   { label: "Categorías", href: "/admin/categorias", icon: Tags },
