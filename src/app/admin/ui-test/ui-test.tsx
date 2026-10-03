@@ -382,7 +382,7 @@ function FormComponentsDemo() {
   return (
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
-      header={<FormTitle title="Formulario de prueba" subtitle="FormCard + FormTitle" logoSrc="/LogoNegro.svg" />}
+      header={<FormTitle title="Formulario de prueba" subtitle="FormCard + FormTitle" logoSrc="/LogoNegro.webp" />}
       error="Así se ve el mensaje de error de FormCard"
       footer={
         <>
@@ -901,7 +901,7 @@ export function UiTest() {
             <ComponentPreview id="avatar" title="Avatar" file="src/components/ui/avatar.tsx">
               <div className="flex gap-3">
                 <Avatar>
-                  <AvatarImage src="/LogoNegro.svg" alt="Logo" />
+                  <AvatarImage src="/LogoNegro.webp" alt="Logo" />
                   <AvatarFallback>BN</AvatarFallback>
                 </Avatar>
                 <Avatar>

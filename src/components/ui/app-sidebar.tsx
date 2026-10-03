@@ -56,7 +56,7 @@ export function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center justify-center gap-2">
           <Link href="/">
-            <Image src="/Logo.svg" alt="BN Performance" width={100} height={100} />
+            <Image src="/Logo.webp" alt="BN Performance" width={100} height={100} />
           </Link>
         </div>
       </SidebarHeader>
