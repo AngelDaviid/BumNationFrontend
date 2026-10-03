@@ -30,6 +30,7 @@ interface ModalProps {
   onOpenChange?: (open: boolean) => void;
   size?: ModalSize;      
   className?: string;
+  closeOnOutsideClick?: boolean;
 }
 
 export function DynamicModal({
@@ -41,6 +42,7 @@ export function DynamicModal({
   onOpenChange,
   size = "md",
   className,
+  closeOnOutsideClick = false,
 }: ModalProps) {
   const [internalOpen, setInternalOpen] = useState(false);
 
@@ -50,10 +52,17 @@ export function DynamicModal({
 
   const close = () => setOpen(false);
 
+  const handleInteractOutside = (event: Event) => {
+    if (!closeOnOutsideClick) event.preventDefault();
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className={cn(sizeClasses[size], className)}>
+      <DialogContent
+        className={cn(sizeClasses[size], className)}
+        onInteractOutside={handleInteractOutside}
+      >
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
