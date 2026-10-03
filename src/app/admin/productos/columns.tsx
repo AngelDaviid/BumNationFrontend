@@ -46,7 +46,7 @@ export const columns: ColumnDef<Product>[] = [
         header: 'Precio',
         cell: ({row}) => {
             const price = row.original.price;
-            return (formattedPrice(price))
+            return `$ ${formattedPrice(price)} COP `;
         }
     },
     {

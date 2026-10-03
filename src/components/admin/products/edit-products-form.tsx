@@ -7,10 +7,14 @@ import {FormCard} from "@/components/ui/form-card";
 import {FormTitle} from "@/components/ui/form-title";
 import {FormGrid} from "@/components/ui/from-grid";
 import {Field} from "@/components/ui/field";
+import {FieldError} from "@/components/ui/field-error";
 import {Input} from "@/components/ui/input";
+import {CurrencyInput} from "@/components/ui/currency-input";
 import {Button} from "@/components/ui/button";
 import {Loader} from "@/components/ui/loader";
-import {useForm} from "react-hook-form";
+import {StatusSelect} from "@/components/admin/selecteables/status-select";
+import {useCategories} from "@/hooks/categories/use-categories";
+import {Controller, useForm} from "react-hook-form";
 
 
 interface EditProductFormProps {
@@ -22,7 +26,9 @@ interface EditProductFormProps {
 export function EditProductsForm({productId, defaultValues, onSuccess}: EditProductFormProps) {
     const {
         register,
+        control,
         handleSubmit,
+        reset,
         formState: {errors, isDirty}
     } = useForm<UpdateProductFormValues>({
         resolver: zodResolver(updateProductSchema),
@@ -30,11 +36,25 @@ export function EditProductsForm({productId, defaultValues, onSuccess}: EditProd
     })
 
     const {mutate: updateProduct, isPending} = useUpdateProducts()
+    const {categories, isLoading: isLoadingCategories} = useCategories()
+
+    const categoryOptions = categories.map((category) => ({
+        value: String(category.id),
+        label: category.name,
+    }))
 
     const onSubmit = (data: UpdateProductFormValues) => {
         updateProduct(
             {id: productId, data}, {
-                onSuccess: () => {
+                onSuccess: (updatedProduct) => {
+                    reset({
+                        name: updatedProduct.name,
+                        description: updatedProduct.description,
+                        price: String(updatedProduct.price),
+                        stock: updatedProduct.stock,
+                        brand: updatedProduct.brand,
+                        categoryId: updatedProduct.categoryId,
+                    });
                     onSuccess?.();
                 }
             });
@@ -62,17 +82,23 @@ export function EditProductsForm({productId, defaultValues, onSuccess}: EditProd
                     />
                 </Field>
                 <Field label={"Precio"}>
-                    <Input
-                        type="number"
-                        error={errors.price?.message}
-                        registration={register("price")}
+                    <Controller
+                        name="price"
+                        control={control}
+                        render={({field}) => (
+                            <CurrencyInput
+                                value={field.value}
+                                onChange={field.onChange}
+                                error={errors.price?.message}
+                            />
+                        )}
                     />
                 </Field>
                 <Field label={"Stock"}>
                     <Input
                         type="number"
                         error={errors.stock?.message}
-                        registration={register("stock")}
+                        registration={register("stock", {valueAsNumber: true})}
                     />
                 </Field>
                 <Field label={"Marca"}>
@@ -82,13 +108,22 @@ export function EditProductsForm({productId, defaultValues, onSuccess}: EditProd
                         registration={register("brand")}
                     />
                 </Field>
-                {/** Cambiar por un selector que consulte las categorias **/}
                 <Field label={"Categoria"}>
-                    <Input
-                        type="number"
-                        error={errors.categoryId?.message}
-                        registration={register("categoryId")}
+                    <Controller
+                        name="categoryId"
+                        control={control}
+                        render={({field}) => (
+                            <StatusSelect
+                                value={field.value ? String(field.value) : ""}
+                                options={categoryOptions}
+                                placeholder={isLoadingCategories ? "Cargando..." : "Selecciona una categoría"}
+                                disabled={isLoadingCategories}
+                                onChange={(value) => field.onChange(Number(value))}
+                                className={"sm:w-full"}
+                            />
+                        )}
                     />
+                    <FieldError message={errors.categoryId?.message}/>
                 </Field>
             </FormGrid>
 

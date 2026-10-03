@@ -35,4 +35,4 @@ export interface CreateProductData {
   categoryId: number;
 }
 
-export type UpdateProductData = UpdateProductFormValues;
+export type UpdateProductData = Omit<UpdateProductFormValues, "price"> & { price: number};

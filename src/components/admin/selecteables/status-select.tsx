@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,15 +17,16 @@ interface StatusSelectProps<T extends string> {
   onChange: (value: T) => void;
   disabled?: boolean;
   placeholder?: string;
+  className?: string;
 }
 
-export function StatusSelect<T extends string>({ value, options, onChange, disabled, placeholder }: StatusSelectProps<T>) {
+export function StatusSelect<T extends string>({ value, options, onChange, disabled, placeholder, className }: StatusSelectProps<T>) {
   const current = options.find((option) => option.value === value);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild disabled={disabled}>
-        <Button variant="outline" size="lg" className="w-full justify-between sm:w-56">
+        <Button variant="outline" size="lg" className={cn("w-full justify-between sm:w-56", className)}>
           {current?.label ?? <span className="text-zinc-400">{placeholder ?? value}</span>}
           <ChevronDown className="text-zinc-400" />
         </Button>
