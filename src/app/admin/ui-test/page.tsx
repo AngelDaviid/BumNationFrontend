@@ -6,7 +6,6 @@ export const metadata = {
   title: "UI Test",
 };
 
-// Página de pruebas visuales: solo disponible en desarrollo
 export default function UiTestPage() {
   if (process.env.NODE_ENV === "production") {
     notFound();

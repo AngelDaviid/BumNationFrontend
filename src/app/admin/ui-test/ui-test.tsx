@@ -15,14 +15,12 @@ import {
   UiTestContext,
 } from "./component-preview";
 
-// Admin
 import { EditProductsForm } from "@/components/admin/products/edit-products-form";
 import { EditUserForm } from "@/components/admin/users/edit-user-form";
 import { columns as userColumns } from "@/app/admin/(users)/columns";
 import { UserActionsCell } from "@/app/admin/(users)/user-actions-cell";
 import { columns as productColumns } from "@/app/admin/productos/columns";
 
-// Dashboard / membership / shop
 import { StatCard } from "@/components/dashboard/stat-card";
 import { StatusBadge as MembershipStatusBadge } from "@/components/membership/status-badge";
 import ProductCard from "@/components/shop/product-cart";
@@ -30,7 +28,6 @@ import ProductList from "@/app/(shop)/products/product-list";
 import { ProductCardSkeleton, ProductGridSkeleton } from "@/components/shop/product-card-skeleton";
 import { CategoryFilter } from "@/components/shop/category-filter";
 
-// Navbar
 import Navbar from "@/components/navbar/nav-bar";
 import { DesktopNavbar } from "@/components/navbar/desktop-navbar";
 import { MobileNavbar } from "@/components/navbar/mobile-navbar";
@@ -43,7 +40,6 @@ import { useProductSearch } from "@/hooks/search/use-product-search";
 import { useSearchDropdown } from "@/hooks/search/use-search-dropdown-menu";
 import { useMobileMenu } from "@/hooks/search/use-mobiel-menu";
 
-// UI propios
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { NavUser } from "@/components/ui/nav-user";
 import { DataTable } from "@/components/ui/data-table";
@@ -57,7 +53,6 @@ import { ImageUpload } from "@/components/ui/image-uploader";
 import { Input } from "@/components/ui/input";
 import { StatusBadge as UiStatusBadge } from "@/components/ui/status-badge";
 
-// UI shadcn
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -111,9 +106,6 @@ import {
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
-// ---------------------------------------------------------------------------
-// Datos de prueba
-// ---------------------------------------------------------------------------
 
 const mockCategories: Category[] = [
   { id: 1, name: "Proteínas" },
@@ -201,9 +193,6 @@ const demoRows: DemoRow[] = [
   { id: 3, name: "Ana Torres", email: "ana@example.com" },
 ];
 
-// ---------------------------------------------------------------------------
-// Índice de secciones
-// ---------------------------------------------------------------------------
 
 const sections: {
   title: string;
@@ -292,9 +281,6 @@ const originCount = sections.reduce(
   { propio: 0, shadcn: 0 } as Record<ComponentOrigin, number>,
 );
 
-// ---------------------------------------------------------------------------
-// Demos que necesitan hooks
-// ---------------------------------------------------------------------------
 
 function DesktopNavbarDemo() {
   const search = useProductSearch();
@@ -433,9 +419,6 @@ function FormComponentsDemo() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Página
-// ---------------------------------------------------------------------------
 
 export function UiTest() {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -587,7 +570,6 @@ export function UiTest() {
             </ComponentPreview>
           </div>
 
-          {/* ------------------------------------------------------------ Navbar */}
           <div className="space-y-6">
             <h2 className="text-xl font-bold">Navbar</h2>
 
@@ -687,7 +669,6 @@ export function UiTest() {
             </ComponentPreview>
           </div>
 
-          {/* ------------------------------------------------------------ Admin */}
           <div className="space-y-6">
             <h2 className="text-xl font-bold">Admin</h2>
 
@@ -808,7 +789,6 @@ export function UiTest() {
             </ComponentPreview>
           </div>
 
-          {/* ------------------------------------------------------------ UI propios */}
           <div className="space-y-6">
             <h2 className="text-xl font-bold">UI propios</h2>
 
@@ -846,6 +826,7 @@ export function UiTest() {
                     description="Descripción opcional del modal"
                     size={size}
                     trigger={<Button variant="outline">Abrir {size}</Button>}
+                    closeOnOutsideClick={true}
                   >
                     {(close) => (
                       <div className="space-y-4">
@@ -884,7 +865,6 @@ export function UiTest() {
             </ComponentPreview>
           </div>
 
-          {/* ------------------------------------------------------------ shadcn */}
           <div className="space-y-6">
             <h2 className="text-xl font-bold">UI shadcn</h2>
 

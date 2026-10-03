@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 
 export default function ProductsPage() {
   return (
-    // useSearchParams necesita un límite de Suspense
     <Suspense
       fallback={
         <div className="mx-auto w-full max-w-[110rem] px-4 sm:px-6 lg:px-10 py-8">
