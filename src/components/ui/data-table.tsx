@@ -9,6 +9,7 @@ import {
 import { Button } from "./button";
 import {Loader} from "@/components/ui/loader";
 import { cn } from "@/lib/utils/utils";
+import { ReactNode } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -23,6 +24,7 @@ interface DataTableProps<TData, TValue> {
   onPrevPage?: () => void;
   onRowClick?: (row: TData) => void;
   tableClassName?: string;
+  toolbar?: ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -38,6 +40,7 @@ export function DataTable<TData, TValue>({
   onPrevPage,
   onRowClick,
   tableClassName,
+  toolbar,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -50,8 +53,9 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-2 p-3">
-      {showSearch && (
-        <div className="flex items-center">
+      {(toolbar || showSearch) && (
+        <div className="flex flex-wrap items-center gap-2">
+          {showSearch && (
           <input
             type="text"
             placeholder={searchPlaceholder}
@@ -59,6 +63,8 @@ export function DataTable<TData, TValue>({
             onChange={(event) => onSearchChange?.(event.target.value)}
             className="w-full max-w-xs bg-zinc-100 text-zinc-800 placeholder-zinc-400 rounded-md px-3 py-1.5 text-xs outline-none focus:ring-2 focus:ring-[#6BFF3C] transition-shadow"
           />
+          )}
+          {toolbar && <div className="ml-auto">{toolbar}</div>}
         </div>
       )}
 

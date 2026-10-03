@@ -8,7 +8,7 @@ interface FormCardProps {
     header?: ReactNode;
     footer?: ReactNode;
     error?: string | null;
-    maxWidth?: 'sm' | 'md' | 'lg' | '2xl';
+    maxWidth?: 'sm' | 'md' | 'lg' | '2xl' | '4xl';
     className?: string;
 }
 
@@ -17,6 +17,7 @@ const maxWidthMap = {
     md: 'max-w-md',
     lg: 'max-w-lg',
     '2xl': 'max-w-2xl',
+    '4xl': 'max-w-4xl',
 }
 
 export function FormCard({
