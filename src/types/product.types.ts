@@ -32,7 +32,9 @@ export interface CreateProductData {
   description?: string;
   price: number;
   stock: number;
+  brand?: string;
   categoryId: number;
+  isActive: boolean;
 }
 
 export type UpdateProductData = Omit<UpdateProductFormValues, "price"> & { price: number};
