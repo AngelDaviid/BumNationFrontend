@@ -28,7 +28,7 @@ export function CreateProductForm({onSuccess}: CreateProductFormProps) {
     return (
         <FormCard
             onSubmit={onSubmit}
-            header={<FormTitle title={"Agregar producto"} titleImage={{src: "/AgregarProducto.webp", width: 1200, height: 142}}/>}
+            header={<FormTitle title={"Agregar producto"} titleImage={{src: "/AgregarProducto.webp", width: 1200, height: 400}}/>}
             maxWidth={"4xl"}
         >
             <FormAsideLayout

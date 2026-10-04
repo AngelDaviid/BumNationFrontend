@@ -23,7 +23,7 @@ export function FormTitle({ title, subtitle, logoSrc, logoAlt, titleImage }: For
                         alt={title}
                         width={titleImage.width}
                         height={titleImage.height}
-                        className="h-10 w-auto sm:h-12"
+                        className="h-14 w-auto sm:h-20 lg:h-24"
                     />
                 </h1>
             ) : (
