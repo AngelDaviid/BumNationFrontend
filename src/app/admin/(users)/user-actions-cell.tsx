@@ -51,7 +51,7 @@ export function UserActionsCell({ user }: { user: User }) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <DynamicModal title="Editar usuario" size="lg" mobileLayout="center" {...modalProps("edit")}>
+      <DynamicModal title="Editar usuario" hideHeader size="lg" mobileLayout="center" {...modalProps("edit")}>
         <EditUserForm user={user} onSuccess={close} onCancel={close} />
       </DynamicModal>
 

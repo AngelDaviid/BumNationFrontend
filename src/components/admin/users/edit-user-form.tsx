@@ -3,6 +3,7 @@
 import {ReactNode} from "react";
 import {Button} from "@/components/ui/button";
 import {Field} from "@/components/ui/field";
+import {FormTitle} from "@/components/ui/form-title";
 import {Input} from "@/components/ui/input";
 import {Loader} from "@/components/ui/loader";
 import {StatusBadge} from "@/components/membership/status-badge";
@@ -45,6 +46,7 @@ export function EditUserForm({user, onSuccess, onCancel}: EditUserFormProps) {
 
     return (
         <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+            <FormTitle title="Editar usuario" titleImage={{src: "/EditarUsuario.svg", width: 1200, height: 400}}/>
             <div className="flex items-center gap-4 rounded-2xl bg-zinc-50 p-4">
                 <UserAvatarPicker
                     imageUrl={user.imageUrl}
