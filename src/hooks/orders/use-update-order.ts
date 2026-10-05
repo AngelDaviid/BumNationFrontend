@@ -14,6 +14,7 @@ function useUpdateOrderStatus() {
             ordersApi.updateStatus(id, status, token!),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["orders"] });
+            queryClient.invalidateQueries({ queryKey: ["my-orders"] });
             toast.success("Estado de la orden actualizado");
         },
         onError: (error) => toast.error(getApiErrorMessage(error) ?? "No se pudo cambiar el estado de la orden"),

@@ -12,6 +12,8 @@ export function useMyOrders(limit = 10) {
     queryFn: () => ordersApi.getMyOrders(token!, page, limit),
     enabled: isAuthenticated && !!token,
     placeholderData: keepPreviousData,
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: "always",
   });
 
   const totalPages = data?.meta.totalPage ?? 1;
