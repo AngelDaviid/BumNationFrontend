@@ -18,6 +18,7 @@ export function OrderDetail({ order, onChanged }: { order: Order; onChanged?: ()
   const {
     status,
     cancelled,
+    canCancel,
     changeStatus,
     isChangingStatus,
     showCancel,
@@ -83,7 +84,9 @@ export function OrderDetail({ order, onChanged }: { order: Order; onChanged?: ()
             />
           </Field>
 
-          {showCancel ? (
+          {!canCancel ? (
+            <p className="text-xs text-zinc-500">Esta orden ya fue enviada o entregada y no se puede cancelar.</p>
+          ) : showCancel ? (
             <form
               onSubmit={onCancel}
               className="flex flex-col gap-2 rounded-lg border border-red-200 p-3"

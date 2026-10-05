@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useUpdateOrderStatus } from "@/hooks/orders/use-update-order";
 import { useCancelOrder } from "@/hooks/orders/use-cancell-order";
 import { Order, OrderStatus } from "@/types";
+import { ADMIN_CANCELLABLE_STATUSES } from "@/components/admin/orders/order-status-badge";
 
 export function useOrderDetail(order: Order, onChanged?: () => void) {
   const [status, setStatus] = useState(order.status);
@@ -15,6 +16,7 @@ export function useOrderDetail(order: Order, onChanged?: () => void) {
   function changeStatus(next: OrderStatus) {
     const previous = status;
     setStatus(next);
+    if (!ADMIN_CANCELLABLE_STATUSES.includes(next)) setShowCancel(false);
     statusMutation.mutate({ id: order.id, status: next }, { onError: () => setStatus(previous), onSuccess: onChanged });
   }
 
@@ -34,6 +36,7 @@ export function useOrderDetail(order: Order, onChanged?: () => void) {
   return {
     status: cancelled ? ("CANCELLED" as const) : status,
     cancelled,
+    canCancel: !cancelled && ADMIN_CANCELLABLE_STATUSES.includes(status),
     changeStatus,
     isChangingStatus: statusMutation.isPending,
     showCancel,
