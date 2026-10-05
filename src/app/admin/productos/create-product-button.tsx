@@ -8,8 +8,10 @@ import {CreateProductForm} from "@/components/admin/products/create-product-form
 export function CreateProductButton() {
     return (
         <DynamicModal
-            title=""
+            title="Agregar producto"
+            hideHeader
             size="full"
+            mobileLayout="floating"
             trigger={
                 <Button size="sm" className="bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f]">
                     <Plus/> Agregar producto

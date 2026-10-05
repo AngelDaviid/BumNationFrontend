@@ -15,8 +15,10 @@ export function ProductActionsCell({product}: { product: Product }) {
     return (
         <div className="flex justify-center gap-1">
             <DynamicModal
-                title=""
+                title="Actualizar producto"
+                hideHeader
                 size="full"
+                mobileLayout="floating"
                 trigger={
                     <Button size="icon" variant="ghost" aria-label="Editar">
                         <Pencil/>
