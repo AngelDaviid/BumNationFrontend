@@ -3,8 +3,8 @@ import { Category } from "@/types";
 import { CategoryActionsCell } from "@/app/admin/categorias/category-actions-cell";
 
 export const columns: ColumnDef<Category>[] = [
-  { accessorKey: "id", header: "#" },
-  { accessorKey: "name", header: "Nombre" },
+  { accessorKey: "id", header: "#", meta: { mobile: "hidden" } },
+  { accessorKey: "name", header: "Nombre", meta: { mobile: "title" } },
   {
     id: "actions",
     header: "Acciones",

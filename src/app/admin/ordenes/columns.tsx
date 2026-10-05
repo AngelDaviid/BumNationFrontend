@@ -5,7 +5,7 @@ import {formattedPrice} from "@/common/formatted-price";
 import {OrderStatusBadge} from "@/components/admin/orders/order-status-badge";
 
 export const columns: ColumnDef<Order>[] = [
-    { id: "number", header: "#", cell: ({ row }) => <span className="font-mono">#{row.original.orderNumber}</span> },
+    { id: "number", header: "#", meta: { mobile: "title" }, cell: ({ row }) => <span className="font-mono">#{row.original.orderNumber}</span> },
     {
         id: "customer",
         header: "Cliente",

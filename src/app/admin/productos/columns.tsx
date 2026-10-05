@@ -10,6 +10,7 @@ export const columns: ColumnDef<Product>[] = [
     {
         id: "image",
         header: "Imagen",
+        meta: {mobile: "media"},
         accessorKey: "image",
         cell: ({row}) => {
             const imageUrl = row.original.imageUrl;
@@ -33,6 +34,7 @@ export const columns: ColumnDef<Product>[] = [
     {
         accessorKey: 'name',
         header: 'Nombre',
+        meta: {mobile: "title"},
     },
     {
         accessorKey: 'brand',

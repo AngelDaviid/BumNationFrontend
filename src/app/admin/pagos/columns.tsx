@@ -14,6 +14,7 @@ export const columns: ColumnDef<MembershipWithStats>[] = [
     {
         id: "member",
         header: "Miembro",
+        meta: { mobile: "title" },
         cell: ({ row }) => (
             <div className="text-left">
                 <p className="font-medium">{memberName(row.original)}</p>
@@ -82,6 +83,8 @@ function MembershipActions({ membership }: { membership: MembershipWithStats }) 
                 title="Historial de pagos"
                 description={memberName(membership)}
                 size="xl"
+                mobileLayout="sheet"
+                closeOnOutsideClick
                 trigger={
                     <Button size="sm" variant="outline" className="h-7 px-2 text-xs">
                         Historial

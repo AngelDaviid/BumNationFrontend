@@ -8,6 +8,7 @@ import {formatDateOnly} from "@/lib/utils/date";
 export const columns: ColumnDef<User>[] = [
   {
     id: "select",
+    meta: { mobile: "hidden" },
     header: ({ table }) => (
       <Checkbox
         className="cursor-pointer"
@@ -69,10 +70,12 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "firstName",
     header: "Nombre",
+    meta: { mobile: "title" },
   },
   {
     accessorKey: "firstLastName",
     header: "Apellido",
+    meta: { mobile: "title" },
   },
   {
     accessorKey: "email",

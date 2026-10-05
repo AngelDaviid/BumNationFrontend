@@ -12,11 +12,8 @@ export default function AdminProductsPage() {
         return <p className="text-red-500 p-6">{error}</p>
     }
 
-   return (
-    <div className="flex min-h-screen bg-zinc-50">
-      <div className="flex-1 flex flex-col">
-        <main className="flex-1 p-6 space-y-6">
-          <BrandSection logo="inventario" className="bg-white ring-1 ring-zinc-200">
+    return (
+        <BrandSection logo="inventario" className="bg-white ring-1 ring-zinc-200">
             <DataTable
                 columns={columns}
                 data={products}
@@ -30,9 +27,6 @@ export default function AdminProductsPage() {
                 onPrevPage={prevPage}
                 toolbar={<CreateProductButton/>}
             />
-          </BrandSection>
-        </main>
-      </div>
-    </div>
-  );
+        </BrandSection>
+    );
 }

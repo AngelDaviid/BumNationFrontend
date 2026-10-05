@@ -19,36 +19,34 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-50">
-      <main className="flex-1 space-y-4 p-6">
-        <form onSubmit={onSubmit} className="flex max-w-xl items-end gap-2">
-          <div className="flex-1">
-            <Field label="Nueva categoría">
-              <Input placeholder="Nombre de la categoría" registration={register("name")} />
-            </Field>
-          </div>
-          <Button
-            type="submit"
-            size="lg"
-            disabled={!canSubmit}
-            className="bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f]"
-          >
-            <Plus /> Agregar
-          </Button>
-        </form>
-
-        <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white">
-          <DataTable
-            columns={columns}
-            data={visible}
-            isLoading={isLoading}
-            searchValue={search}
-            onSearchChange={setSearch}
-            searchPlaceholder="Buscar categoría..."
-          />
+    <div className="space-y-4">
+      <form onSubmit={onSubmit} className="flex max-w-xl items-end gap-2">
+        <div className="min-w-0 flex-1">
+          <Field label="Nueva categoría">
+            <Input placeholder="Nombre de la categoría" registration={register("name")} />
+          </Field>
         </div>
-        <p className="text-xs text-zinc-400">Solo se puede borrar una categoría que no tenga productos.</p>
-      </main>
+        <Button
+          type="submit"
+          size="lg"
+          disabled={!canSubmit}
+          className="bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f]"
+        >
+          <Plus /> Agregar
+        </Button>
+      </form>
+
+      <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white">
+        <DataTable
+          columns={columns}
+          data={visible}
+          isLoading={isLoading}
+          searchValue={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Buscar categoría..."
+        />
+      </div>
+      <p className="text-xs text-zinc-400">Solo se puede borrar una categoría que no tenga productos.</p>
     </div>
   );
 }
