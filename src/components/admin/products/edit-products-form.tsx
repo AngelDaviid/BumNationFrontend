@@ -34,6 +34,7 @@ export function EditProductsForm({productId, defaultValues, imageUrl, onSuccess}
 
     return (
         <FormCard
+            variant="modal"
             onSubmit={onSubmit}
             header={<FormTitle title={"Actualizar producto"} titleImage={{src: "/ActualizarProducto.webp", width: 1200, height: 400}}/>}
             maxWidth={"4xl"}

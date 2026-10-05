@@ -27,6 +27,7 @@ export function CreateProductForm({onSuccess}: CreateProductFormProps) {
 
     return (
         <FormCard
+            variant="modal"
             onSubmit={onSubmit}
             header={<FormTitle title={"Agregar producto"} titleImage={{src: "/AgregarProducto.webp", width: 1200, height: 400}}/>}
             maxWidth={"4xl"}
