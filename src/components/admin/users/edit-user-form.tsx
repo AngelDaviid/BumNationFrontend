@@ -1,145 +1,108 @@
-import {UpdateUserFormValues, updateUserSchema} from "@/common/schemas/user.schema";
+"use client"
+
+import {ReactNode} from "react";
 import {Button} from "@/components/ui/button";
 import {Field} from "@/components/ui/field";
-import {FormCard} from "@/components/ui/form-card";
-import {FormTitle} from "@/components/ui/form-title";
-import {FormGrid} from "@/components/ui/from-grid";
 import {Input} from "@/components/ui/input";
-import {useUpdateUser} from "@/hooks/users/use-update-user";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useForm} from "react-hook-form";
 import {Loader} from "@/components/ui/loader";
-
+import {StatusBadge} from "@/components/membership/status-badge";
+import {UserAvatarPicker} from "@/components/admin/users/user-avatar-picker";
+import {useEditUserForm} from "@/hooks/users/use-edit-user-form";
+import {User} from "@/types";
 
 interface EditUserFormProps {
-    userId: string;
-    defaultValues: UpdateUserFormValues;
-    imageUrl?: string | null;
+    user: User;
     onSuccess?: () => void;
+    onCancel?: () => void;
 }
 
-export function EditUserForm({userId, defaultValues, imageUrl, onSuccess}: EditUserFormProps) {
+function OptionalLabel({children}: { children: ReactNode }) {
+    return <>{children} <span className="font-normal text-zinc-400">(opcional)</span></>
+}
+
+function Section({title, children}: { title: string; children: ReactNode }) {
+    return (
+        <section className="flex flex-col gap-3">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-400">{title}</h3>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">{children}</div>
+        </section>
+    )
+}
+
+export function EditUserForm({user, onSuccess, onCancel}: EditUserFormProps) {
     const {
         register,
-        handleSubmit,
-        formState: {errors, isDirty},
-    } = useForm<UpdateUserFormValues>({
-        resolver: zodResolver(updateUserSchema),
-        defaultValues,
-    })
+        errors,
+        onSubmit,
+        isPending,
+        canSubmit,
+        newImage,
+        handleImageChange,
+    } = useEditUserForm({user, onSuccess})
 
-    const {mutate: updateUser, isPending} = useUpdateUser()
-    //const { mutate: uploadImage, isPending: isUploadingImage } = useUploadUserImage();
-
-    const onSubmit = (data: UpdateUserFormValues) => {
-        updateUser(
-            {id: userId, data},
-            {
-                onSuccess: () => {
-                    onSuccess?.();
-                },
-            }
-        );
-    };
-
-    /** const handleImageChange = (file: File | null) => {
-     if (!file) return;
-
-     uploadImage(
-     { id: userId, file },
-     {
-     onError: () => {
-     toast.error("No se puede subir la imagen")
-     }
-     }
-     )
-     } **/
+    const fullName = [user.firstName, user.middleName, user.firstLastName, user.secondLastName].filter(Boolean).join(" ");
+    const initials = `${user.firstName?.[0] ?? ""}${user.firstLastName?.[0] ?? ""}`.toUpperCase();
 
     return (
-        <FormCard
-            onSubmit={handleSubmit(onSubmit)}
-            header={<FormTitle title="Actualizar usuario"/>}
-            maxWidth="2xl"
-        >
-            {/** <div className="flex justify-center mb-6">
-             <ImageUpload
-             value={imageUrl}
-             onChange={handleImageChange}
-             isUploading={isUploadingImage}
-             shape="circle"
-             />
-             </div> **/}
-            <FormGrid columns={2}>
-                <Field label="identificación">
-                    <Input
-                        type="text"
-                        error={errors.identification?.message}
-                        placeholder="Ingresa la identificación del usuario"
-                        registration={register('identification')}
-                    />
+        <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+            <div className="flex items-center gap-4 rounded-2xl bg-zinc-50 p-4">
+                <UserAvatarPicker
+                    imageUrl={user.imageUrl}
+                    initials={initials}
+                    file={newImage}
+                    onChange={handleImageChange}
+                    disabled={isPending}
+                />
+                <div className="flex min-w-0 flex-col gap-1">
+                    <p className="truncate text-base font-semibold text-zinc-900">{fullName}</p>
+                    <p className="truncate text-xs text-zinc-500">C.C. {user.identification}</p>
+                    <div><StatusBadge status={user.gymMembership?.status ?? null}/></div>
+                </div>
+            </div>
+
+            <Section title="Datos personales">
+                <Field label="Primer nombre">
+                    <Input type="text" error={errors.firstName?.message} registration={register("firstName")}/>
                 </Field>
-                <Field label="email">
-                    <Input
-                        type="text"
-                        error={errors.email?.message}
-                        placeholder="Ingresa el email del usuario"
-                        registration={register('email')}
-                    />
+                <Field label={<OptionalLabel>Segundo nombre</OptionalLabel>}>
+                    <Input type="text" error={errors.middleName?.message} registration={register("middleName")}/>
                 </Field>
-                <Field label="Nombre">
-                    <Input
-                        type="text"
-                        error={errors.firstName?.message}
-                        placeholder="Ingresa el nombre del usuario"
-                        registration={register('firstName')}
-                    />
+                <Field label="Primer apellido">
+                    <Input type="text" error={errors.firstLastName?.message} registration={register("firstLastName")}/>
                 </Field>
-                <Field label="Segundo Nombre (opcional)">
-                    <Input
-                        type="text"
-                        error={errors.middleName?.message}
-                        placeholder="Ingresa el segundo nombre del usuario"
-                        registration={register('middleName')}
-                    />
+                <Field label={<OptionalLabel>Segundo apellido</OptionalLabel>}>
+                    <Input type="text" error={errors.secondLastName?.message} registration={register("secondLastName")}/>
                 </Field>
-                <Field label="Primer Apellido">
-                    <Input
-                        type="text"
-                        error={errors.firstLastName?.message}
-                        placeholder="Ingresa el primer apellido del usuario"
-                        registration={register('firstLastName')}
-                    />
-                </Field>
-                <Field label="Segundo Apellido (opcional)">
-                    <Input
-                        type="text"
-                        error={errors.secondLastName?.message}
-                        placeholder="Ingresa el segundo apellido del usuario"
-                        registration={register('secondLastName')}
-                    />
+            </Section>
+
+            <Section title="Contacto">
+                <Field label="Identificación">
+                    <Input type="text" inputMode="numeric" error={errors.identification?.message} registration={register("identification")}/>
                 </Field>
                 <Field label="Teléfono">
-                    <Input
-                        type="text"
-                        error={errors.phone?.message}
-                        placeholder="Ingresa el teléfono del usuario"
-                        registration={register('phone')}
-                    />
+                    <Input type="tel" inputMode="tel" error={errors.phone?.message} registration={register("phone")}/>
                 </Field>
-            </FormGrid>
+                <div className="sm:col-span-2">
+                    <Field label="Correo electrónico">
+                        <Input type="email" inputMode="email" error={errors.email?.message} registration={register("email")}/>
+                    </Field>
+                </div>
+            </Section>
 
-            <div className="flex justify-end mt-4">
+            <div className="sticky -bottom-4 -mx-4 flex justify-end gap-2 border-t border-zinc-100 bg-white px-4 py-3">
+                <Button type="button" variant="outline" size="lg" onClick={onCancel} disabled={isPending}>
+                    Cancelar
+                </Button>
                 <Button
                     type="submit"
                     size="lg"
-                    disabled={isPending || !isDirty}
-                    className="flex items-center gap-2 bg-[#6BFF3C] hover:bg-[#5de52f] disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed text-black font-semibold text-sm rounded-lg px-6 py-2.5 transition-colors"
+                    disabled={!canSubmit}
+                    className="gap-2 bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f] disabled:opacity-60"
                 >
                     {isPending && <Loader size="sm"/>}
-                    {isPending ? 'Actualizando...' : 'Actualizar'}
+                    {isPending ? "Guardando..." : "Guardar cambios"}
                 </Button>
             </div>
-
-        </FormCard>
+        </form>
     )
 }
