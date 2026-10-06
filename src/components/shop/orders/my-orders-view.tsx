@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Package, RotateCw } from "lucide-react";
 import { formattedDate } from "@/common/formatted-date";
 import { formattedPrice } from "@/common/formatted-price";
 import { useMyOrders } from "@/hooks/my-orders";
+import { useListParams } from "@/hooks/use-list-params";
 import { EmptyState } from "@/components/shop/empty-state";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -13,7 +14,8 @@ import { OrderStatusPill } from "./order-status-pill";
 const pagerButton = "h-10 border-zinc-300 bg-white px-4 text-zinc-700 hover:border-brand hover:text-brand-text";
 
 export function MyOrdersView() {
-  const { orders, page, totalPages, isLoading, isFetching, isError, refetch, nextPage, prevPage } = useMyOrders();
+  const { page, nextPage, prevPage } = useListParams();
+  const { orders, totalPages, isLoading, isFetching, isError, refetch } = useMyOrders({ page });
 
   if (isLoading) {
     return (
