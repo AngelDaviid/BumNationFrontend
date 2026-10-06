@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@/stores/auth.store";
 import { membershipApi } from "@/lib/api/membership";
 import { toast } from "sonner";
 import { getApiErrorMessage } from "@/hooks/memberships/use-memberships";
@@ -15,12 +14,11 @@ function useInvalidateMemberships() {
 }
 
 export function useCreateMembership() {
-  const { token } = useAuthStore();
   const invalidate = useInvalidateMemberships();
 
   return useMutation({
     mutationFn: ({ userId, data }: { userId: string; data: CreateMembershipData }) =>
-      membershipApi.create(userId, data, token!),
+      membershipApi.create(userId, data),
     onSuccess: () => {
       invalidate();
       toast.success("Membresía creada");
@@ -30,12 +28,11 @@ export function useCreateMembership() {
 }
 
 export function useRenewMembership() {
-  const { token } = useAuthStore();
   const invalidate = useInvalidateMemberships();
 
   return useMutation({
     mutationFn: ({ userId, data }: { userId: string; data: RenewMembershipData }) =>
-      membershipApi.renew(userId, data, token!),
+      membershipApi.renew(userId, data),
     onSuccess: () => {
       invalidate();
       toast.success("Pago registrado, membresía renovada");
@@ -45,12 +42,11 @@ export function useRenewMembership() {
 }
 
 export function useUpdateMembershipStatus() {
-  const { token } = useAuthStore();
   const invalidate = useInvalidateMemberships();
 
   return useMutation({
     mutationFn: ({ userId, status }: { userId: string; status: MembershipStatus }) =>
-      membershipApi.updateStatus(userId, status, token!),
+      membershipApi.updateStatus(userId, status),
     onSuccess: () => {
       invalidate();
       toast.success("Estado de la membresía actualizado");

@@ -8,13 +8,13 @@ export function useCartQueryKey() {
 }
 
 export function useCart() {
-  const { token, isAuthenticated, hasHydrated } = useAuthStore();
+  const { isAuthenticated, hasHydrated } = useAuthStore();
   const queryKey = useCartQueryKey();
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey,
-    queryFn: () => cartApi.getCart(token!),
-    enabled: isAuthenticated && !!token,
+    queryFn: () => cartApi.getCart(),
+    enabled: isAuthenticated,
   });
 
   const items = data?.items ?? [];

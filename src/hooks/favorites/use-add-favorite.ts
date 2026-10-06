@@ -7,12 +7,12 @@ import { Favorite, Product } from "@/types";
 import { useFavoritesQueryKey } from "./use-favorites";
 
 export function useAddFavorite() {
-  const { token, user } = useAuthStore();
+  const { user } = useAuthStore();
   const queryClient = useQueryClient();
   const queryKey = useFavoritesQueryKey();
 
   return useMutation({
-    mutationFn: (product: Product) => favoritesApi.add(product.id, token!),
+    mutationFn: (product: Product) => favoritesApi.add(product.id),
 
     onMutate: async (product) => {
       await queryClient.cancelQueries({ queryKey });

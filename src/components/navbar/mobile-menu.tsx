@@ -4,6 +4,7 @@ import { Home, Grid2X2, User, LogIn, ChevronDown, Heart } from 'lucide-react';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Category } from '@/types';
 import { useAuthStore } from '@/stores/auth.store';
+import { useLogout } from '@/hooks/auth-hook/use-logout';
 import { useMobileMenu } from '@/hooks/search/use-mobiel-menu';
 
 interface MobileMenuProps {
@@ -13,7 +14,8 @@ interface MobileMenuProps {
 
 export function MobileMenu({ categories, menu }: MobileMenuProps) {
   const pathname = usePathname();
-  const { isAuthenticated, user, logout, hasHydrated } = useAuthStore();
+  const { isAuthenticated, user, hasHydrated } = useAuthStore();
+  const logout = useLogout();
 
   if (!menu.isOpen) return null;
 
@@ -115,7 +117,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
             <DropdownMenuSeparator className="bg-zinc-700 my-2" />
             <button
               type="button"
-              onClick={logout}
+              onClick={() => void logout()}
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-red-400 hover:bg-zinc-800 hover:text-red-300 transition-colors text-left"
             >
               Cerrar sesión

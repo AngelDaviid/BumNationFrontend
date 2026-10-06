@@ -4,7 +4,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { usersApi } from "@/lib/api/users";
 
 export function useUsers({ initialPage = 1, limit = 10 } = {}) {
-  const { token, hasHydrated } = useAuthStore();
+  const { isAuthenticated, hasHydrated } = useAuthStore();
   const [page, setPage] = useState(initialPage);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -19,8 +19,8 @@ export function useUsers({ initialPage = 1, limit = 10 } = {}) {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['users', page, limit, debouncedSearch],
-    queryFn: () => usersApi.getAll(token!, page, limit, debouncedSearch),
-    enabled: !!token,
+    queryFn: () => usersApi.getAll(page, limit, debouncedSearch),
+    enabled: isAuthenticated,
     placeholderData: keepPreviousData,
   });
 

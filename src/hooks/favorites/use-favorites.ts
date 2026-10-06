@@ -9,13 +9,13 @@ export function useFavoritesQueryKey() {
 }
 
 export function useFavorites() {
-  const { token, isAuthenticated, hasHydrated } = useAuthStore();
+  const { isAuthenticated, hasHydrated } = useAuthStore();
   const queryKey = useFavoritesQueryKey();
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey,
-    queryFn: () => favoritesApi.getAll(token!),
-    enabled: isAuthenticated && !!token,
+    queryFn: () => favoritesApi.getAll(),
+    enabled: isAuthenticated,
   });
 
   const favorites = data ?? [];

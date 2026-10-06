@@ -51,47 +51,37 @@ export const productsApi = {
             tags: ['products'],
         }),
 
-    create: (data: CreateProductData, token: string) =>
+    create: (data: CreateProductData) =>
         apiClient<Product>('/products', {
             method: 'POST',
             body: data,
-            token,
         }),
 
-    uploadProductImage: (id: number, file: File, token: string) => {
+    uploadProductImage: (id: number, file: File) => {
         const formData = new FormData();
         formData.append('file', file);
 
         return apiClient<Product>(`/products/${id}/image`, {
             method: 'PATCH',
             body: formData,
-            token,
         });
     },
 
-    removeProductImage: (id: number, token: string) =>
-        apiClient<Product>(`/products/${id}/image`, {
-            method: 'DELETE',
-            token,
-        }),
+    removeProductImage: (id: number) =>
+        apiClient<Product>(`/products/${id}/image`, { method: 'DELETE' }),
 
-    update: (id: number, data: UpdateProductData, token: string) =>
+    update: (id: number, data: UpdateProductData) =>
         apiClient<Product>(`/products/${id}`, {
             method: 'PATCH',
             body: data,
-            token,
         }),
 
-    changeCategory: (id: number, categoryId: number, token: string) =>
+    changeCategory: (id: number, categoryId: number) =>
         apiClient<Product>(`/products/${id}`, {
             method: 'PATCH',
             body: { categoryId },
-            token,
         }),
 
-    delete: (id: number, token: string) =>
-        apiClient<void>(`/products/${id}`, {
-            method: 'DELETE',
-            token,
-        }),
+    delete: (id: number) =>
+        apiClient<void>(`/products/${id}`, { method: 'DELETE' }),
 }

@@ -3,12 +3,12 @@ import { useAuthStore } from "@/stores/auth.store";
 import { usersApi } from "@/lib/api/users";
 
 export function useUserStats() {
-  const { token, hasHydrated } = useAuthStore();
+  const { isAuthenticated, hasHydrated } = useAuthStore();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["users-stats"],
-    queryFn: () => usersApi.getStats(token!), 
-    enabled: !!token,
+    queryFn: () => usersApi.getStats(), 
+    enabled: isAuthenticated,
     staleTime: 1000 * 60, 
   });
 

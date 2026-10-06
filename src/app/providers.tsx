@@ -1,14 +1,11 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useAuthStore } from "@/stores/auth.store";
+import { useState } from "react";
+import { useSessionSync } from "@/hooks/auth-hook/use-session-sync";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  // Carga la sesión de la cookie después del primer render (ver auth.store)
-  useEffect(() => {
-    void useAuthStore.persist.rehydrate();
-  }, []);
+  useSessionSync();
 
   const [queryClient] = useState(
     () =>

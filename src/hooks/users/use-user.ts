@@ -3,12 +3,12 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useQuery } from "@tanstack/react-query";
 
 const useUser = (id: string) => {
-    const { token } = useAuthStore();
+    const { isAuthenticated } = useAuthStore();
 
     return useQuery({
         queryKey: ['users', id],
-        queryFn: () => usersApi.getUserById(id, token!),
-        enabled: !!token && !!id,
+        queryFn: () => usersApi.getUserById(id),
+        enabled: isAuthenticated && !!id,
     })
 }
 

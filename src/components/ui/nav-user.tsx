@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronsUpDown, User, LogOut } from "lucide-react";
-import { useRouter } from "next/navigation";
 import {
   Avatar,
   AvatarFallback,
@@ -22,6 +21,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/stores/auth.store";
+import { useLogout } from "@/hooks/auth-hook/use-logout";
 
 function getInitials(name: string) {
   return name
@@ -34,14 +34,13 @@ function getInitials(name: string) {
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const router = useRouter();
-  const { user, logout } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+  const logout = useLogout();
 
   if (!user) return null;
 
   const handleLogout = () => {
-    logout();
-    router.push("/login");
+    void logout();
   };
 
   return (

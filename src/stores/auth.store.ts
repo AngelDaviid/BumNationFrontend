@@ -4,12 +4,11 @@ import { persist } from "zustand/middleware";
 import { create } from "zustand/react";
 
 interface AuthState {
-    token: string | null;
     user: User | null;
     isAuthenticated: boolean;
     // true cuando la sesión ya se leyó de la cookie (solo en el cliente)
     hasHydrated: boolean;
-    setAuth: (token: string, user: User) => void;
+    setAuth: (user: User) => void;
     updateUser: (user: User) => void;
     logout: () => void;
 }
@@ -36,19 +35,18 @@ const cookieStorage = {
 export const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
-            token: null,
             user: null,
             isAuthenticated: false,
             hasHydrated: false,
 
-            setAuth: (token, user) =>
-                set({ token, user, isAuthenticated: true }),
+            setAuth: (user) =>
+                set({ user, isAuthenticated: true }),
 
             updateUser: (user) => 
                 set({ user }),
 
             logout: () => 
-                set({ token: null, user: null, isAuthenticated: false }),
+                set({ user: null, isAuthenticated: false }),
         }),
         {
             name: "auth-storage",
@@ -58,7 +56,7 @@ export const useAuthStore = create<AuthState>()(
             // HTML del servidor (error de hidratación). Se rehidrata en
             // AuthHydration, después del primer render.
             skipHydration: true,
-            partialize: ({ token, user, isAuthenticated }) => ({ token, user, isAuthenticated }),
+            partialize: ({ user, isAuthenticated }) => ({ user, isAuthenticated }),
             onRehydrateStorage: () => () => {
                 useAuthStore.setState({ hasHydrated: true });
             },
