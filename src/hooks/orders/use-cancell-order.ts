@@ -14,6 +14,7 @@ function useCancelOrder() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["orders"] });
             queryClient.invalidateQueries({ queryKey: ["products"] });
+            queryClient.invalidateQueries({ queryKey: ["my-orders"] });
             toast.success("Orden cancelada, el stock volvió al inventario");
         },
         onError: (error) => toast.error(getApiErrorMessage(error) ?? "No se pudo cancelar la orden"),

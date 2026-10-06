@@ -1,11 +1,13 @@
 'use client'
 
+import { FieldError } from './field-error';
+
 export const Field = ({
   label,
   error,
   children,
 }: {
-  label: string;
+  label: React.ReactNode;
   error?: string ;
   children: React.ReactNode;
 }) => {
@@ -13,7 +15,7 @@ export const Field = ({
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-zinc-700">{label}</label>
       {children}
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      <FieldError message={error} />
     </div>
   );
 }

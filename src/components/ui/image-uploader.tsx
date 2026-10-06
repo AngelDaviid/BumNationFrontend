@@ -11,6 +11,7 @@ interface ImageUploadProps {
   onChange: (file: File | null) => void;
   isUploading?: boolean;
   shape?: "circle" | "square"; 
+  fit?: "cover" | "contain";
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export function ImageUpload({
   onChange,
   isUploading = false,
   shape = "square",
+  fit = "cover",
   className,
 }: ImageUploadProps) {
   const [preview, setPreview] = useState<string | null>(value ?? null);
@@ -72,7 +74,7 @@ export function ImageUpload({
           <img
             src={preview}
             alt="Preview"
-            className="w-full h-full object-cover"
+            className={cn("w-full h-full", fit === "contain" ? "object-contain" : "object-cover")}
           />
           <button
             onClick={handleRemove}

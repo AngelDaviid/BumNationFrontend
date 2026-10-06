@@ -31,7 +31,7 @@ export default function RegisterPage() {
       onSubmit={handleSubmit(onSubmit)}
       maxWidth={'2xl'}
       className={"min-h-screen"}
-      header={<FormTitle title="Crear cuenta" logoSrc="/LogoNegro.svg" logoAlt="Bum Nation" />}
+      header={<FormTitle title="Crear cuenta" logoSrc="/LogoNegro.webp" logoAlt="Bum Nation" />}
       footer={
         <>
           <Link href="/login" className="text-sm text-zinc-500 hover:text-zinc-700 transition-colors">

@@ -20,7 +20,7 @@ export default function LoginPage() {
   return (
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
-      header={<FormTitle title="Iniciar sesión" logoSrc="/LogoNegro.svg" logoAlt="Bum Nation" />}
+      header={<FormTitle title="Iniciar sesión" logoSrc="/LogoNegro.webp" logoAlt="Bum Nation" />}
       className={"min-h-screen"}
       footer={
         <>

@@ -10,7 +10,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils/utils";
 
 interface DatePickerProps {
-  // Fecha en formato YYYY-MM-DD, igual que un input type="date"
   value?: string;
   onChange: (value: string) => void;
   placeholder?: string;

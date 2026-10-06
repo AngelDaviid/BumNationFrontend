@@ -15,7 +15,7 @@ export function useUpdateProducts() {
     const {token} = useAuthStore()
 
     return useMutation<Product, Error, UpdateProductsVariables>({
-        mutationFn: ({id, data}) => productsApi.update(id, data, token!),
+        mutationFn: ({id, data}) => productsApi.update(id, {...data, price: Number(data.price)}, token!),
 
         onSuccess: (updatedProduct, {id}) => {
             queryClient.invalidateQueries({queryKey: ['products']})

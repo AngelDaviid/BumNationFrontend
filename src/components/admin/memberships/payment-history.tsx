@@ -44,7 +44,7 @@ export function PaymentHistory({userId, readOnly}: PaymentHistoryProps ) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4 [&>*]:min-w-0">
         <Info label="Estado" value={<StatusBadge status={membership.status} />} />
         <Info label="Miembro desde" value={formatDate(membership.startDate)} />
         <Info label="Próximo pago" value={formatDate(membership.nextPaymentDate)} />
@@ -65,7 +65,28 @@ export function PaymentHistory({userId, readOnly}: PaymentHistoryProps ) {
           </Field>
       )}
 
-      <div className="rounded-lg border border-zinc-200">
+      <ul className="flex flex-col gap-2 sm:hidden">
+        {payments.length === 0 ? (
+          <li className="rounded-lg border border-zinc-200 py-6 text-center text-xs text-zinc-400">
+            Sin pagos registrados.
+          </li>
+        ) : (
+          payments.map((p) => (
+            <li key={p.id} className="rounded-lg border border-zinc-200 p-3 text-xs">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-sm font-semibold text-zinc-800">${formattedPrice(p.amount)}</span>
+                <span className="text-zinc-500">{formatDate(p.paidAt)}</span>
+              </div>
+              <p className="mt-1 text-zinc-600">
+                {formatDate(p.validFrom)} – {formatDate(p.validUntil)}
+              </p>
+              {p.notes && <p className="mt-1 text-zinc-500">{p.notes}</p>}
+            </li>
+          ))
+        )}
+      </ul>
+
+      <div className="hidden rounded-lg border border-zinc-200 sm:block">
         <Table className="text-xs">
           <TableHeader className="bg-zinc-50 text-[11px] uppercase tracking-wide">
             <TableRow>

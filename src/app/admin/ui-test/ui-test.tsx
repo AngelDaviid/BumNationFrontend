@@ -382,7 +382,7 @@ function FormComponentsDemo() {
   return (
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
-      header={<FormTitle title="Formulario de prueba" subtitle="FormCard + FormTitle" logoSrc="/LogoNegro.svg" />}
+      header={<FormTitle title="Formulario de prueba" subtitle="FormCard + FormTitle" logoSrc="/LogoNegro.webp" />}
       error="Así se ve el mensaje de error de FormCard"
       footer={
         <>
@@ -751,19 +751,7 @@ export function UiTest() {
               file="src/components/admin/users/edit-user-form.tsx"
               notes={["Enviar llama a la API real"]}
             >
-              <EditUserForm
-                userId={mockUsers[1].id}
-                defaultValues={{
-                  identification: mockUsers[1].identification,
-                  email: mockUsers[1].email,
-                  firstName: mockUsers[1].firstName,
-                  middleName: mockUsers[1].middleName ?? "",
-                  firstLastName: mockUsers[1].firstLastName,
-                  secondLastName: mockUsers[1].secondLastName ?? "",
-                  phone: mockUsers[1].phone ?? "",
-                }}
-                onSuccess={() => toast.success("Usuario actualizado")}
-              />
+              <EditUserForm user={mockUsers[1]} onSuccess={() => toast.success("Usuario actualizado")} />
             </ComponentPreview>
 
             <ComponentPreview id="stat-card" title="StatCard" file="src/components/dashboard/stat-card.tsx">
@@ -901,7 +889,7 @@ export function UiTest() {
             <ComponentPreview id="avatar" title="Avatar" file="src/components/ui/avatar.tsx">
               <div className="flex gap-3">
                 <Avatar>
-                  <AvatarImage src="/LogoNegro.svg" alt="Logo" />
+                  <AvatarImage src="/LogoNegro.webp" alt="Logo" />
                   <AvatarFallback>BN</AvatarFallback>
                 </Avatar>
                 <Avatar>

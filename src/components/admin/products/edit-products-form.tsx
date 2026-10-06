@@ -1,103 +1,68 @@
 "use client"
 
-import {UpdateProductFormValues, updateProductSchema} from "@/common/schemas/product.schema";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useUpdateProducts} from "@/hooks/products/use-update-products";
+import {UpdateProductFormValues} from "@/common/schemas/product.schema";
+import {useEditProductForm} from "@/hooks/products/use-edit-product-form";
 import {FormCard} from "@/components/ui/form-card";
 import {FormTitle} from "@/components/ui/form-title";
-import {FormGrid} from "@/components/ui/from-grid";
-import {Field} from "@/components/ui/field";
-import {Input} from "@/components/ui/input";
+import {FormAsideLayout} from "@/components/ui/form-aside-layout";
 import {Button} from "@/components/ui/button";
 import {Loader} from "@/components/ui/loader";
-import {useForm} from "react-hook-form";
+import {ProductImageField} from "@/components/admin/products/product-image-field";
+import {ProductFormFields} from "@/components/admin/products/product-form-fields";
 
 
 interface EditProductFormProps {
     productId: number;
     defaultValues: UpdateProductFormValues;
+    imageUrl?: string | null;
     onSuccess?: () => void;
 }
 
-export function EditProductsForm({productId, defaultValues, onSuccess}: EditProductFormProps) {
+export function EditProductsForm({productId, defaultValues, imageUrl, onSuccess}: EditProductFormProps) {
     const {
         register,
-        handleSubmit,
-        formState: {errors, isDirty}
-    } = useForm<UpdateProductFormValues>({
-        resolver: zodResolver(updateProductSchema),
-        defaultValues,
-    })
-
-    const {mutate: updateProduct, isPending} = useUpdateProducts()
-
-    const onSubmit = (data: UpdateProductFormValues) => {
-        updateProduct(
-            {id: productId, data}, {
-                onSuccess: () => {
-                    onSuccess?.();
-                }
-            });
-    };
+        control,
+        errors,
+        onSubmit,
+        isPending,
+        canSubmit,
+        categoryOptions,
+        isLoadingCategories,
+        imageUrl: currentImageUrl,
+        handleImageChange,
+    } = useEditProductForm({productId, defaultValues, imageUrl, onSuccess})
 
     return (
         <FormCard
-            onSubmit={handleSubmit(onSubmit)}
-            header={<FormTitle title={"Actualizar producto"}/>}
-            maxWidth={"2xl"}
+            variant="modal"
+            onSubmit={onSubmit}
+            header={<FormTitle title={"Actualizar producto"} titleImage={{src: "/ActualizarProducto.webp", width: 1200, height: 400}}/>}
+            maxWidth={"4xl"}
         >
-            <FormGrid columns={2}>
-                <Field label={"Nombre"}>
-                    <Input
-                        type="text"
-                        error={errors.name?.message}
-                        registration={register("name")}
+            <FormAsideLayout
+                aside={
+                    <ProductImageField
+                        imageUrl={currentImageUrl}
+                        onChange={handleImageChange}
+                        isUploading={isPending}
                     />
-                </Field>
-                <Field label={"Descripción"}>
-                    <Input
-                        type="text"
-                        error={errors.description?.message}
-                        registration={register("description")}
-                    />
-                </Field>
-                <Field label={"Precio"}>
-                    <Input
-                        type="number"
-                        error={errors.price?.message}
-                        registration={register("price")}
-                    />
-                </Field>
-                <Field label={"Stock"}>
-                    <Input
-                        type="number"
-                        error={errors.stock?.message}
-                        registration={register("stock")}
-                    />
-                </Field>
-                <Field label={"Marca"}>
-                    <Input
-                        type="text"
-                        error={errors.brand?.message}
-                        registration={register("brand")}
-                    />
-                </Field>
-                {/** Cambiar por un selector que consulte las categorias **/}
-                <Field label={"Categoria"}>
-                    <Input
-                        type="number"
-                        error={errors.categoryId?.message}
-                        registration={register("categoryId")}
-                    />
-                </Field>
-            </FormGrid>
+                }
+            >
+                <ProductFormFields
+                    register={register}
+                    control={control}
+                    errors={errors}
+                    categoryOptions={categoryOptions}
+                    isLoadingCategories={isLoadingCategories}
+                />
+            </FormAsideLayout>
 
-            <div className="flex justify-end mt-4">
+            <div className="mt-4 flex justify-end max-sm:sticky max-sm:-bottom-4 max-sm:-mx-4 max-sm:mt-0 max-sm:border-t max-sm:border-zinc-100 max-sm:bg-white max-sm:px-4 max-sm:pt-3 max-sm:pb-[max(0.75rem,env(safe-area-inset-bottom))]">
                 <Button
                     type="submit"
                     size="lg"
-                    disabled={isPending || !isDirty}
-                    className="flex items-center gap-2 bg-[#6BFF3C] hover:bg-[#5de52f] disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed text-black font-semibold text-sm rounded-lg px-6 py-2.5 transition-colors"
+                    disabled={!canSubmit}
+                    className="flex items-center justify-center gap-2 max-sm:w-full bg-[#6BFF3C] hover:bg-[#5de52f] disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed text-black font-semibold text-sm rounded-lg px-6 py-2.5 transition-colors"
                 >
                     {isPending && <Loader size="sm"/>}
                     {isPending ? 'Actualizando...' : 'Actualizar'}

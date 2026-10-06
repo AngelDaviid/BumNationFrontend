@@ -11,6 +11,8 @@ export function useMyOrder(orderId: string) {
     queryKey: ["my-orders", user?.id, "detail", orderId],
     queryFn: () => ordersApi.getById(orderId, token!),
     enabled: isAuthenticated && !!token && !!orderId,
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: "always",
   });
 
   return {
