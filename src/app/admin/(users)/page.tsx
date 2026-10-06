@@ -6,7 +6,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { useUserStats } from "@/hooks/users/use-users-stats";
 import { useMemberships } from "@/hooks/memberships/use-memberships";
-import { useListParams } from "@/hooks/admin/use-list-params";
+import { useListParams } from "@/hooks/use-list-params";
 
 export default function AllUsersPage() {
   const { search, setSearch, debouncedSearch, page, nextPage, prevPage } = useListParams();

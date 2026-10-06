@@ -9,7 +9,11 @@ const parsePage = (value: string | null) => {
   return Number.isFinite(page) && page > 1 ? page : 1;
 };
 
-export function useListParams() {
+interface UseListParamsOptions {
+  liveSearch?: boolean;
+}
+
+export function useListParams({ liveSearch = true }: UseListParamsOptions = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -25,30 +29,37 @@ export function useListParams() {
     setSearch(urlSearch);
   }
 
-  const setParams = (updates: QueryUpdates) =>
+  const replace = (updates: QueryUpdates) =>
     router.replace(buildQueryHref(pathname, searchParams, updates), { scroll: false });
 
   const term = search.trim();
 
+  const commitSearch = () => {
+    setSyncedSearch(term);
+    replace({ search: term || undefined });
+  };
+
   useEffect(() => {
-    if (term === syncedSearch) return;
+    if (!liveSearch || term === syncedSearch) return;
     const timeout = setTimeout(() => {
       setSyncedSearch(term);
       router.replace(buildQueryHref(pathname, searchParams, { search: term || undefined }), { scroll: false });
     }, SEARCH_DELAY_MS);
     return () => clearTimeout(timeout);
-  }, [term, syncedSearch, router, pathname, searchParams]);
+  }, [liveSearch, term, syncedSearch, router, pathname, searchParams]);
 
-  const goToPage = (target: number) => setParams({ page: target > 1 ? String(target) : undefined });
+  const goToPage = (target: number) => replace({ page: target > 1 ? String(target) : undefined });
 
   return {
     search,
     setSearch,
+    commitSearch,
     debouncedSearch: urlSearch,
     page,
     nextPage: () => goToPage(page + 1),
     prevPage: () => goToPage(page - 1),
     getParam: (key: string) => searchParams.get(key) ?? undefined,
-    setParam: (key: string, value?: string) => setParams({ [key]: value }),
+    setFilter: (key: string, value?: string) => replace({ [key]: value }),
+    setDetail: (key: string, value?: string) => replace({ [key]: value, page: searchParams.get("page") ?? undefined }),
   };
 }

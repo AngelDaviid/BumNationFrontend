@@ -1,5 +1,5 @@
 import { useForm, useWatch } from "react-hook-form";
-import { useListParams } from "@/hooks/admin/use-list-params";
+import { useListParams } from "@/hooks/use-list-params";
 import { useCategoryMutations } from "@/hooks/categories/use-categories";
 import { Category } from "@/types";
 

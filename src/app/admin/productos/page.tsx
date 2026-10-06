@@ -4,7 +4,7 @@ import {columns} from "@/app/admin/productos/columns";
 import {useProducts} from "@/hooks/products/use-products";
 import {BrandSection} from "@/components/shop/brand-divider";
 import {CreateProductButton} from "@/app/admin/productos/create-product-button";
-import {useListParams} from "@/hooks/admin/use-list-params";
+import {useListParams} from "@/hooks/use-list-params";
 
 export default function AdminProductsPage() {
     const { search, setSearch, debouncedSearch, page, nextPage, prevPage } = useListParams()
