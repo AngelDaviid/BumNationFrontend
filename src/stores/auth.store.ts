@@ -23,11 +23,12 @@ const cookieStorage = {
   },
   setItem: (name: string, value: string) => {
     if (typeof document === 'undefined') return;
-    document.cookie = `${name}=${encodeURIComponent(value)};path=/;max-age=${60 * 60 * 24 * 7}`; // 7 días
+    const secure = window.location.protocol === 'https:' ? ';Secure' : '';
+    document.cookie = `${name}=${encodeURIComponent(value)};path=/;max-age=${60 * 60 * 24 * 7};SameSite=Lax${secure}`; // 7 días
   },
   removeItem: (name: string) => {
     if (typeof document === 'undefined') return;
-    document.cookie = `${name}=;path=/;max-age=0`;
+    document.cookie = `${name}=;path=/;max-age=0;SameSite=Lax`;
   },
 };
 
