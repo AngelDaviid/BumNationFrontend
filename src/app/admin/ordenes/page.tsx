@@ -7,7 +7,7 @@ import { DynamicModal } from "@/components/ui/dynamic-modal";
 import { OrderDetail } from "@/components/admin/orders/order-detail";
 import {useAdminOrders} from "@/hooks/orders";
 import { useOrderSearch } from "../../../hooks/orders/use-order-search";
-import { useListParams } from "@/hooks/admin/use-list-params";
+import { useListParams } from "@/hooks/use-list-params";
 import { formatDate } from "@/lib/utils/date";
 import { columns } from "@/app/admin/ordenes/columns";
 
