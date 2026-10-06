@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/shop/brand-divider";
@@ -14,6 +15,19 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
 
   return (
     <section className="relative overflow-hidden rounded-3xl bg-zinc-900 px-6 py-8 sm:px-10 sm:py-12">
+      <Image
+        src="/ImgGym.webp"
+        alt=""
+        aria-hidden
+        fill
+        priority
+        sizes="(max-width: 1760px) 100vw, 1760px"
+        className="object-cover object-center"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-zinc-950/95 via-zinc-950/75 to-zinc-950/30"
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-[#65C33A]/25 blur-3xl sm:size-96"
