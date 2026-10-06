@@ -1,17 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ImageOff, ShoppingCart } from "lucide-react";
+import { ImageOff } from "lucide-react";
 import { formattedPrice } from "@/common/formatted-price";
 import { getProductBadges, ProductBadgeTone } from "@/common/product-badges";
-import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
 import { cn } from "@/lib/utils/utils";
 import { Product } from "@/types/product.types";
+import { AddToCartButton, FavoriteButton } from "./product-card-buttons";
+import { AddToCartAction, FavoriteToggle } from "./product-card-actions";
 
 const badgeTone: Record<ProductBadgeTone, string> = {
-  danger: "bg-red-500 text-white",
+  danger: "bg-red-600 text-white",
   warning: "bg-amber-400 text-zinc-900",
-  new: "bg-zinc-900 text-[#6BFF3C]",
+  new: "bg-zinc-900 text-neon",
 };
 
 interface ProductCardProps {
@@ -20,6 +20,9 @@ interface ProductCardProps {
   isAddingToCart?: boolean;
   onAddToCart?: (product: Product) => void;
   onToggleFavorite?: (product: Product) => void;
+  // true: la tarjeta trae sus propios botones (islas de cliente) y puede
+  // renderizarse en el servidor sin pasarle callbacks.
+  selfContained?: boolean;
 }
 
 export default function ProductCard({
@@ -28,6 +31,7 @@ export default function ProductCard({
   isAddingToCart = false,
   onAddToCart,
   onToggleFavorite,
+  selfContained = false,
 }: ProductCardProps) {
   const isOutOfStock = product.stock <= 0;
   const badges = getProductBadges(product);
@@ -52,21 +56,12 @@ export default function ProductCard({
           )}
         </Link>
 
-        {onToggleFavorite && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => onToggleFavorite(product)}
-            aria-pressed={isFavorite}
-            aria-label={isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-            className="absolute top-2 right-2 z-10 size-9 rounded-full bg-black/40 backdrop-blur-sm hover:bg-black/60"
-          >
-            <Heart
-              className={cn("size-5 transition-colors", isFavorite ? "fill-[#65C33A] text-[#65C33A]" : "text-white")}
-              strokeWidth={2}
-            />
-          </Button>
+        {selfContained ? (
+          <FavoriteToggle product={product} />
+        ) : (
+          onToggleFavorite && (
+            <FavoriteButton isFavorite={isFavorite} onClick={() => onToggleFavorite(product)} />
+          )
         )}
 
         {badges.length > 0 && (
@@ -85,42 +80,38 @@ export default function ProductCard({
 
       <div className="flex flex-1 flex-col gap-2 p-3 sm:gap-3 sm:p-4">
         <div className="flex-1">
-          <p className="truncate text-[10px] font-semibold uppercase tracking-wide text-neutral-400 sm:text-xs">
+          <p className="truncate text-[10px] font-semibold uppercase tracking-wide text-neutral-500 sm:text-xs">
             {product.brand}
           </p>
           <Link href={href}>
-            <h3 className="line-clamp-2 text-sm font-bold leading-snug text-neutral-900 hover:text-[#3f8f1f] sm:text-base">
+            <h3 className="line-clamp-2 text-sm font-bold leading-snug text-neutral-900 hover:text-brand-text sm:text-base">
               {product.name}
             </h3>
           </Link>
         </div>
 
         <div className="flex flex-wrap items-baseline justify-between gap-x-2">
-          <span className="text-base font-bold text-[#65C33A] sm:text-lg">
+          <span className="text-base font-bold text-brand-text sm:text-lg">
             ${formattedPrice(product.price)}
             <span className="ml-1 text-xs font-medium text-neutral-500 sm:text-sm">COP</span>
           </span>
           {!isOutOfStock && (
             <span className="text-xs font-medium text-neutral-500 sm:text-sm">
-              Stock: <span className="font-semibold text-[#65C33A]">{product.stock}</span>
+              Stock: <span className="font-semibold text-brand-text">{product.stock}</span>
             </span>
           )}
         </div>
 
-        {onAddToCart && (
-          <Button
-            type="button"
-            onClick={() => onAddToCart(product)}
-            disabled={isOutOfStock || isAddingToCart}
-            className="h-9 w-full rounded-sm bg-[#65C33A] text-xs font-semibold text-white hover:bg-[#58ad32] disabled:bg-neutral-300 disabled:opacity-100 sm:h-10 sm:text-sm"
-          >
-            {isAddingToCart ? (
-              <Loader size="sm" />
-            ) : (
-              <ShoppingCart className="size-4 sm:size-5" strokeWidth={2} />
-            )}
-            {isOutOfStock ? "Sin stock" : isAddingToCart ? "Agregando…" : "Agregar"}
-          </Button>
+        {selfContained ? (
+          <AddToCartAction product={product} />
+        ) : (
+          onAddToCart && (
+            <AddToCartButton
+              isOutOfStock={isOutOfStock}
+              isAdding={isAddingToCart}
+              onClick={() => onAddToCart(product)}
+            />
+          )
         )}
       </div>
     </article>

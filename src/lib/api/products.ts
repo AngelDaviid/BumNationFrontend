@@ -38,11 +38,13 @@ export const productsApi = {
 
         return apiClient<PaginatedResponse<Product>>(`/products?${params.toString()}`, {
             signal: options.signal,
+            // En el servidor, la misma consulta se reutiliza 30 s entre visitantes
+            revalidate: 30,
         });
     },
 
     getBrands: () =>
-        apiClient<string[]>('/products/brands'),
+        apiClient<string[]>('/products/brands', { revalidate: 300 }),
 
     getById: (id: number) =>
         apiClient<Product>(`/products/${id}`, {

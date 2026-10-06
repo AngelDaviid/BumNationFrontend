@@ -64,7 +64,7 @@ export function CatalogToolbar({
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className={`${triggerClasses} ${brand ? "border-[#65C33A] text-[#3f8f1f]" : ""}`}
+              className={`${triggerClasses} ${brand ? "border-brand text-brand-text" : ""}`}
             >
               <Tag /> {brand ?? "Marca"} <ChevronDown className="text-zinc-400" />
             </Button>
@@ -88,7 +88,7 @@ export function CatalogToolbar({
         <Checkbox
           checked={inStock}
           onCheckedChange={(checked) => onInStockChange(checked === true)}
-          className="data-checked:border-[#65C33A] data-checked:bg-[#65C33A] data-checked:text-white"
+          className="data-checked:border-brand data-checked:bg-brand data-checked:text-brand-foreground"
         />
         Solo disponibles
       </label>

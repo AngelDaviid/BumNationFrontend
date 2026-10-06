@@ -20,7 +20,7 @@ export function CartDrawer() {
       <SheetContent side="right" className="w-full gap-0 bg-white sm:max-w-md">
         <SheetHeader className="border-b border-zinc-200 px-5 py-4">
           <SheetTitle className="flex items-center gap-2 text-lg font-bold text-zinc-900">
-            <ShoppingCart className="size-5 text-[#65C33A]" /> Tu carrito
+            <ShoppingCart className="size-5 text-brand-text" /> Tu carrito
           </SheetTitle>
           <SheetDescription>
             {itemCount} {itemCount === 1 ? "producto" : "productos"}
@@ -50,14 +50,14 @@ export function CartDrawer() {
         <SheetFooter className="gap-3 border-t border-zinc-200 px-5 py-4">
           <div className="flex items-baseline justify-between">
             <span className="text-sm font-medium text-zinc-700">Total</span>
-            <span className="text-xl font-bold text-[#65C33A]">
+            <span className="text-xl font-bold text-brand-text">
               ${formattedPrice(String(subtotal))}
               <span className="ml-1 text-xs font-medium text-zinc-500">COP</span>
             </span>
           </div>
           <Button
             asChild
-            className="h-11 bg-[#65C33A] text-sm font-semibold text-white hover:bg-[#58ad32]"
+            className="h-11 text-sm"
             onClick={close}
           >
             <Link href="/cart">Ver carrito y pagar</Link>

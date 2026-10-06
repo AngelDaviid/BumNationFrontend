@@ -17,7 +17,7 @@ export function ProductCardSkeleton() {
           <div className="hidden h-4 w-14 animate-pulse rounded bg-neutral-200 sm:block" />
         </div>
 
-        <div className="h-9 w-full animate-pulse rounded-sm bg-[#65C33A]/30 sm:h-10" />
+        <div className="h-9 w-full animate-pulse rounded-sm bg-brand/30 sm:h-10" />
       </div>
     </div>
   );

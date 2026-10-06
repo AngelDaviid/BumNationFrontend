@@ -29,7 +29,7 @@ export function CartView() {
         title="No pudimos cargar tu carrito"
         description="Revisa tu conexión e inténtalo de nuevo."
         action={
-          <Button onClick={() => refetch()} className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
+          <Button onClick={() => refetch()} className="h-10 px-5">
             <RotateCw /> Reintentar
           </Button>
         }
@@ -44,7 +44,7 @@ export function CartView() {
         title="Tu carrito está vacío"
         description="Agrega productos desde la tienda y aparecerán aquí."
         action={
-          <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
+          <Button asChild className="h-10 px-5">
             <Link href="/">Ir a la tienda</Link>
           </Button>
         }

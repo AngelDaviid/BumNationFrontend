@@ -21,7 +21,7 @@ export function ProductsDropdown({ categories }: ProductsDropdownProps) {
       <DropdownMenuContent className="bg-zinc-900 border-zinc-700 text-white">
         {categories.map((cat) => (
           <DropdownMenuItem key={cat.id} asChild className="text-md w-auto">
-            <Link href={`/products?category=${cat.id}`} className="cursor-pointer hover:text-[#6BFF3C]">
+            <Link href={`/products?category=${cat.id}`} className="cursor-pointer hover:text-neon">
               {cat.name}
             </Link>
           </DropdownMenuItem>

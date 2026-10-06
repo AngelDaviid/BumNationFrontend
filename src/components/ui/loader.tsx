@@ -37,7 +37,7 @@ export function Loader({ size = "md", tone = "dark", label, className }: LoaderP
           sizeClasses[size],
           trackClasses[tone],
 
-          "border-t-[#6BFF3C]",
+          "border-t-neon",
         )}
       />
       {label ? (

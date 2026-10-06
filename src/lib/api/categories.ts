@@ -5,6 +5,7 @@ export const categoriesApi = {
   getAll: () =>
     apiClient<Category[]>('/category', {
       tags: ['category'],
+      revalidate: 300,
     }),
 
   getById: (id: number) =>

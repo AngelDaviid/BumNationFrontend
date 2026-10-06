@@ -30,7 +30,7 @@ export function CartSummary({ itemCount, subtotal, hasStockIssues }: CartSummary
 
       <div className="flex items-baseline justify-between">
         <span className="text-sm font-medium text-zinc-700">Total</span>
-        <span className="text-2xl font-bold text-[#65C33A]">
+        <span className="text-2xl font-bold text-brand-text">
           ${formattedPrice(String(subtotal))}
           <span className="ml-1 text-sm font-medium text-zinc-500">COP</span>
         </span>
@@ -47,7 +47,7 @@ export function CartSummary({ itemCount, subtotal, hasStockIssues }: CartSummary
       <Button
         asChild
         variant="outline"
-        className="h-10 w-full border-zinc-300 bg-transparent text-zinc-700 hover:border-[#65C33A] hover:bg-transparent hover:text-[#65C33A]"
+        className="h-10 w-full border-zinc-300 bg-transparent text-zinc-700 hover:border-brand hover:bg-transparent hover:text-brand-text"
       >
         <Link href="/">Seguir comprando</Link>
       </Button>

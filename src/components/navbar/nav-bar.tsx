@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Category } from '@/types';
+import { useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { categoriesApi } from '@/lib/api/categories';
 import { useMobileMenu } from '@/hooks/search/use-mobiel-menu';
 import { useProductSearch } from '@/hooks/search/use-product-search';
@@ -10,7 +10,10 @@ import { DesktopNavbar } from './desktop-navbar';
 import { MobileNavbar } from './mobile-navbar';
 
 export default function Navbar() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const { data: categories = [] } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => categoriesApi.getAll(),
+  });
 
   const menu = useMobileMenu();
   const search = useProductSearch();
@@ -19,10 +22,6 @@ export default function Navbar() {
   const mobileContainerRef = useRef<HTMLDivElement>(null);
   const desktopDropdown = useSearchDropdown(desktopContainerRef);
   const mobileDropdown = useSearchDropdown(mobileContainerRef);
-
-  useEffect(() => {
-    categoriesApi.getAll().then(setCategories).catch(console.error);
-  }, []);
 
   return (
     <>

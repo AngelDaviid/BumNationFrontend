@@ -24,7 +24,7 @@ export function CalendarDropdown({ options = [], value, onChange, "aria-label": 
         <button
           type="button"
           aria-label={ariaLabel}
-          className="flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold capitalize text-zinc-800 outline-none transition-colors hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-[#6BFF3C]"
+          className="flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-sm font-semibold capitalize text-zinc-800 outline-none transition-colors hover:bg-zinc-100 focus-visible:ring-2 focus-visible:ring-neon"
         >
           {current?.label}
           <ChevronDown className="size-3.5 text-zinc-400" />
@@ -37,7 +37,7 @@ export function CalendarDropdown({ options = [], value, onChange, "aria-label": 
               key={option.value}
               value={String(option.value)}
               disabled={option.disabled}
-              className="cursor-pointer capitalize data-[state=checked]:bg-[#6BFF3C]/15 data-[state=checked]:font-semibold"
+              className="cursor-pointer capitalize data-[state=checked]:bg-neon/15 data-[state=checked]:font-semibold"
             >
               {option.label}
             </DropdownMenuRadioItem>

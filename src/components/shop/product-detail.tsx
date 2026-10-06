@@ -38,7 +38,7 @@ export function ProductDetail({ productId }: { productId: number }) {
         title="No encontramos este producto"
         description="Puede que ya no esté disponible."
         action={
-          <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
+          <Button asChild className="h-10 px-5">
             <Link href="/">Volver a la tienda</Link>
           </Button>
         }
@@ -53,7 +53,7 @@ export function ProductDetail({ productId }: { productId: number }) {
     <div className="space-y-6">
       <Link
         href="/"
-        className="inline-flex items-center gap-1 text-sm text-zinc-500 transition-colors hover:text-[#65C33A]"
+        className="inline-flex items-center gap-1 text-sm text-zinc-500 transition-colors hover:text-brand-text"
       >
         <ChevronLeft size={16} /> Volver a la tienda
       </Link>
@@ -65,7 +65,8 @@ export function ProductDetail({ productId }: { productId: number }) {
               src={product.imageUrl}
               alt={product.name}
               fill
-              priority
+              loading="eager"
+              fetchPriority="high"
               quality={90}
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
               className="object-cover"
@@ -79,14 +80,14 @@ export function ProductDetail({ productId }: { productId: number }) {
 
         <div className="flex flex-col gap-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#65C33A]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-text">
               {product.category?.name ?? "Producto"}
             </p>
             <h1 className="mt-1 text-2xl font-bold text-zinc-900 sm:text-4xl">{product.name}</h1>
             <p className="mt-1 text-sm font-medium uppercase tracking-wide text-zinc-500">{product.brand}</p>
           </div>
 
-          <p className="text-3xl font-bold text-[#65C33A]">
+          <p className="text-3xl font-bold text-brand-text">
             ${formattedPrice(product.price)}
             <span className="ml-1.5 text-base font-medium text-zinc-500">COP</span>
           </p>
@@ -117,7 +118,7 @@ export function ProductDetail({ productId }: { productId: number }) {
               <Button
                 onClick={() => addToCart(product, quantity.quantity)}
                 disabled={isOutOfStock || isAdding}
-                className="h-11 flex-1 bg-[#65C33A] text-sm font-semibold text-white hover:bg-[#58ad32] disabled:bg-zinc-200 disabled:text-zinc-500 disabled:opacity-100"
+                className="h-11 flex-1 text-sm"
               >
                 {isAdding ? <Loader tone="light" size="sm" /> : <ShoppingCart />}
                 {isOutOfStock ? "Sin stock" : isAdding ? "Agregando…" : "Agregar al carrito"}
@@ -129,10 +130,10 @@ export function ProductDetail({ productId }: { productId: number }) {
                 onClick={() => toggleFavorite(product)}
                 aria-pressed={favorite}
                 aria-label={favorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-                className="size-11 border-zinc-300 bg-transparent hover:border-[#65C33A] hover:bg-transparent"
+                className="size-11 border-zinc-300 bg-transparent hover:border-brand hover:bg-transparent"
               >
                 <Heart
-                  className={cn("size-5", favorite ? "fill-[#65C33A] text-[#65C33A]" : "text-zinc-700")}
+                  className={cn("size-5", favorite ? "fill-brand text-brand" : "text-zinc-700")}
                 />
               </Button>
             </div>

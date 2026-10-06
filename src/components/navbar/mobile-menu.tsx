@@ -23,7 +23,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
         <Link
           href="/"
           className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
-            pathname === '/' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+            pathname === '/' ? 'text-neon bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
           }`}
         >
           <Home size={18} />
@@ -46,7 +46,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
           <div className="ml-9 flex flex-col gap-1 mb-1">
             <Link
               href="/products"
-              className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-[#6BFF3C] hover:bg-zinc-800 transition-colors"
+              className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-neon hover:bg-zinc-800 transition-colors"
             >
               Ver todos
             </Link>
@@ -54,7 +54,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
               <Link
                 key={cat.id}
                 href={`/products?category=${cat.id}`}
-                className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-[#6BFF3C] hover:bg-zinc-800 transition-colors"
+                className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-neon hover:bg-zinc-800 transition-colors"
               >
                 {cat.name}
               </Link>
@@ -65,7 +65,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
         <Link
           href="/about"
           className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
-            pathname === '/about' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+            pathname === '/about' ? 'text-neon bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
           }`}
         >
           Sobre nosotros
@@ -107,7 +107,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
             {user?.role === 'ADMIN' && (
               <Link
                 href="/admin"
-                className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-[#6BFF3C] hover:bg-zinc-800 transition-colors"
+                className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-neon hover:bg-zinc-800 transition-colors"
               >
                 Panel Admin
               </Link>

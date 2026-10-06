@@ -13,7 +13,7 @@ export function CreateProductButton() {
             size="full"
             mobileLayout="floating"
             trigger={
-                <Button size="sm" className="bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f]">
+                <Button size="sm">
                     <Plus/> Agregar producto
                 </Button>
             }

@@ -30,7 +30,6 @@ export default function CategoriesPage() {
           type="submit"
           size="lg"
           disabled={!canSubmit}
-          className="bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f]"
         >
           <Plus /> Agregar
         </Button>

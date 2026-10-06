@@ -10,7 +10,7 @@ import { useCreateMembershipForm } from "@/hooks/memberships/use-create-membersh
 import { formatDate } from "@/lib/utils/date";
 
 const submitClass =
-  "flex items-center gap-2 bg-[#6BFF3C] hover:bg-[#5de52f] disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed text-black font-semibold text-sm rounded-lg px-6 py-2.5 transition-colors";
+  "flex items-center gap-2 text-sm rounded-lg px-6 py-2.5 transition-colors";
 
 export function CreateMembershipForm({ userId, onSuccess }: { userId: string; onSuccess?: () => void }) {
   const { register, control, errors, onSubmit, isPending, coverage } = useCreateMembershipForm(userId, onSuccess);

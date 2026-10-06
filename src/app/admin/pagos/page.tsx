@@ -42,7 +42,7 @@ export default function MembershipsPage() {
             variant="outline"
             onClick={() => setFilter(key)}
             className={`rounded-full ${
-              filter === key ? "border-[#6BFF3C] bg-[#6BFF3C]/15 text-[#3f9c1f] hover:bg-[#6BFF3C]/25" : "text-zinc-500"
+              filter === key ? "border-neon bg-neon/15 text-brand-text hover:bg-neon/25" : "text-zinc-500"
             }`}
           >
             {MEMBERSHIP_FILTERS[key].label} <span className="opacity-60">{isLoading ? "" : count(key)}</span>

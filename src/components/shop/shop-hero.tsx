@@ -20,7 +20,8 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
         alt=""
         aria-hidden
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
         sizes="(max-width: 1760px) 100vw, 1760px"
         className="object-cover object-center"
       />
@@ -30,25 +31,25 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-[#65C33A]/25 blur-3xl sm:size-96"
+        className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full bg-brand/25 blur-3xl sm:size-96"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-32 -left-20 size-64 rounded-full bg-[#65C33A]/10 blur-3xl"
+        className="pointer-events-none absolute -bottom-32 -left-20 size-64 rounded-full bg-brand/10 blur-3xl"
       />
 
       <div className="relative">
         <div className="space-y-4">
           <BrandLogo logo="performance" priority className="h-12 sm:h-16" />
           <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl">
-            Todo para tu <span className="text-[#6BFF3C]">rendimiento</span>
+            Todo para tu <span className="text-brand">rendimiento</span>
           </h1>
           <p className="max-w-md text-sm text-zinc-300 sm:text-base">
             Proteínas, creatinas, pre-entrenos y todo lo que necesitas para entrenar al máximo.
           </p>
 
           <div className="flex flex-wrap gap-2 pt-1">
-            <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
+            <Button asChild className="h-10 px-5">
               <a href="#catalogo">
                 Ver productos <ArrowRight />
               </a>
@@ -58,7 +59,7 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
                 key={category.id}
                 asChild
                 variant="outline"
-                className="h-10 border-zinc-700 bg-transparent px-4 text-zinc-200 hover:border-[#6BFF3C] hover:bg-transparent hover:text-[#6BFF3C]"
+                className="h-10 border-zinc-700 bg-transparent px-4 text-zinc-200 hover:border-neon hover:bg-transparent hover:text-neon"
               >
                 <Link href={buildCategoryHref(String(category.id))} scroll={false}>
                   {category.name}

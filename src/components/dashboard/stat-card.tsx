@@ -15,7 +15,7 @@ export function StatCard({ label, value, accent, isLoading }: StatCardProps) {
       </span>
       <span
         className={`text-2xl font-semibold ${
-          accent ? "text-[#3fbf1f]" : "text-zinc-800"
+          accent ? "text-brand-text" : "text-zinc-800"
         }`}
       >
         {isLoading ?<Loader size={"sm"} tone={"dark"} /> :value}

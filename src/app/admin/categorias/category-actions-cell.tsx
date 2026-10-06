@@ -37,7 +37,6 @@ export function CategoryActionsCell({ category }: { category: Category }) {
               <Button
                 type="submit"
                 disabled={isRenaming}
-                className="bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f]"
               >
                 {isRenaming && <Loader size="sm" />}
                 {isRenaming ? "Guardando..." : "Guardar"}

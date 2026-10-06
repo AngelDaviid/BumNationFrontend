@@ -5,6 +5,7 @@ interface FetchOptions {
     body?: unknown;
     token?: string;
     tags?: string[];
+    revalidate?: number;
     signal?: AbortSignal;
 }
 
@@ -21,13 +22,13 @@ export async function apiClient<T>(
         );
     }
 
-    const { method = 'GET', body, token, tags, signal } = options;
+    const { method = 'GET', body, token, tags, revalidate, signal } = options;
 
     const isFormData = body instanceof FormData;
 
     const headers: Record<string, string> = {};
 
-    if (!isFormData) {
+    if (body !== undefined && !isFormData) {
         headers['Content-Type'] = 'application/json';
     }
 
@@ -43,7 +44,7 @@ export async function apiClient<T>(
         method,
         headers,
         body: isFormData ? (body as FormData) : (body ? JSON.stringify(body) : undefined),
-        next: tags ? { tags } : undefined,
+        next: tags || revalidate !== undefined ? { tags, revalidate } : undefined,
         signal
     })
 

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils/utils";
 
-// Imágenes ya recortadas al área visible del logo
 const LOGOS = {
   suplementacion: {
     src: "/SuplementacionDeportiva.webp",
@@ -37,7 +36,7 @@ export function BrandLogo({ logo, className, priority }: BrandLogoProps) {
       alt={alt}
       width={width}
       height={height}
-      priority={priority}
+      loading={priority ? "eager" : undefined}
       sizes="(max-width: 640px) 200px, 400px"
       className={cn("w-auto", className)}
     />
