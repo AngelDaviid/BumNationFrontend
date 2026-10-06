@@ -22,6 +22,7 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
         fill
         loading="eager"
         fetchPriority="high"
+        quality={50}
         sizes="(max-width: 1760px) 100vw, 1760px"
         className="object-cover object-center"
       />
