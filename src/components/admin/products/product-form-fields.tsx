@@ -2,7 +2,6 @@
 
 import {Control, Controller, FieldErrors, UseFormRegister} from "react-hook-form";
 import {UpdateProductFormValues} from "@/common/schemas/product.schema";
-import {FormGrid} from "@/components/ui/from-grid";
 import {Field} from "@/components/ui/field";
 import {FieldError} from "@/components/ui/field-error";
 import {Input} from "@/components/ui/input";
@@ -19,21 +18,25 @@ interface ProductFormFieldsProps {
 
 export function ProductFormFields({register, control, errors, categoryOptions, isLoadingCategories}: ProductFormFieldsProps) {
     return (
-        <FormGrid columns={2}>
-            <Field label={"Nombre"}>
-                <Input
-                    type="text"
-                    error={errors.name?.message}
-                    registration={register("name")}
-                />
-            </Field>
-            <Field label={"Descripción"}>
-                <Input
-                    type="text"
-                    error={errors.description?.message}
-                    registration={register("description")}
-                />
-            </Field>
+        <div className="grid grid-cols-2 gap-4">
+            <div className="col-span-2 sm:col-span-1">
+                <Field label={"Nombre"}>
+                    <Input
+                        type="text"
+                        error={errors.name?.message}
+                        registration={register("name")}
+                    />
+                </Field>
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+                <Field label={"Descripción"}>
+                    <Input
+                        type="text"
+                        error={errors.description?.message}
+                        registration={register("description")}
+                    />
+                </Field>
+            </div>
             <Field label={"Precio"}>
                 <Controller
                     name="price"
@@ -50,34 +53,39 @@ export function ProductFormFields({register, control, errors, categoryOptions, i
             <Field label={"Stock"}>
                 <Input
                     type="number"
+                    inputMode="numeric"
                     error={errors.stock?.message}
                     registration={register("stock", {valueAsNumber: true})}
                 />
             </Field>
-            <Field label={"Marca"}>
-                <Input
-                    type="text"
-                    error={errors.brand?.message}
-                    registration={register("brand")}
-                />
-            </Field>
-            <Field label={"Categoria"}>
-                <Controller
-                    name="categoryId"
-                    control={control}
-                    render={({field}) => (
-                        <StatusSelect
-                            value={field.value ? String(field.value) : ""}
-                            options={categoryOptions}
-                            placeholder={isLoadingCategories ? "Cargando..." : "Selecciona una categoría"}
-                            disabled={isLoadingCategories}
-                            onChange={(value) => field.onChange(Number(value))}
-                            className={"sm:w-full truncate"}
-                        />
-                    )}
-                />
-                <FieldError message={errors.categoryId?.message}/>
-            </Field>
-        </FormGrid>
+            <div className="col-span-2 sm:col-span-1">
+                <Field label={"Marca"}>
+                    <Input
+                        type="text"
+                        error={errors.brand?.message}
+                        registration={register("brand")}
+                    />
+                </Field>
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+                <Field label={"Categoria"}>
+                    <Controller
+                        name="categoryId"
+                        control={control}
+                        render={({field}) => (
+                            <StatusSelect
+                                value={field.value ? String(field.value) : ""}
+                                options={categoryOptions}
+                                placeholder={isLoadingCategories ? "Cargando..." : "Selecciona una categoría"}
+                                disabled={isLoadingCategories}
+                                onChange={(value) => field.onChange(Number(value))}
+                                className={"sm:w-full truncate"}
+                            />
+                        )}
+                    />
+                    <FieldError message={errors.categoryId?.message}/>
+                </Field>
+            </div>
+        </div>
     )
 }

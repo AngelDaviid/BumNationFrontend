@@ -17,6 +17,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarMenuSubButton,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   Collapsible,
@@ -52,6 +53,11 @@ const navItems: NavItem[] = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const closeOnMobile = () => {
+    if (isMobile) setOpenMobile(false);
+  };
 
   return (
     <Sidebar
@@ -61,7 +67,7 @@ export function AppSidebar() {
     >
       <SidebarHeader>
         <div className="flex items-center justify-center gap-2">
-          <Link href="/">
+          <Link href="/" onClick={closeOnMobile}>
             <Image src="/Logo.webp" alt="BN Performance" width={100} height={100} />
           </Link>
         </div>
@@ -87,7 +93,7 @@ export function AppSidebar() {
                             : "border-transparent text-zinc-400 hover:bg-zinc-900 hover:text-white"
                         }`}
                       >
-                        <Link href={item.href!} className="flex items-center gap-2">
+                        <Link href={item.href!} onClick={closeOnMobile} className="flex items-center gap-2">
                           <Icon size={16} />
                           <span>{item.label}</span>
                         </Link>
@@ -137,7 +143,7 @@ export function AppSidebar() {
                                       : "text-zinc-400 hover:text-white"
                                   }`}
                                 >
-                                  <Link href={sub.href}>{sub.label}</Link>
+                                  <Link href={sub.href} onClick={closeOnMobile}>{sub.label}</Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             );

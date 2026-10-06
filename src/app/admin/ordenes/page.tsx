@@ -19,44 +19,44 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-50">
-      <main className="flex-1 space-y-4 p-6">
-        <form onSubmit={onSearch} className="flex items-center gap-3">
-          <div className="w-64">
-            <Input
-              inputMode="numeric"
-              placeholder="Buscar por número de orden"
-              error={searchError ?? undefined}
-              registration={register("number")}
-            />
-          </div>
-          {isSearching && <Loader size="sm" tone="light" label="Buscando…" />}
-        </form>
-
-        <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white">
-          <DataTable
-            columns={columns}
-            data={orders}
-            isLoading={isLoading}
-            page={page}
-            totalPages={totalPages}
-            onNextPage={nextPage}
-            onPrevPage={prevPage}
-            onRowClick={selectOrder}
+    <div className="space-y-4">
+      <form onSubmit={onSearch} className="flex flex-wrap items-center gap-3">
+        <div className="w-full sm:w-64">
+          <Input
+            inputMode="numeric"
+            placeholder="Buscar por número de orden"
+            error={searchError ?? undefined}
+            registration={register("number")}
           />
         </div>
+        {isSearching && <Loader size="sm" tone="light" label="Buscando…" />}
+      </form>
 
-        <DynamicModal
-          title={selected ? `Orden #${selected.orderNumber}` : ""}
-          description={selected ? formatDate(selected.createdAt) : undefined}
-          size="xl"
-          trigger={<span className="hidden" />}
-          open={!!selected}
-          onOpenChange={(open) => !open && clearSelected()}
-        >
-          {selected && <OrderDetail key={selected.id} order={selected} />}
-        </DynamicModal>
-      </main>
+      <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white">
+        <DataTable
+          columns={columns}
+          data={orders}
+          isLoading={isLoading}
+          page={page}
+          totalPages={totalPages}
+          onNextPage={nextPage}
+          onPrevPage={prevPage}
+          onRowClick={selectOrder}
+        />
+      </div>
+
+      <DynamicModal
+        title={selected ? `Orden #${selected.orderNumber}` : ""}
+        description={selected ? formatDate(selected.createdAt) : undefined}
+        size="xl"
+        mobileLayout="sheet"
+        closeOnOutsideClick
+        trigger={<span className="hidden" />}
+        open={!!selected}
+        onOpenChange={(open) => !open && clearSelected()}
+      >
+        {selected && <OrderDetail key={selected.id} order={selected} />}
+      </DynamicModal>
     </div>
   );
 }

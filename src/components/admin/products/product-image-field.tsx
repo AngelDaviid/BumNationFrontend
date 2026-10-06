@@ -17,7 +17,7 @@ export function ProductImageField({imageUrl, onChange, isUploading}: ProductImag
                 onChange={onChange}
                 isUploading={isUploading}
                 fit="contain"
-                className="aspect-square h-auto w-full bg-zinc-50"
+                className="aspect-square h-auto w-full bg-zinc-50 max-md:aspect-auto max-md:h-40"
             />
         </div>
     )
