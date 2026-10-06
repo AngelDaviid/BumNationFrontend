@@ -67,6 +67,12 @@ export const productsApi = {
         });
     },
 
+    removeProductImage: (id: number, token: string) =>
+        apiClient<Product>(`/products/${id}/image`, {
+            method: 'DELETE',
+            token,
+        }),
+
     update: (id: number, data: UpdateProductData, token: string) =>
         apiClient<Product>(`/products/${id}`, {
             method: 'PATCH',

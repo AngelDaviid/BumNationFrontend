@@ -2,6 +2,7 @@
 
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { ReactNode } from 'react';
+import { FieldError } from './field-error';
 
 interface InputProps {
   label?: string;
@@ -9,7 +10,7 @@ interface InputProps {
   type?: 'text' | 'email' | 'password' | 'tel' | 'number' | 'date';
   placeholder?: string;
   inputMode?: 'text' | 'numeric' | 'tel' | 'email' | 'none' | 'search' | 'decimal';
-  registration: UseFormRegisterReturn;
+  registration?: UseFormRegisterReturn;
   rightElement?: ReactNode; 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number;
@@ -18,7 +19,7 @@ interface InputProps {
 }
 
 function inputClass(hasError: boolean) {
-  return `bg-zinc-100 text-zinc-800 placeholder-zinc-400 rounded-lg px-3.5 py-2.5 text-sm outline-none focus:ring-2 transition-shadow w-full ${
+  return `bg-zinc-100 text-zinc-800 placeholder-zinc-400 rounded-lg px-3.5 py-2.5 text-base sm:text-sm outline-none focus:ring-2 transition-shadow w-full ${
     hasError ? 'ring-1 ring-red-400 focus:ring-red-400' : 'focus:ring-[#6BFF3C]'
   }`;
 }
@@ -49,7 +50,7 @@ export function Input({
             onFocus={onFocus}
             {...registration}
             onChange={(e) => {
-              registration.onChange(e);
+              registration?.onChange(e);
               onChange?.(e);
             }}
             value={value}
@@ -61,7 +62,7 @@ export function Input({
         )}
       </div>
 
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      <FieldError message={error} />
     </div>
   );
 }

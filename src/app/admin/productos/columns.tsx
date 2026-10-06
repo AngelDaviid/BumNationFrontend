@@ -4,11 +4,13 @@ import Image from "next/image";
 import {StatusBadge} from "@/components/ui/status-badge";
 import {formattedPrice} from "@/common/formatted-price";
 import {Field} from "@/components/ui/field";
+import {ProductActionsCell} from "./product-actions-cell";
 
 export const columns: ColumnDef<Product>[] = [
     {
         id: "image",
         header: "Imagen",
+        meta: {mobile: "media"},
         accessorKey: "image",
         cell: ({row}) => {
             const imageUrl = row.original.imageUrl;
@@ -32,6 +34,7 @@ export const columns: ColumnDef<Product>[] = [
     {
         accessorKey: 'name',
         header: 'Nombre',
+        meta: {mobile: "title"},
     },
     {
         accessorKey: 'brand',
@@ -46,7 +49,7 @@ export const columns: ColumnDef<Product>[] = [
         header: 'Precio',
         cell: ({row}) => {
             const price = row.original.price;
-            return (formattedPrice(price))
+            return `$ ${formattedPrice(price)} COP `;
         }
     },
     {
@@ -75,5 +78,10 @@ export const columns: ColumnDef<Product>[] = [
                 )
             }
         }
+    },
+    {
+        id: "actions",
+        header: "Acciones",
+        cell: ({row}) => <ProductActionsCell product={row.original}/>,
     },
 ]

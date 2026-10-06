@@ -10,6 +10,8 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   CANCELLED: "Cancelada",
 };
 
+export const ADMIN_CANCELLABLE_STATUSES: OrderStatus[] = ["PENDING_CONFIRMATION", "CONFIRMED", "AWAITING_PAYMENT", "PAID"];
+
 const styles: Record<OrderStatus, string> = {
   PENDING_CONFIRMATION: "bg-amber-100 text-amber-700",
   CONFIRMED: "bg-sky-100 text-sky-700",

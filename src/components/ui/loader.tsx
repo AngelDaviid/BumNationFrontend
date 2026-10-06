@@ -63,7 +63,7 @@ export function LoadingScreen({ label = "Cargando…", className }: LoadingScree
       )}
     >
       <Image
-        src="/Logo.svg"
+        src="/Logo.webp"
         alt="Bum Nation"
         width={120}
         height={120}

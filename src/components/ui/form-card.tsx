@@ -8,8 +8,9 @@ interface FormCardProps {
     header?: ReactNode;
     footer?: ReactNode;
     error?: string | null;
-    maxWidth?: 'sm' | 'md' | 'lg' | '2xl';
+    maxWidth?: 'sm' | 'md' | 'lg' | '2xl' | '4xl';
     className?: string;
+    variant?: 'page' | 'modal';
 }
 
 const maxWidthMap = {
@@ -17,6 +18,7 @@ const maxWidthMap = {
     md: 'max-w-md',
     lg: 'max-w-lg',
     '2xl': 'max-w-2xl',
+    '4xl': 'max-w-4xl',
 }
 
 export function FormCard({
@@ -26,11 +28,13 @@ export function FormCard({
     footer,
     error,
     maxWidth = 'md',
-    className = ""
+    className = "",
+    variant = 'page',
 }: FormCardProps) {
+    const isModal = variant === 'modal';
     return (
-        <div className={`flex items-center justify-center px-4 py-10 ${className}`}>
-            <div className={`w-full ${maxWidthMap[maxWidth]} bg-white rounded-3xl shadow-2xl p-8 sm:p-10`}>
+        <div className={`flex items-center justify-center ${isModal ? 'sm:px-4 sm:py-10' : 'px-4 py-10'} ${className}`}>
+            <div className={`w-full ${maxWidthMap[maxWidth]} bg-white ${isModal ? 'sm:rounded-3xl sm:shadow-2xl sm:p-10' : 'rounded-3xl shadow-2xl p-8 sm:p-10'}`}>
                 {header}
 
                 {error && (

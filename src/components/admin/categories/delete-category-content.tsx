@@ -32,14 +32,14 @@ export function DeleteCategoryContent({ category, onCancel, onDelete, isDeleting
           </p>
           <ul className="max-h-72 divide-y divide-zinc-100 overflow-y-auto rounded-lg border border-zinc-200">
             {products.map((product) => (
-              <li key={product.id} className="flex items-center gap-3 px-3 py-2">
+              <li key={product.id} className="flex flex-wrap items-center gap-3 px-3 py-2">
                 <div className="relative size-9 shrink-0 overflow-hidden rounded-md bg-zinc-100">
                   {product.imageUrl && (
                     <Image src={product.imageUrl} alt={product.name} fill sizes="36px" className="object-cover" />
                   )}
                 </div>
-                <span className="flex-1 truncate text-zinc-800">{product.name}</span>
-                <div className="w-56 shrink-0">
+                <span className="min-w-0 flex-1 truncate text-zinc-800">{product.name}</span>
+                <div className="w-full shrink-0 sm:w-56">
                   <StatusSelect
                     value=""
                     placeholder="Mover a…"

@@ -27,7 +27,7 @@ export function DesktopNavbar({ categories, search, containerRef, dropdown }: De
   return (
     <nav className="hidden md:flex fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-3rem)] lg:w-[calc(100%-5rem)] max-w-[105rem] items-center justify-between space-x-4 bg-zinc-900 rounded-2xl px-6 py-3 shadow-xl">
       <Link href="/">
-        <Image src="/Logo.svg" alt="Bum Nation" width={100} height={100} className="object-contain" />
+        <Image src="/Logo.webp" alt="Bum Nation" width={100} height={100} className="object-contain" />
       </Link>
 
       {isAdmin ? (
