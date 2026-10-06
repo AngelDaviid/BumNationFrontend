@@ -8,9 +8,11 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { useAuthStore } from '@/stores/auth.store';
+import { useLogout } from '@/hooks/auth-hook/use-logout';
 
 export function UserMenu() {
-  const { isAuthenticated, user, logout, hasHydrated } = useAuthStore();
+  const { isAuthenticated, user, hasHydrated } = useAuthStore();
+  const logout = useLogout();
 
   // Evita mostrar "LogIn" un instante antes de cargar la sesión
   if (!hasHydrated) {
@@ -71,7 +73,7 @@ export function UserMenu() {
           </>
         )}
         <DropdownMenuSeparator className="bg-zinc-700" />
-        <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-400 hover:text-red-300">
+        <DropdownMenuItem onClick={() => void logout()} className="cursor-pointer text-red-400 hover:text-red-300">
           Cerrar sesión
         </DropdownMenuItem>
       </DropdownMenuContent>

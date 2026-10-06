@@ -2,7 +2,6 @@ import { RegisterData, User } from "@/types";
 import { apiClient } from "./client";
 
 interface AuthResponse {
-    access_token: string;
     user: User;
 }
 
@@ -18,5 +17,8 @@ export const authApi = {
         apiClient<AuthResponse>('auth/register', {
             method: 'POST',
             body: data
-        })
+        }),
+
+    logout: () =>
+        apiClient<void>('auth/logout', { method: 'POST' }),
 }

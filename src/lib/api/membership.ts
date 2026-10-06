@@ -2,36 +2,33 @@ import { CreateMembershipData, GymMembership, MembershipPayment, MembershipStatu
 import { apiClient } from './client';
 
 export const membershipApi = {
-  getMyMembership: (token: string) =>
-    apiClient<MembershipWithStats>('/gym-membership/me', { token }),
+  getMyMembership: () =>
+    apiClient<MembershipWithStats>('/gym-membership/me'),
 
-  getMyPayments: (token: string) =>
-    apiClient<MembershipPayment[]>('/gym-membership/me/payments', { token }),
+  getMyPayments: () =>
+    apiClient<MembershipPayment[]>('/gym-membership/me/payments'),
 
-  getAll: (token: string) =>
-    apiClient<MembershipWithStats[]>('/gym-membership', { token }),
+  getAll: () =>
+    apiClient<MembershipWithStats[]>('/gym-membership'),
 
-  getByUserId: (userId: string, token: string) =>
-    apiClient<MembershipWithStats>(`/gym-membership/${userId}`, { token }),
+  getByUserId: (userId: string) =>
+    apiClient<MembershipWithStats>(`/gym-membership/${userId}`),
 
-  create: (userId: string, data: CreateMembershipData, token: string) =>
+  create: (userId: string, data: CreateMembershipData) =>
     apiClient<GymMembership>(`/gym-membership/${userId}`, {
       method: 'POST',
       body: data,
-      token,
     }),
 
-  renew: (userId: string, data: RenewMembershipData, token: string) =>
+  renew: (userId: string, data: RenewMembershipData) =>
     apiClient<GymMembership>(`/gym-membership/${userId}/renew`, {
       method: 'POST',
       body: data,
-      token,
     }),
 
-  updateStatus: (userId: string, status: MembershipStatus, token: string) =>
+  updateStatus: (userId: string, status: MembershipStatus) =>
     apiClient<GymMembership>(`/gym-membership/${userId}/status`, {
       method: 'PATCH',
       body: { status },
-      token,
     }),
 };

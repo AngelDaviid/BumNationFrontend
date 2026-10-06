@@ -1,5 +1,4 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {useAuthStore} from "@/stores/auth.store";
 import {Product} from "@/types";
 import {productsApi} from "@/lib/api/products";
 import {toast} from "sonner";
@@ -12,10 +11,9 @@ interface UploadProductImageVariables {
 
 export function useUploadProductImage() {
     const queryClient = useQueryClient()
-    const {token} = useAuthStore()
 
     return useMutation<Product, Error, UploadProductImageVariables>({
-        mutationFn: ({id, file}) => productsApi.uploadProductImage(id, file, token!),
+        mutationFn: ({id, file}) => productsApi.uploadProductImage(id, file),
 
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['products']})

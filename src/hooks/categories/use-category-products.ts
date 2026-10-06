@@ -1,13 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { productsApi } from "@/lib/api/products";
-import { useAuthStore } from "@/stores/auth.store";
 import { useCategories } from "@/hooks/categories/use-categories";
 import { getApiErrorMessage } from "@/hooks/memberships/use-memberships";
 import { Category } from "@/types";
 
 export function useCategoryProducts(category: Category) {
-  const { token } = useAuthStore();
   const queryClient = useQueryClient();
   const { categories } = useCategories();
 
@@ -18,7 +16,7 @@ export function useCategoryProducts(category: Category) {
 
   const moveProduct = useMutation({
     mutationFn: ({ productId, categoryId }: { productId: number; categoryId: number }) =>
-      productsApi.changeCategory(productId, categoryId, token!),
+      productsApi.changeCategory(productId, categoryId),
     onSuccess: (product, { categoryId }) => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       const target = categories.find((c) => c.id === categoryId)?.name ?? "otra categoría";

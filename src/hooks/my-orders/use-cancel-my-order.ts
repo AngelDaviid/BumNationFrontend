@@ -3,19 +3,17 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { ordersApi } from "@/lib/api/orders";
 import { getApiErrorMessage } from "@/lib/utils/api-error";
-import { useAuthStore } from "@/stores/auth.store";
 
 interface CancelOrderFormValues {
   reason: string;
 }
 
 export function useCancelMyOrder(orderId: string) {
-  const { token } = useAuthStore();
   const queryClient = useQueryClient();
   const { register, handleSubmit, reset } = useForm<CancelOrderFormValues>({ defaultValues: { reason: "" } });
 
   const mutation = useMutation({
-    mutationFn: (reason?: string) => ordersApi.cancel(orderId, reason, token!),
+    mutationFn: (reason?: string) => ordersApi.cancel(orderId, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-orders"] });
       queryClient.invalidateQueries({ queryKey: ["products"] });

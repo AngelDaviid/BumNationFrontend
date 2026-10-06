@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@/stores/auth.store";
 import { categoriesApi } from "@/lib/api/categories";
 import { toast } from "sonner";
 import { getApiErrorMessage } from "@/hooks/memberships/use-memberships";
@@ -18,13 +17,12 @@ export function useCategories() {
 }
 
 export function useCategoryMutations() {
-  const { token } = useAuthStore();
   const queryClient = useQueryClient();
   const onSuccess = () => queryClient.invalidateQueries({ queryKey: ["categories"] });
 
   return {
     create: useMutation({
-      mutationFn: (name: string) => categoriesApi.create(name, token!),
+      mutationFn: (name: string) => categoriesApi.create(name),
       onSuccess: () => {
         onSuccess();
         toast.success("Categoría creada");
@@ -33,7 +31,7 @@ export function useCategoryMutations() {
     }),
     update: useMutation({
       mutationFn: ({ id, name }: { id: number; name: string }) =>
-        categoriesApi.update(id, name, token!),
+        categoriesApi.update(id, name),
       onSuccess: () => {
         onSuccess();
         toast.success("Categoría actualizada");
@@ -41,7 +39,7 @@ export function useCategoryMutations() {
       onError: (error) => toast.error(getApiErrorMessage(error) ?? "No se pudo actualizar la categoría"),
     }),
     remove: useMutation({
-      mutationFn: (id: number) => categoriesApi.delete(id, token!),
+      mutationFn: (id: number) => categoriesApi.delete(id),
       onSuccess: () => {
         onSuccess();
         toast.success("Categoría eliminada");

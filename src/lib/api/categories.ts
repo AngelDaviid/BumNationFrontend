@@ -11,23 +11,18 @@ export const categoriesApi = {
   getById: (id: number) =>
     apiClient<Category>(`/category/${id}`),
 
-  create: (name: string, token: string) =>
+  create: (name: string) =>
     apiClient<Category>('/category', {
       method: 'POST',
       body: { name },
-      token,
     }),
 
-  update: (id: number, name: string, token: string) =>
+  update: (id: number, name: string) =>
     apiClient<Category>(`/category/${id}`, {
       method: 'PATCH',
       body: { name },
-      token,
     }),
 
-  delete: (id: number, token: string) =>
-    apiClient<void>(`/category/${id}`, {
-      method: 'DELETE',
-      token,
-    }),
+  delete: (id: number) =>
+    apiClient<void>(`/category/${id}`, { method: 'DELETE' }),
 };

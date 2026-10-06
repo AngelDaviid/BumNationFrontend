@@ -3,12 +3,12 @@ import { useAuthStore } from "@/stores/auth.store";
 import { membershipApi } from "@/lib/api/membership";
 
 export function useMemberships() {
-  const { token, hasHydrated } = useAuthStore();
+  const { isAuthenticated, hasHydrated } = useAuthStore();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["memberships"],
-    queryFn: () => membershipApi.getAll(token!),
-    enabled: !!token,
+    queryFn: () => membershipApi.getAll(),
+    enabled: isAuthenticated,
   });
 
   return {
@@ -19,12 +19,12 @@ export function useMemberships() {
 }
 
 export function useUserMembership(userId: string | null) {
-  const { token } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["memberships", userId],
-    queryFn: () => membershipApi.getByUserId(userId!, token!),
-    enabled: !!token && !!userId,
+    queryFn: () => membershipApi.getByUserId(userId!),
+    enabled: isAuthenticated && !!userId,
     retry: false,
   });
 
