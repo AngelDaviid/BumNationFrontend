@@ -8,12 +8,14 @@ interface UseProductsParams extends ProductListFilters {
   // Búsqueda controlada desde fuera (p. ej. la URL). Si no se pasa, se usa
   // la búsqueda interna con setSearch.
   search?: string;
+  page?: number;
   initialPage?: number;
   limit?: number;
 }
 
-export function useProducts({ categoryId, search: externalSearch, initialPage = 1, limit = 10, brand, sort, inStock }: UseProductsParams) {
-  const [page, setPage] = useState(initialPage);
+export function useProducts({ categoryId, search: externalSearch, page: externalPage, initialPage = 1, limit = 10, brand, sort, inStock }: UseProductsParams) {
+  const [internalPage, setPage] = useState(initialPage);
+  const page = externalPage ?? internalPage;
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
