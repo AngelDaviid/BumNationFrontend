@@ -21,7 +21,7 @@ export default function LoginPage() {
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
       header={<FormTitle title="Iniciar sesión" logoSrc="/LogoNegro.webp" logoAlt="Bum Nation" />}
-      className={"min-h-screen"}
+      className={"min-h-dvh"}
       footer={
         <>
           <Link href="/register" className="text-sm text-zinc-500 hover:text-zinc-700 transition-colors">

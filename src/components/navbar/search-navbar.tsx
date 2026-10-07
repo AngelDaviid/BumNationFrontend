@@ -36,7 +36,7 @@ export function SearchBar({
           onFocus={dropdown.open}
           placeholder="¿Qué estás buscando?"
           className={`bg-transparent text-zinc-300 placeholder-zinc-500 outline-none w-full ${
-            isDesktop ? 'text-md' : 'text-sm'
+            isDesktop ? 'text-md' : 'text-base'
           }`}
         />
       </form>

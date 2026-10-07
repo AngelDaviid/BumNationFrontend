@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useBodyScrollLock } from '@/hooks/use-body-scroll-lock';
 
 export function useMobileMenu() {
   const pathname = usePathname();
@@ -13,12 +14,7 @@ export function useMobileMenu() {
     setIsProductsOpen(false);
   }
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  useBodyScrollLock(isOpen);
 
   return {
     isOpen,

@@ -50,6 +50,7 @@ export const useRegistration = () => {
       setAuth(user);
       toast.success('Cuenta creada, ¡bienvenido a Bum Nation!');
       router.push('/');
+      router.refresh();
     } catch {
       toast.error('No se pudo crear la cuenta. Verifica tus datos e intenta de nuevo.');
     }

@@ -15,6 +15,7 @@ export const useLogout = () => {
       clearSession();
       queryClient.clear();
       router.push("/login");
+      router.refresh();
     }
   };
 };
