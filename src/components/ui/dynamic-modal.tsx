@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useRef, useState, PointerEvent, ReactNode } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,6 +31,8 @@ const mobileBodyClasses: Record<MobileLayout, string> = {
   fullscreen: "",
   sheet: "",
 };
+
+const DOUBLE_CLICK_WINDOW_MS = 500;
 
 const sizeClasses: Record<ModalSize, string> = {
   sm: "sm:max-w-sm",
@@ -69,6 +71,7 @@ export function DynamicModal({
 }: ModalProps) {
   const layout = mobileLayout ?? (size === "xl" || size === "full" ? "fullscreen" : "center");
   const [internalOpen, setInternalOpen] = useState(false);
+  const lastInsidePointerDown = useRef(0);
 
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : internalOpen;
@@ -76,8 +79,13 @@ export function DynamicModal({
 
   const close = () => setOpen(false);
 
+  const handlePointerDownCapture = (event: PointerEvent<HTMLDivElement>) => {
+    lastInsidePointerDown.current = event.timeStamp;
+  };
+
   const handleInteractOutside = (event: Event) => {
-    if (!closeOnOutsideClick) event.preventDefault();
+    const isFollowUpClick = event.timeStamp - lastInsidePointerDown.current < DOUBLE_CLICK_WINDOW_MS;
+    if (!closeOnOutsideClick || isFollowUpClick) event.preventDefault();
   };
 
   const handleOpenAutoFocus = (event: Event) => {
@@ -89,6 +97,7 @@ export function DynamicModal({
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
       <DialogContent
         className={cn("max-h-[90dvh] overflow-y-auto", sizeClasses[size], mobileLayoutClasses[layout], className)}
+        onPointerDownCapture={handlePointerDownCapture}
         onInteractOutside={handleInteractOutside}
         onOpenAutoFocus={handleOpenAutoFocus}
       >
