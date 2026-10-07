@@ -26,6 +26,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  devIndicators:false,
   poweredByHeader: false,
   images:{
     qualities: [50, 75, 90],

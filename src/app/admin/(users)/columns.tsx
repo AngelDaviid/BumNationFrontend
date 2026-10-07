@@ -1,34 +1,10 @@
 import { MembershipStatus, User } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox"
 import { UserActionsCell } from "./user-actions-cell";
 import { StatusBadge } from "@/components/membership/status-badge";
 import {formatDateOnly} from "@/lib/utils/date";
 
 export const columns: ColumnDef<User>[] = [
-  {
-    id: "select",
-    meta: { mobile: "hidden" },
-    header: ({ table }) => (
-      <Checkbox
-        className="cursor-pointer"
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        className="cursor-pointer"
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-  },
   {
     id: "status",
     header: "Estado",
