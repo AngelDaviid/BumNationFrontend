@@ -50,7 +50,6 @@ export default function OrdersPage() {
         description={selected ? formatDate(selected.createdAt) : undefined}
         size="xl"
         mobileLayout="sheet"
-        closeOnOutsideClick
         trigger={<span className="hidden" />}
         open={!!selected}
         onOpenChange={(open) => !open && clearSelected()}
