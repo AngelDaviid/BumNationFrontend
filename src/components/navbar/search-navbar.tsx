@@ -8,6 +8,7 @@ interface SearchBarProps {
   search: ReturnType<typeof useProductSearch>;
   dropdown: ReturnType<typeof useSearchDropdown>;
   onSubmitClose?: () => void;
+  autoFocus?: boolean;
   variant?: 'desktop' | 'mobile';
 }
 
@@ -16,12 +17,13 @@ export function SearchBar({
   search,
   dropdown,
   onSubmitClose,
+  autoFocus = false,
   variant = 'desktop',
 }: SearchBarProps) {
   const isDesktop = variant === 'desktop';
 
   return (
-    <div ref={containerRef} className={isDesktop ? 'relative w-100' : 'relative flex-1 mx-2'}>
+    <div ref={containerRef} className="relative w-full">
       <form
         onSubmit={(e) => search.handleSubmit(e, onSubmitClose)}
         className={`flex items-center gap-2 bg-zinc-800 rounded-full px-4 ${isDesktop ? 'py-2' : 'py-2.5'}`}
@@ -33,6 +35,7 @@ export function SearchBar({
           type="text"
           value={search.query}
           onChange={(e) => search.setQuery(e.target.value)}
+          autoFocus={autoFocus}
           onFocus={dropdown.open}
           placeholder="¿Qué estás buscando?"
           className={`bg-transparent text-zinc-300 placeholder-zinc-500 outline-none w-full ${
