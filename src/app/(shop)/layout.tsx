@@ -14,7 +14,7 @@ export default async function ShopLayout({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="min-h-screen bg-zinc-50">
+      <div className="min-h-dvh bg-zinc-50">
         <Suspense fallback={<div className="h-20" />}>
           <Navbar />
         </Suspense>

@@ -31,6 +31,7 @@ export const useLogin = () => {
       setAuth(user);
       toast.success(`Bienvenido, ${user.firstName}`);
       router.push('/');
+      router.refresh();
     } catch {
       toast.error('Identificación o contraseña incorrectas.');
     }

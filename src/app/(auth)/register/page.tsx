@@ -30,7 +30,7 @@ export default function RegisterPage() {
     <FormCard
       onSubmit={handleSubmit(onSubmit)}
       maxWidth={'2xl'}
-      className={"min-h-screen"}
+      className={"min-h-dvh"}
       header={<FormTitle title="Crear cuenta" logoSrc="/LogoNegro.webp" logoAlt="Bum Nation" />}
       footer={
         <>

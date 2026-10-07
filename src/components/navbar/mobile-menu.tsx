@@ -21,7 +21,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
 
   return (
     <div className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm">
-      <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[92%] max-h-[75vh] overflow-y-auto bg-zinc-900 rounded-2xl px-5 py-5 shadow-2xl flex flex-col gap-1">
+      <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[92%] max-h-[75dvh] overflow-y-auto overscroll-contain bg-zinc-900 rounded-2xl px-5 py-5 shadow-2xl flex flex-col gap-1">
         <Link
           href="/"
           className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
