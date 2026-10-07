@@ -10,12 +10,14 @@ import { useMobileSearch } from '@/hooks/search/use-mobile-search';
 import { SearchBar } from './search-navbar';
 import { CartButton } from './cart-button';
 import { MobileMenu } from './mobile-menu';
+import {BrandLogo} from "@/components/shop/brand-divider";
 
 
 interface MobileNavbarProps {
   categories: Category[];
   search: ReturnType<typeof useProductSearch>;
   menu: ReturnType<typeof useMobileMenu>;
+  mobileSearch: ReturnType<typeof useMobileSearch>;
   containerRef: RefObject<HTMLDivElement | null>;
   dropdown: ReturnType<typeof useSearchDropdown>;
 }
@@ -23,9 +25,7 @@ interface MobileNavbarProps {
 const iconButtonClass =
   'flex size-10 shrink-0 items-center justify-center rounded-full text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors';
 
-export function MobileNavbar({ categories, search, menu, containerRef, dropdown }: MobileNavbarProps) {
-  const mobileSearch = useMobileSearch();
-
+export function MobileNavbar({ categories, search, menu, mobileSearch, containerRef, dropdown }: MobileNavbarProps) {
   const openSearch = () => {
     menu.close();
     mobileSearch.open();
@@ -66,8 +66,8 @@ export function MobileNavbar({ categories, search, menu, containerRef, dropdown 
             {menu.isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <Link href="/" onClick={menu.close} className="shrink-0">
-            <Image src="/Logo.webp" alt="Bum Nation" width={72} height={48} className="h-12 w-auto object-contain" />
+          <Link href="/" onClick={menu.close} className="ml-22 shrink-0">
+            <BrandLogo logo="performance" priority className="h-8 sm:h-16 " />
           </Link>
 
           <div className="-mr-2 ml-auto flex items-center gap-1">

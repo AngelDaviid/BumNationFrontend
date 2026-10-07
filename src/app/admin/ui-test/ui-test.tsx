@@ -39,6 +39,7 @@ import { CartButton } from "@/components/navbar/cart-button";
 import { useProductSearch } from "@/hooks/search/use-product-search";
 import { useSearchDropdown } from "@/hooks/search/use-search-dropdown-menu";
 import { useMobileMenu } from "@/hooks/search/use-mobiel-menu";
+import { useMobileSearch } from "@/hooks/search/use-mobile-search";
 
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { NavUser } from "@/components/ui/nav-user";
@@ -300,6 +301,7 @@ function DesktopNavbarDemo() {
 function MobileNavbarDemo() {
   const search = useProductSearch();
   const menu = useMobileMenu();
+  const mobileSearch = useMobileSearch();
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdown = useSearchDropdown(containerRef);
 
@@ -308,6 +310,7 @@ function MobileNavbarDemo() {
       categories={mockCategories}
       search={search}
       menu={menu}
+      mobileSearch={mobileSearch}
       containerRef={containerRef}
       dropdown={dropdown}
     />

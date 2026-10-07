@@ -39,9 +39,8 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
         className="pointer-events-none absolute -bottom-32 -left-20 size-64 rounded-full bg-brand/10 blur-3xl"
       />
 
-      <div className="relative mx-auto w-full max-w-[110rem] px-4 py-12 sm:px-6 sm:py-16 lg:px-10">
+      <div className="relative mx-auto w-full max-w-[110rem] px-4 pt-24 pb-12 sm:px-6 sm:pt-28 sm:pb-16 lg:px-10">
         <div className="space-y-4">
-          <BrandLogo logo="performance" priority className="h-12 sm:h-16" />
           <h1 className="text-4xl font-bold leading-tight text-white sm:text-6xl">
             Todo para tu <span className="text-brand">rendimiento</span>
           </h1>

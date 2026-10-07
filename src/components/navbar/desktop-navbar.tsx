@@ -10,6 +10,7 @@ import { ProductsDropdown } from './products-dropdown';
 import { SearchBar } from './search-navbar';
 import { UserMenu } from './user-menu';
 import { CartButton } from './cart-button';
+import {BrandLogo} from "@/components/shop/brand-divider";
 
 
 interface DesktopNavbarProps {
@@ -28,11 +29,11 @@ export function DesktopNavbar({ categories, search, containerRef, dropdown }: De
   const isAdmin = isAuthenticated && user?.role === 'ADMIN';
 
   return (
-    <div className="hidden md:block">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-6 lg:gap-8 lg:px-8">
-        <Link href="/" className="shrink-0">
-          <Image src="/Logo.webp" alt="Bum Nation" width={84} height={56} className="h-14 w-auto object-contain" />
-        </Link>
+    <div className="hidden h-20 md:block">
+  <div className="flex pt-2 lg:gap-8 lg:px-8">
+      <Link href="/" className="shrink-0">
+        <BrandLogo logo="performance" priority className="h-8 sm:h-16" />
+      </Link>
 
         {isAdmin ? (
           <nav className="flex flex-1 items-center">
