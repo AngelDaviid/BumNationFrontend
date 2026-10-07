@@ -14,7 +14,7 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
   const featured = categories.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-zinc-900 px-6 py-8 sm:px-10 sm:py-12">
+    <section className="relative -mt-6 flex min-h-[55dvh] items-center overflow-hidden bg-zinc-900 sm:min-h-[65dvh] md:-mt-10">
       <Image
         src="/ImgGym.webp"
         alt=""
@@ -23,7 +23,7 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
         loading="eager"
         fetchPriority="high"
         quality={50}
-        sizes="(max-width: 1760px) 100vw, 1760px"
+        sizes="100vw"
         className="object-cover object-center"
       />
       <div
@@ -39,13 +39,13 @@ export function ShopHero({ categories, buildCategoryHref }: ShopHeroProps) {
         className="pointer-events-none absolute -bottom-32 -left-20 size-64 rounded-full bg-brand/10 blur-3xl"
       />
 
-      <div className="relative">
+      <div className="relative mx-auto w-full max-w-[110rem] px-4 py-12 sm:px-6 sm:py-16 lg:px-10">
         <div className="space-y-4">
           <BrandLogo logo="performance" priority className="h-12 sm:h-16" />
-          <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl">
+          <h1 className="text-4xl font-bold leading-tight text-white sm:text-6xl">
             Todo para tu <span className="text-brand">rendimiento</span>
           </h1>
-          <p className="max-w-md text-sm text-zinc-300 sm:text-base">
+          <p className="max-w-lg text-base text-zinc-300 sm:text-lg">
             Proteínas, creatinas, pre-entrenos y todo lo que necesitas para entrenar al máximo.
           </p>
 

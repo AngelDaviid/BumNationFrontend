@@ -19,55 +19,52 @@ interface DesktopNavbarProps {
   dropdown: ReturnType<typeof useSearchDropdown>;
 }
 
+const linkClass = (isActive: boolean) =>
+  `text-sm font-medium whitespace-nowrap transition-colors ${isActive ? 'text-neon' : 'text-zinc-300 hover:text-white'}`;
+
 export function DesktopNavbar({ categories, search, containerRef, dropdown }: DesktopNavbarProps) {
   const pathname = usePathname();
   const { isAuthenticated, user, hasHydrated } = useAuthStore();
   const isAdmin = isAuthenticated && user?.role === 'ADMIN';
 
   return (
-    <nav className="hidden md:flex fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-3rem)] lg:w-[calc(100%-5rem)] max-w-[105rem] items-center justify-between space-x-4 bg-zinc-900 rounded-2xl px-6 py-3 shadow-xl">
-      <Link href="/">
-        <Image src="/Logo.webp" alt="Bum Nation" width={100} height={100} className="object-contain" />
-      </Link>
-
-      {isAdmin ? (
-        <Link
-          href="/admin"
-          className={`text-md font-medium transition-colors ${
-            pathname === '/admin' ? 'text-neon' : 'text-zinc-300 hover:text-white'
-          }`}
-        >
-          Inicio
+    <div className="hidden md:block">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-6 lg:gap-8 lg:px-8">
+        <Link href="/" className="shrink-0">
+          <Image src="/Logo.webp" alt="Bum Nation" width={84} height={56} className="h-14 w-auto object-contain" />
         </Link>
-      ) : (
-        // Hasta cargar la sesión se ocultan (sin quitarlos del HTML) para que
-        // un admin no vea un instante los enlaces de la tienda
-        <div className={`contents ${hasHydrated ? '' : '[&>*]:invisible'}`}>
-          <div className="flex items-center gap-6">
-            <Link
-              href="/"
-              className={`text-md font-medium transition-colors ${
-                pathname === '/' ? 'text-neon' : 'text-zinc-300 hover:text-white'
-              }`}
-            >
+
+        {isAdmin ? (
+          <nav className="flex flex-1 items-center">
+            <Link href="/admin" className={linkClass(pathname === '/admin')}>
               Inicio
             </Link>
+          </nav>
+        ) : (
+          <div className={`flex flex-1 items-center gap-6 lg:gap-8 ${hasHydrated ? '' : 'invisible'}`}>
+            <nav className="flex items-center gap-6">
+              <Link href="/" className={linkClass(pathname === '/')}>
+                Inicio
+              </Link>
 
-            <ProductsDropdown categories={categories} />
+              <ProductsDropdown categories={categories} isActive={pathname.startsWith('/products')} />
 
-            <Link href="/about" className="text-md font-medium text-zinc-300 hover:text-white transition-colors">
-              Sobre nosotros
-            </Link>
+              <Link href="/about" className={linkClass(pathname === '/about')}>
+                Sobre nosotros
+              </Link>
+            </nav>
+
+            <div className="ml-auto w-full max-w-md">
+              <SearchBar containerRef={containerRef} search={search} dropdown={dropdown} variant="desktop" />
+            </div>
           </div>
+        )}
 
-          <SearchBar containerRef={containerRef} search={search} dropdown={dropdown} variant="desktop" />
+        <div className="flex shrink-0 items-center gap-1">
+          <UserMenu />
+          <CartButton />
         </div>
-      )}
-
-      <div className="flex items-center gap-4">
-        <UserMenu />
-        <CartButton variant="desktop" />
       </div>
-    </nav>
+    </div>
   );
 }

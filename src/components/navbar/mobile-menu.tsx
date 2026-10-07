@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Grid2X2, User, LogIn, ChevronDown, Heart } from 'lucide-react';
-import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Category } from '@/types';
 import { useAuthStore } from '@/stores/auth.store';
 import { useLogout } from '@/hooks/auth-hook/use-logout';
@@ -20,8 +19,11 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
   if (!menu.isOpen) return null;
 
   return (
-    <div className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm">
-      <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[92%] max-h-[75dvh] overflow-y-auto overscroll-contain bg-zinc-900 rounded-2xl px-5 py-5 shadow-2xl flex flex-col gap-1">
+    <div className="md:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-black/60" onClick={menu.close}>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="max-h-full overflow-y-auto overscroll-contain border-b border-zinc-800 bg-zinc-900 px-4 py-3 flex flex-col gap-1"
+      >
         <Link
           onClick={menu.close}
           href="/"
@@ -77,7 +79,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
           Sobre nosotros
         </Link>
 
-        <DropdownMenuSeparator className="bg-zinc-700 my-2" />
+        <div className="my-2 h-px bg-zinc-800" />
 
         {!hasHydrated ? null : isAuthenticated ? (
           <>
@@ -123,7 +125,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
                 Panel Admin
               </Link>
             )}
-            <DropdownMenuSeparator className="bg-zinc-700 my-2" />
+            <div className="my-2 h-px bg-zinc-800" />
             <button
               type="button"
               onClick={() => void logout()}

@@ -24,7 +24,7 @@ export default function Navbar() {
   const mobileDropdown = useSearchDropdown(mobileContainerRef);
 
   return (
-    <>
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-zinc-900">
       <DesktopNavbar
         categories={categories}
         search={search}
@@ -39,8 +39,6 @@ export default function Navbar() {
         containerRef={mobileContainerRef}
         dropdown={mobileDropdown}
       />
-
-      <div className="h-20" />
-    </>
+    </header>
   );
 }

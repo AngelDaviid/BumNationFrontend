@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import { RefObject } from 'react';
 import { Category } from '@/types';
 import { useProductSearch } from '@/hooks/search/use-product-search';
 import { useSearchDropdown } from '@/hooks/search/use-search-dropdown-menu';
 import { useMobileMenu } from '@/hooks/search/use-mobiel-menu';
+import { useMobileSearch } from '@/hooks/search/use-mobile-search';
 import { SearchBar } from './search-navbar';
 import { CartButton } from './cart-button';
 import { MobileMenu } from './mobile-menu';
@@ -19,38 +20,66 @@ interface MobileNavbarProps {
   dropdown: ReturnType<typeof useSearchDropdown>;
 }
 
+const iconButtonClass =
+  'flex size-10 shrink-0 items-center justify-center rounded-full text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors';
+
 export function MobileNavbar({ categories, search, menu, containerRef, dropdown }: MobileNavbarProps) {
+  const mobileSearch = useMobileSearch();
+
+  const openSearch = () => {
+    menu.close();
+    mobileSearch.open();
+  };
+
+  const closeSearch = () => {
+    dropdown.close();
+    mobileSearch.close();
+  };
+
   return (
-    <>
-      <nav className="md:hidden fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] flex items-center justify-between bg-zinc-900 rounded-2xl px-4 py-3 shadow-xl">
-        <Link href="/" onClick={menu.close}>
-          <Image src="/Logo.webp" alt="Bum Nation" width={80} height={80} className="object-contain" />
-        </Link>
-
-        <SearchBar
-          containerRef={containerRef}
-          search={search}
-          dropdown={dropdown}
-          onSubmitClose={menu.close}
-          variant="mobile"
-        />
-
-        <div className="flex items-center gap-3">
-          <CartButton variant="mobile" />
-
+    <div className="md:hidden">
+      {mobileSearch.isOpen ? (
+        <div className="flex h-16 items-center gap-2 px-4">
+          <div className="min-w-0 flex-1">
+            <SearchBar
+              containerRef={containerRef}
+              search={search}
+              dropdown={dropdown}
+              onSubmitClose={closeSearch}
+              variant="mobile"
+              autoFocus
+            />
+          </div>
+          <button type="button" onClick={closeSearch} aria-label="Cerrar búsqueda" className={`-mr-2 ${iconButtonClass}`}>
+            <X size={22} />
+          </button>
+        </div>
+      ) : (
+        <div className="flex h-16 items-center gap-2 px-4">
           <button
             type="button"
             onClick={menu.toggle}
             aria-label={menu.isOpen ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={menu.isOpen}
-            className="flex items-center justify-center text-zinc-300 hover:text-white transition-colors"
+            className={`-ml-2 ${iconButtonClass}`}
           >
             {menu.isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+
+          <Link href="/" onClick={menu.close} className="shrink-0">
+            <Image src="/Logo.webp" alt="Bum Nation" width={72} height={48} className="h-12 w-auto object-contain" />
+          </Link>
+
+          <div className="-mr-2 ml-auto flex items-center gap-1">
+            <button type="button" onClick={openSearch} aria-label="Buscar productos" className={iconButtonClass}>
+              <Search size={22} />
+            </button>
+            <CartButton />
+          </div>
         </div>
-      </nav>
+      )}
 
       <MobileMenu categories={categories} menu={menu} />
-    </>
+    </div>
   );
 }

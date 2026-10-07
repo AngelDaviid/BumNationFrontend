@@ -663,8 +663,7 @@ export function UiTest() {
               dark
             >
               <div className="flex items-center gap-10">
-                <CartButton variant="desktop" />
-                <CartButton variant="mobile" />
+                <CartButton />
               </div>
             </ComponentPreview>
           </div>
