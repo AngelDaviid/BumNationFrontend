@@ -23,6 +23,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
     <div className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm">
       <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[92%] max-h-[75dvh] overflow-y-auto overscroll-contain bg-zinc-900 rounded-2xl px-5 py-5 shadow-2xl flex flex-col gap-1">
         <Link
+          onClick={menu.close}
           href="/"
           className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
             pathname === '/' ? 'text-neon bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
@@ -47,6 +48,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
         {menu.isProductsOpen && (
           <div className="ml-9 flex flex-col gap-1 mb-1">
             <Link
+              onClick={menu.close}
               href="/products"
               className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-neon hover:bg-zinc-800 transition-colors"
             >
@@ -55,6 +57,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
             {categories.map((cat) => (
               <Link
                 key={cat.id}
+                onClick={menu.close}
                 href={`/products?category=${cat.id}`}
                 className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-neon hover:bg-zinc-800 transition-colors"
               >
@@ -65,6 +68,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
         )}
 
         <Link
+          onClick={menu.close}
           href="/about"
           className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
             pathname === '/about' ? 'text-neon bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
@@ -81,6 +85,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
               {user?.firstName} {user?.firstLastName}
             </div>
             <Link
+              onClick={menu.close}
               href="/profile"
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
             >
@@ -88,6 +93,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
               Mi perfil
             </Link>
             <Link
+              onClick={menu.close}
               href="/favorites"
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
             >
@@ -95,12 +101,14 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
               Mis favoritos
             </Link>
             <Link
+              onClick={menu.close}
               href="/orders"
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
             >
               Mis pedidos
             </Link>
             <Link
+              onClick={menu.close}
               href="/membership"
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
             >
@@ -108,6 +116,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
             </Link>
             {user?.role === 'ADMIN' && (
               <Link
+                onClick={menu.close}
                 href="/admin"
                 className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-neon hover:bg-zinc-800 transition-colors"
               >
@@ -125,6 +134,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
           </>
         ) : (
           <Link
+            onClick={menu.close}
             href="/login"
             className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
           >
