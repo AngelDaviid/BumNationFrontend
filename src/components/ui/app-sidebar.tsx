@@ -159,7 +159,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4">
+      <SidebarFooter>
         <NavUser />
       </SidebarFooter>
     </Sidebar>
