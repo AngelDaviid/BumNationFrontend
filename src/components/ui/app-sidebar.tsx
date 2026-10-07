@@ -89,7 +89,7 @@ export function AppSidebar() {
                         tooltip={item.label}
                         className={`rounded-md border-l-2 ${
                           active
-                            ? "border-[#6BFF3C] bg-zinc-900 text-[#6BFF3C] hover:bg-zinc-900 hover:text-[#6BFF3C]"
+                            ? "border-neon bg-zinc-900 text-neon hover:bg-zinc-900 hover:text-neon"
                             : "border-transparent text-zinc-400 hover:bg-zinc-900 hover:text-white"
                         }`}
                       >
@@ -119,7 +119,7 @@ export function AppSidebar() {
                           tooltip={item.label}
                           className={`rounded-md border-l-2 ${
                             isParentActive
-                              ? "border-[#6BFF3C] text-[#6BFF3C] hover:bg-zinc-900 hover:text-[#6BFF3C]"
+                              ? "border-neon text-neon hover:bg-zinc-900 hover:text-neon"
                               : "border-transparent text-zinc-400 hover:bg-zinc-900 hover:text-white"
                           }`}
                         >
@@ -139,7 +139,7 @@ export function AppSidebar() {
                                   asChild
                                   className={`hover:bg-zinc-900 ${
                                     active
-                                      ? "text-[#6BFF3C] hover:text-[#6BFF3C]"
+                                      ? "text-neon hover:text-neon"
                                       : "text-zinc-400 hover:text-white"
                                   }`}
                                 >

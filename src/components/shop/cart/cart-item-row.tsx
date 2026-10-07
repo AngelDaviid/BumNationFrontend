@@ -45,7 +45,7 @@ export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = fal
             <p className="truncate text-[10px] font-semibold uppercase tracking-wide text-zinc-500 sm:text-xs">
               {product.brand}
             </p>
-            <Link href={href} className="line-clamp-2 text-sm font-semibold text-zinc-900 hover:text-[#65C33A] sm:text-base">
+            <Link href={href} className="line-clamp-2 text-sm font-semibold text-zinc-900 hover:text-brand-text sm:text-base">
               {product.name}
             </Link>
             <p className="mt-0.5 text-xs text-zinc-500">${formattedPrice(product.price)} c/u</p>
@@ -72,7 +72,7 @@ export function CartItemRow({ item, onChangeQuantity, onRemove, isUpdating = fal
             canIncrement={quantity < product.stock}
             disabled={isUpdating}
           />
-          <span className="text-base font-bold text-[#65C33A]">${formattedPrice(lineTotal)}</span>
+          <span className="text-base font-bold text-brand-text">${formattedPrice(lineTotal)}</span>
         </div>
 
         {exceedsStock && (

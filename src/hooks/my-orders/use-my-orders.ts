@@ -4,13 +4,13 @@ import { ordersApi } from "@/lib/api/orders";
 import { useAuthStore } from "@/stores/auth.store";
 
 export function useMyOrders(limit = 10) {
-  const { token, isAuthenticated, hasHydrated, user } = useAuthStore();
+  const { isAuthenticated, hasHydrated, user } = useAuthStore();
   const [page, setPage] = useState(1);
 
   const { data, isLoading, isFetching, isError, refetch } = useQuery({
     queryKey: ["my-orders", user?.id, page, limit],
-    queryFn: () => ordersApi.getMyOrders(token!, page, limit),
-    enabled: isAuthenticated && !!token,
+    queryFn: () => ordersApi.getMyOrders(page, limit),
+    enabled: isAuthenticated,
     placeholderData: keepPreviousData,
     refetchInterval: 30_000,
     refetchOnWindowFocus: "always",

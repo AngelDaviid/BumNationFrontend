@@ -2,17 +2,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { cartApi } from "@/lib/api/cart";
 import { getApiErrorMessage } from "@/lib/utils/api-error";
-import { useAuthStore } from "@/stores/auth.store";
 import { Cart, CartItem } from "@/types";
 import { useCartQueryKey } from "./use-cart";
 
 export function useRemoveCartItem() {
-  const { token } = useAuthStore();
   const queryClient = useQueryClient();
   const queryKey = useCartQueryKey();
 
   return useMutation({
-    mutationFn: (item: CartItem) => cartApi.removeItem(item.id, token!),
+    mutationFn: (item: CartItem) => cartApi.removeItem(item.id),
 
     onMutate: async (item) => {
       await queryClient.cancelQueries({ queryKey });

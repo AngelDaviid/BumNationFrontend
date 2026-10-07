@@ -65,7 +65,7 @@ function MembershipActions({ membership }: { membership: MembershipWithStats }) 
                     title="Renovar membresía"
                     description={memberName(membership)}
                     trigger={
-                        <Button size="sm" className="h-7 bg-[#6BFF3C] px-2 text-xs font-semibold text-black hover:bg-[#5de52f]">
+                        <Button size="sm" className="h-7 px-2 text-xs">
                             Renovar
                         </Button>
                     }

@@ -1,25 +1,27 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils/utils";
 
-// Imágenes ya recortadas al área visible del logo
 const LOGOS = {
   suplementacion: {
     src: "/SuplementacionDeportiva.webp",
     alt: "Suplementación deportiva",
     width: 1200,
     height: 359,
+    sizes: "(min-width: 1024px) 321px, (min-width: 640px) 268px, 188px",
   },
   inventario: {
     src: "/Inventario.webp",
     alt: "Inventario",
     width: 1200,
     height: 400,
+    sizes: "(min-width: 1024px) 288px, (min-width: 640px) 240px, 168px",
   },
   performance: {
     src: "/LogoPerformance.webp",
     alt: "BN Performance",
     width: 1200,
     height: 404,
+    sizes: "(min-width: 640px) 190px, 143px",
   },
 } as const;
 
@@ -30,15 +32,15 @@ interface BrandLogoProps {
 }
 
 export function BrandLogo({ logo, className, priority }: BrandLogoProps) {
-  const { src, alt, width, height } = LOGOS[logo];
+  const { src, alt, width, height, sizes } = LOGOS[logo];
   return (
     <Image
       src={src}
       alt={alt}
       width={width}
       height={height}
-      priority={priority}
-      sizes="(max-width: 640px) 200px, 400px"
+      loading={priority ? "eager" : undefined}
+      sizes={sizes}
       className={cn("w-auto", className)}
     />
   );

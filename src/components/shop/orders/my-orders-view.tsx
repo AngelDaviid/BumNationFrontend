@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
 import { OrderStatusPill } from "./order-status-pill";
 
-const pagerButton = "h-10 border-zinc-300 bg-white px-4 text-zinc-700 hover:border-[#65C33A] hover:text-[#65C33A]";
+const pagerButton = "h-10 border-zinc-300 bg-white px-4 text-zinc-700 hover:border-brand hover:text-brand-text";
 
 export function MyOrdersView() {
   const { orders, page, totalPages, isLoading, isFetching, isError, refetch, nextPage, prevPage } = useMyOrders();
@@ -30,7 +30,7 @@ export function MyOrdersView() {
         title="No pudimos cargar tus pedidos"
         description="Revisa tu conexión e inténtalo de nuevo."
         action={
-          <Button onClick={() => refetch()} className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
+          <Button onClick={() => refetch()} className="h-10 px-5">
             <RotateCw /> Reintentar
           </Button>
         }
@@ -45,7 +45,7 @@ export function MyOrdersView() {
         title="Aún no tienes pedidos"
         description="Cuando finalices una compra la verás aquí con su estado."
         action={
-          <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
+          <Button asChild className="h-10 px-5">
             <Link href="/">Ir a la tienda</Link>
           </Button>
         }
@@ -62,7 +62,7 @@ export function MyOrdersView() {
             <li key={order.id}>
               <Link
                 href={`/orders/${order.id}`}
-                className="flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 transition-colors hover:border-[#65C33A] sm:flex-row sm:items-center sm:justify-between sm:p-5"
+                className="flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 transition-colors hover:border-brand sm:flex-row sm:items-center sm:justify-between sm:p-5"
               >
                 <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -74,7 +74,7 @@ export function MyOrdersView() {
                   </p>
                 </div>
                 <div className="flex items-center justify-between gap-3 sm:justify-end">
-                  <span className="text-lg font-bold text-[#65C33A]">${formattedPrice(order.total)}</span>
+                  <span className="text-lg font-bold text-brand-text">${formattedPrice(order.total)}</span>
                   <ChevronRight className="size-5 text-zinc-400" />
                 </div>
               </Link>

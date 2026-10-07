@@ -54,7 +54,7 @@ export function CreateProductForm({onSuccess}: CreateProductFormProps) {
                     type="submit"
                     size="lg"
                     disabled={isPending}
-                    className="flex items-center justify-center gap-2 max-sm:w-full bg-[#6BFF3C] hover:bg-[#5de52f] disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed text-black font-semibold text-sm rounded-lg px-6 py-2.5 transition-colors"
+                    className="flex items-center justify-center gap-2 max-sm:w-full text-sm rounded-lg px-6 py-2.5 transition-colors"
                 >
                     {isPending && <Loader size="sm"/>}
                     {isPending ? 'Creando...' : 'Crear producto'}

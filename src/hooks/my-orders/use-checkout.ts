@@ -3,15 +3,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { ordersApi } from "@/lib/api/orders";
 import { getApiErrorMessage } from "@/lib/utils/api-error";
-import { useAuthStore } from "@/stores/auth.store";
 
 export function useCheckout() {
-  const { token } = useAuthStore();
   const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
-    mutationFn: () => ordersApi.checkout(token!),
+    mutationFn: () => ordersApi.checkout(),
     onSuccess: (order) => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
       queryClient.invalidateQueries({ queryKey: ["products"] });

@@ -25,7 +25,7 @@ export function OriginBadge({ origin }: { origin: ComponentOrigin }) {
   return (
     <span
       className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-        origin === "shadcn" ? "bg-zinc-900 text-white" : "bg-[#6BFF3C]/20 text-[#2f7a14]"
+        origin === "shadcn" ? "bg-zinc-900 text-white" : "bg-neon/20 text-brand-text"
       }`}
     >
       {origin === "shadcn" ? "shadcn" : "Propio"}

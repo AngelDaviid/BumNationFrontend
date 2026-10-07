@@ -22,7 +22,7 @@ export function CheckoutButton({ total, disabled = false }: CheckoutButtonProps)
       trigger={
         <Button
           disabled={disabled}
-          className="h-11 w-full bg-[#65C33A] text-sm font-semibold text-white hover:bg-[#58ad32] disabled:bg-zinc-200 disabled:text-zinc-500 disabled:opacity-100"
+          className="h-11 w-full text-sm"
         >
           Finalizar compra
         </Button>
@@ -36,7 +36,6 @@ export function CheckoutButton({ total, disabled = false }: CheckoutButtonProps)
           <Button
             onClick={() => checkout.mutate(undefined, { onSettled: close })}
             disabled={checkout.isPending}
-            className="bg-[#65C33A] font-semibold text-white hover:bg-[#58ad32]"
           >
             {checkout.isPending && <Loader size="sm" tone="light" />}
             {checkout.isPending ? "Creando pedido…" : "Confirmar pedido"}

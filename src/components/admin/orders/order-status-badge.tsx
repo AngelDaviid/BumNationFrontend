@@ -18,7 +18,7 @@ const styles: Record<OrderStatus, string> = {
   AWAITING_PAYMENT: "bg-amber-100 text-amber-700",
   PAID: "bg-violet-100 text-violet-700",
   SHIPPED: "bg-sky-100 text-sky-700",
-  DELIVERED: "bg-[#6BFF3C]/15 text-[#3f9c1f]",
+  DELIVERED: "bg-neon/15 text-brand-text",
   CANCELLED: "bg-red-100 text-red-600",
 };
 

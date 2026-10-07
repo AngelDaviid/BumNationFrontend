@@ -5,13 +5,13 @@ import { ordersApi } from "@/lib/api/orders";
 
 
 function useAdminOrders({ limit = 10 } = {}) {
-  const { token, hasHydrated } = useAuthStore();
+  const { isAuthenticated, hasHydrated } = useAuthStore();
   const [page, setPage] = useState(1);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["orders", page, limit],
-    queryFn: () => ordersApi.getAll(token!, page, limit),
-    enabled: !!token,
+    queryFn: () => ordersApi.getAll(page, limit),
+    enabled: isAuthenticated,
     placeholderData: keepPreviousData,
   });
 

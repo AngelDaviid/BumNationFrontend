@@ -2,44 +2,36 @@ import { Order, PaginatedResponse } from "@/types";
 import { apiClient } from "./client";
 
 export const ordersApi = {
-    checkout: (token: string) => 
-        apiClient<Order>(`/orders/checkout`, {
-            method: 'POST',
-            token,
-        }),
+    checkout: () => 
+        apiClient<Order>(`/orders/checkout`, { method: 'POST' }),
 
-    getMyOrders: (token: string, page = 1, limit = 10) => 
-        apiClient<PaginatedResponse<Order>>(`/orders/me?page=${page}&limit=${limit}`, {token }),
+    getMyOrders: (page = 1, limit = 10) => 
+        apiClient<PaginatedResponse<Order>>(`/orders/me?page=${page}&limit=${limit}`),
 
-    getById: (id: string, token: string) => 
-        apiClient<Order>(`/orders/${id}`, { token }),
+    getById: (id: string) => 
+        apiClient<Order>(`/orders/${id}`),
 
-    cancel: (id: string, reason: string | undefined, token: string) =>
+    cancel: (id: string, reason: string | undefined) =>
         apiClient <Order>(`/orders/${id}/cancel`, {
             method: 'PATCH',
             body: { cancelReason: reason },
-            token,
         }),
     
-    getAll: (token: string, page = 1, limit = 10) =>
-        apiClient<PaginatedResponse<Order>>(
-            `/orders?page=${page}&limit=${limit}`, { token }
-        ),
+    getAll: (page = 1, limit = 10) =>
+        apiClient<PaginatedResponse<Order>>(`/orders?page=${page}&limit=${limit}`),
 
-    searchByNumber: (orderNumber: number, token: string) =>
-        apiClient<Order>(`/orders/search/${orderNumber}`, { token }),
+    searchByNumber: (orderNumber: number) =>
+        apiClient<Order>(`/orders/search/${orderNumber}`),
 
-    updateStatus: (id: string, status: string, token: string) =>
+    updateStatus: (id: string, status: string) =>
         apiClient<Order>(`/orders/${id}/status`, {
             method: 'PATCH',
             body: { status },
-            token,
         }),
 
-    cancelAsAdmin: (id: string, reason: string | undefined, token: string) =>
+    cancelAsAdmin: (id: string, reason: string | undefined) =>
         apiClient<Order>(`/orders/${id}/admin-cancel`, {
             method: 'PATCH',
             body: { cancelReason: reason },
-            token,
         }),
 }

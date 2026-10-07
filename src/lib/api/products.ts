@@ -38,58 +38,50 @@ export const productsApi = {
 
         return apiClient<PaginatedResponse<Product>>(`/products?${params.toString()}`, {
             signal: options.signal,
+            // En el servidor, la misma consulta se reutiliza 30 s entre visitantes
+            revalidate: 30,
         });
     },
 
     getBrands: () =>
-        apiClient<string[]>('/products/brands'),
+        apiClient<string[]>('/products/brands', { revalidate: 300 }),
 
     getById: (id: number) =>
         apiClient<Product>(`/products/${id}`, {
             tags: ['products'],
         }),
 
-    create: (data: CreateProductData, token: string) =>
+    create: (data: CreateProductData) =>
         apiClient<Product>('/products', {
             method: 'POST',
             body: data,
-            token,
         }),
 
-    uploadProductImage: (id: number, file: File, token: string) => {
+    uploadProductImage: (id: number, file: File) => {
         const formData = new FormData();
         formData.append('file', file);
 
         return apiClient<Product>(`/products/${id}/image`, {
             method: 'PATCH',
             body: formData,
-            token,
         });
     },
 
-    removeProductImage: (id: number, token: string) =>
-        apiClient<Product>(`/products/${id}/image`, {
-            method: 'DELETE',
-            token,
-        }),
+    removeProductImage: (id: number) =>
+        apiClient<Product>(`/products/${id}/image`, { method: 'DELETE' }),
 
-    update: (id: number, data: UpdateProductData, token: string) =>
+    update: (id: number, data: UpdateProductData) =>
         apiClient<Product>(`/products/${id}`, {
             method: 'PATCH',
             body: data,
-            token,
         }),
 
-    changeCategory: (id: number, categoryId: number, token: string) =>
+    changeCategory: (id: number, categoryId: number) =>
         apiClient<Product>(`/products/${id}`, {
             method: 'PATCH',
             body: { categoryId },
-            token,
         }),
 
-    delete: (id: number, token: string) =>
-        apiClient<void>(`/products/${id}`, {
-            method: 'DELETE',
-            token,
-        }),
+    delete: (id: number) =>
+        apiClient<void>(`/products/${id}`, { method: 'DELETE' }),
 }

@@ -27,8 +27,8 @@ export const useLogin = () => {
 
   async function onSubmit(data: LoginFormData) {
     try {
-      const { access_token, user } = await authApi.login(data.identification, data.password);
-      setAuth(access_token, user);
+      const { user } = await authApi.login(data.identification, data.password);
+      setAuth(user);
       toast.success(`Bienvenido, ${user.firstName}`);
       router.push('/');
     } catch {

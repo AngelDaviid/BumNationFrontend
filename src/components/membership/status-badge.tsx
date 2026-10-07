@@ -1,7 +1,7 @@
 import { MembershipStatus } from "@/types";
 
 const statusStyles: Record<MembershipStatus, string> = {
-  ACTIVE: "bg-[#6BFF3C]/15 text-[#3f9c1f]",
+  ACTIVE: "bg-neon/15 text-brand-text",
   EXPIRED: "bg-red-300 text-red-600",
   SUSPENDED: "bg-amber-100 text-amber-600",
   CANCELLED: "bg-red-100 text-red-600",

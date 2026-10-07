@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { cartApi } from "@/lib/api/cart";
 import { getApiErrorMessage } from "@/lib/utils/api-error";
-import { useAuthStore } from "@/stores/auth.store";
 import { Cart } from "@/types";
 import { useCartQueryKey } from "./use-cart";
 
@@ -12,12 +11,11 @@ interface UpdateCartItemVariables {
 }
 
 export function useUpdateCartItem() {
-  const { token } = useAuthStore();
   const queryClient = useQueryClient();
   const queryKey = useCartQueryKey();
 
   return useMutation({
-    mutationFn: ({ itemId, quantity }: UpdateCartItemVariables) => cartApi.updateItem(itemId, quantity, token!),
+    mutationFn: ({ itemId, quantity }: UpdateCartItemVariables) => cartApi.updateItem(itemId, quantity),
 
     onMutate: async ({ itemId, quantity }) => {
       await queryClient.cancelQueries({ queryKey });

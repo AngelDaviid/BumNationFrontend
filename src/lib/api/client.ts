@@ -1,10 +1,18 @@
+const getBaseUrl = () => {
+    if (typeof window !== 'undefined') {
+        return '/api';
+    }
+
+    return (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000').replace(/\/+$/, '');
+};
+
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT';
 
 interface FetchOptions {
     method?: HttpMethod;
     body?: unknown;
-    token?: string;
     tags?: string[];
+    revalidate?: number;
     signal?: AbortSignal;
 }
 
@@ -13,29 +21,17 @@ export async function apiClient<T>(
     options: FetchOptions = {},
 ): Promise<T> { 
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
-    if (!API_URL) {
-        throw new Error(
-            'NEXT_PUBLIC_API_URL no está definida. Revisa tu .env.local y reinicia el servidor de desarrollo.',
-        );
-    }
-
-    const { method = 'GET', body, token, tags, signal } = options;
+    const { method = 'GET', body, tags, revalidate, signal } = options;
 
     const isFormData = body instanceof FormData;
 
     const headers: Record<string, string> = {};
 
-    if (!isFormData) {
+    if (body !== undefined && !isFormData) {
         headers['Content-Type'] = 'application/json';
     }
 
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    const baseUrl = API_URL.replace(/\/+$/, ''); 
+    const baseUrl = getBaseUrl();
     const path = endpoint.replace(/^\/+/, ''); 
     const url = `${baseUrl}/${path}`;
 
@@ -43,7 +39,7 @@ export async function apiClient<T>(
         method,
         headers,
         body: isFormData ? (body as FormData) : (body ? JSON.stringify(body) : undefined),
-        next: tags ? { tags } : undefined,
+        next: tags || revalidate !== undefined ? { tags, revalidate } : undefined,
         signal
     })
 

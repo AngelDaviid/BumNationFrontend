@@ -30,7 +30,7 @@ export function MyOrderDetail({ orderId }: { orderId: string }) {
         icon={PackageX}
         title="No encontramos este pedido"
         action={
-          <Button asChild className="h-10 bg-[#65C33A] px-5 font-semibold text-white hover:bg-[#58ad32]">
+          <Button asChild className="h-10 px-5">
             <Link href="/orders">Ver mis pedidos</Link>
           </Button>
         }
@@ -42,14 +42,14 @@ export function MyOrderDetail({ orderId }: { orderId: string }) {
     <div className="space-y-6">
       <Link
         href="/orders"
-        className="inline-flex items-center gap-1 text-sm text-zinc-500 transition-colors hover:text-[#65C33A]"
+        className="inline-flex items-center gap-1 text-sm text-zinc-500 transition-colors hover:text-brand-text"
       >
         <ChevronLeft size={16} /> Mis pedidos
       </Link>
 
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#65C33A]">{formattedDate(order.createdAt)}</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-brand-text">{formattedDate(order.createdAt)}</p>
           <h1 className="mt-1 text-2xl font-bold text-zinc-900 sm:text-4xl">Pedido #{order.orderNumber}</h1>
         </div>
         <OrderStatusPill status={order.status} />
@@ -88,7 +88,7 @@ export function MyOrderDetail({ orderId }: { orderId: string }) {
         <aside className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-5">
           <div className="flex items-baseline justify-between">
             <span className="text-sm font-medium text-zinc-700">Total</span>
-            <span className="text-2xl font-bold text-[#65C33A]">
+            <span className="text-2xl font-bold text-brand-text">
               ${formattedPrice(order.total)}
               <span className="ml-1 text-sm font-medium text-zinc-500">COP</span>
             </span>

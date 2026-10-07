@@ -34,7 +34,7 @@ export function DesktopNavbar({ categories, search, containerRef, dropdown }: De
         <Link
           href="/admin"
           className={`text-md font-medium transition-colors ${
-            pathname === '/admin' ? 'text-[#6BFF3C]' : 'text-zinc-300 hover:text-white'
+            pathname === '/admin' ? 'text-neon' : 'text-zinc-300 hover:text-white'
           }`}
         >
           Inicio
@@ -47,7 +47,7 @@ export function DesktopNavbar({ categories, search, containerRef, dropdown }: De
             <Link
               href="/"
               className={`text-md font-medium transition-colors ${
-                pathname === '/' ? 'text-[#6BFF3C]' : 'text-zinc-300 hover:text-white'
+                pathname === '/' ? 'text-neon' : 'text-zinc-300 hover:text-white'
               }`}
             >
               Inicio

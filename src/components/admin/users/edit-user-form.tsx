@@ -99,7 +99,7 @@ export function EditUserForm({user, onSuccess, onCancel}: EditUserFormProps) {
                     type="submit"
                     size="lg"
                     disabled={!canSubmit}
-                    className="gap-2 bg-[#6BFF3C] font-semibold text-black hover:bg-[#5de52f] disabled:opacity-60"
+                    className="gap-2"
                 >
                     {isPending && <Loader size="sm"/>}
                     {isPending ? "Guardando..." : "Guardar cambios"}

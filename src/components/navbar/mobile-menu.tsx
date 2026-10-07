@@ -4,6 +4,7 @@ import { Home, Grid2X2, User, LogIn, ChevronDown, Heart } from 'lucide-react';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Category } from '@/types';
 import { useAuthStore } from '@/stores/auth.store';
+import { useLogout } from '@/hooks/auth-hook/use-logout';
 import { useMobileMenu } from '@/hooks/search/use-mobiel-menu';
 
 interface MobileMenuProps {
@@ -13,7 +14,8 @@ interface MobileMenuProps {
 
 export function MobileMenu({ categories, menu }: MobileMenuProps) {
   const pathname = usePathname();
-  const { isAuthenticated, user, logout, hasHydrated } = useAuthStore();
+  const { isAuthenticated, user, hasHydrated } = useAuthStore();
+  const logout = useLogout();
 
   if (!menu.isOpen) return null;
 
@@ -23,7 +25,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
         <Link
           href="/"
           className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
-            pathname === '/' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+            pathname === '/' ? 'text-neon bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
           }`}
         >
           <Home size={18} />
@@ -46,7 +48,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
           <div className="ml-9 flex flex-col gap-1 mb-1">
             <Link
               href="/products"
-              className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-[#6BFF3C] hover:bg-zinc-800 transition-colors"
+              className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-neon hover:bg-zinc-800 transition-colors"
             >
               Ver todos
             </Link>
@@ -54,7 +56,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
               <Link
                 key={cat.id}
                 href={`/products?category=${cat.id}`}
-                className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-[#6BFF3C] hover:bg-zinc-800 transition-colors"
+                className="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-neon hover:bg-zinc-800 transition-colors"
               >
                 {cat.name}
               </Link>
@@ -65,7 +67,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
         <Link
           href="/about"
           className={`flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium transition-colors ${
-            pathname === '/about' ? 'text-[#6BFF3C] bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
+            pathname === '/about' ? 'text-neon bg-zinc-800' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
           }`}
         >
           Sobre nosotros
@@ -107,7 +109,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
             {user?.role === 'ADMIN' && (
               <Link
                 href="/admin"
-                className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-[#6BFF3C] hover:bg-zinc-800 transition-colors"
+                className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-neon hover:bg-zinc-800 transition-colors"
               >
                 Panel Admin
               </Link>
@@ -115,7 +117,7 @@ export function MobileMenu({ categories, menu }: MobileMenuProps) {
             <DropdownMenuSeparator className="bg-zinc-700 my-2" />
             <button
               type="button"
-              onClick={logout}
+              onClick={() => void logout()}
               className="flex items-center gap-3 px-3 py-3 rounded-xl text-base font-medium text-red-400 hover:bg-zinc-800 hover:text-red-300 transition-colors text-left"
             >
               Cerrar sesión

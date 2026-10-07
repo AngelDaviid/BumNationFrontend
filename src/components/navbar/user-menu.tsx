@@ -8,9 +8,11 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { useAuthStore } from '@/stores/auth.store';
+import { useLogout } from '@/hooks/auth-hook/use-logout';
 
 export function UserMenu() {
-  const { isAuthenticated, user, logout, hasHydrated } = useAuthStore();
+  const { isAuthenticated, user, hasHydrated } = useAuthStore();
+  const logout = useLogout();
 
   // Evita mostrar "LogIn" un instante antes de cargar la sesión
   if (!hasHydrated) {
@@ -41,22 +43,22 @@ export function UserMenu() {
         </div>
         <DropdownMenuSeparator className="bg-zinc-700" />
         <DropdownMenuItem asChild>
-          <Link href="/profile" className="cursor-pointer hover:text-[#6BFF3C]">
+          <Link href="/profile" className="cursor-pointer hover:text-neon">
             Mi perfil
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/favorites" className="cursor-pointer hover:text-[#6BFF3C]">
+          <Link href="/favorites" className="cursor-pointer hover:text-neon">
             Mis favoritos
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/orders" className="cursor-pointer hover:text-[#6BFF3C]">
+          <Link href="/orders" className="cursor-pointer hover:text-neon">
             Mis pedidos
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/membership" className="cursor-pointer hover:text-[#6BFF3C]">
+          <Link href="/membership" className="cursor-pointer hover:text-neon">
             Mi membresía
           </Link>
         </DropdownMenuItem>
@@ -64,14 +66,14 @@ export function UserMenu() {
           <>
             <DropdownMenuSeparator className="bg-zinc-700" />
             <DropdownMenuItem asChild>
-              <Link href="/admin" className="cursor-pointer text-[#6BFF3C]">
+              <Link href="/admin" className="cursor-pointer text-neon">
                 Panel Admin
               </Link>
             </DropdownMenuItem>
           </>
         )}
         <DropdownMenuSeparator className="bg-zinc-700" />
-        <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-400 hover:text-red-300">
+        <DropdownMenuItem onClick={() => void logout()} className="cursor-pointer text-red-400 hover:text-red-300">
           Cerrar sesión
         </DropdownMenuItem>
       </DropdownMenuContent>

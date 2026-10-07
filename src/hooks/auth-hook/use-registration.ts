@@ -46,8 +46,8 @@ export const useRegistration = () => {
     };
 
     try {
-      const { access_token, user } = await authApi.register(payload);
-      setAuth(access_token, user);
+      const { user } = await authApi.register(payload);
+      setAuth(user);
       toast.success('Cuenta creada, ¡bienvenido a Bum Nation!');
       router.push('/');
     } catch {
