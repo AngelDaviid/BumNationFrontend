@@ -24,7 +24,7 @@ export function StatusSelect<T extends string>({ value, options, onChange, disab
   const current = options.find((option) => option.value === value);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild disabled={disabled}>
         <Button variant="outline" size="lg" className={cn("w-full justify-between sm:w-56", className)}>
           {current?.label ?? <span className="text-zinc-400">{placeholder ?? value}</span>}
