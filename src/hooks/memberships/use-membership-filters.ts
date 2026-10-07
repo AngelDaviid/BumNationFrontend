@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useListParams } from "@/hooks/use-list-params";
 import { MembershipWithStats } from "@/types";
 
 export const MEMBERSHIP_FILTERS = {
@@ -19,9 +19,14 @@ export type MembershipFilterKey = keyof typeof MEMBERSHIP_FILTERS;
 
 export const MEMBERSHIP_FILTER_KEYS = Object.keys(MEMBERSHIP_FILTERS) as MembershipFilterKey[];
 
+const isFilterKey = (value?: string): value is MembershipFilterKey =>
+  MEMBERSHIP_FILTER_KEYS.some((key) => key === value);
+
 export function useMembershipFilters(memberships: MembershipWithStats[]) {
-  const [filter, setFilter] = useState<MembershipFilterKey>("all");
-  const [search, setSearch] = useState("");
+  const { search, setSearch, getParam, setFilter: setUrlFilter } = useListParams();
+  const statusParam = getParam("status");
+  const filter: MembershipFilterKey = isFilterKey(statusParam) ? statusParam : "all";
+  const setFilter = (key: MembershipFilterKey) => setUrlFilter("status", key === "all" ? undefined : key);
 
   const count = (key: MembershipFilterKey) => memberships.filter(MEMBERSHIP_FILTERS[key].match).length;
 

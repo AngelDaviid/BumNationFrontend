@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { MyOrdersView } from "@/components/shop/orders/my-orders-view";
+import { Loader } from "@/components/ui/loader";
 
 export const metadata: Metadata = {
   title: "Mis pedidos | Bum Nation",
@@ -12,7 +14,9 @@ export default function MyOrdersPage() {
         <p className="text-xs font-semibold uppercase tracking-widest text-brand-text">Tienda</p>
         <h1 className="mt-1 text-2xl font-bold text-zinc-900 sm:text-4xl">Mis pedidos</h1>
       </header>
-      <MyOrdersView />
+      <Suspense fallback={<Loader tone="light" className="mx-auto flex justify-center py-20" />}>
+        <MyOrdersView />
+      </Suspense>
     </div>
   );
 }

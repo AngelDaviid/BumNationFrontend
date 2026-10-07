@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { useListParams } from "@/hooks/use-list-params";
 import { useCategoryMutations } from "@/hooks/categories/use-categories";
 import { Category } from "@/types";
 
@@ -58,7 +58,7 @@ export function useCategoryActions(category: Category) {
 }
 
 export function useCategorySearch(categories: Category[]) {
-  const [search, setSearch] = useState("");
+  const { search, setSearch } = useListParams();
   const term = search.trim().toLowerCase();
   const visible = term ? categories.filter((c) => c.name.toLowerCase().includes(term)) : categories;
 

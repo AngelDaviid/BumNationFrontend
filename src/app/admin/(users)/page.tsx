@@ -6,10 +6,11 @@ import { DataTable } from "@/components/ui/data-table";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { useUserStats } from "@/hooks/users/use-users-stats";
 import { useMemberships } from "@/hooks/memberships/use-memberships";
+import { useListParams } from "@/hooks/use-list-params";
 
 export default function AllUsersPage() {
-  const { users, isLoading, error, page, totalPages, nextPage, prevPage, search, setSearch } =
-    useUsers({ limit: 10 });
+  const { search, setSearch, debouncedSearch, page, nextPage, prevPage } = useListParams();
+  const { users, isLoading, error, totalPages } = useUsers({ page, limit: 10, search: debouncedSearch });
 
   const { total, active, withoutMembership, isLoading: isLoadingStats } = useUserStats();
   const { memberships, isLoading: isLoadingMemberships } = useMemberships();
